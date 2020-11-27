@@ -1,0 +1,71 @@
+package ro.utcn.parking.system.management.model.membership;
+
+import java.time.Instant;
+
+import org.immutables.value.Value;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ro.utcn.parking.system.management.model.base.MembershipType;
+
+
+/**
+ * @author Andrada
+ * Model entity for a membership
+ */
+@Value.Immutable
+@JsonSerialize(as = ImtMembership.class)
+@JsonDeserialize(builder = ImtMembership.Builder.class)
+public interface Membership {
+
+	/**
+	 * @return identifier for the entity
+	 */
+	Long getId();
+	
+
+	/**
+	 * @return unique code for the entity
+	 */
+	String getCode();	
+	
+
+	/**
+	 * @return creation time
+	 */
+	Instant getCreatedAt();
+	
+
+	/**
+	 * @return last update time
+	 */
+	Instant getUpdatedAt();
+	
+	/**
+	 * @return the type of the membership
+	 */
+	MembershipType getMembershipType();
+	
+	/**
+	 * @return the user's identifier
+	 */
+	Long getUserId();
+	
+	/**
+	 * @return user's unique code
+	 */
+	String getUserCode();
+	
+	/**
+	 * @return the parking spot's id
+	 */
+	Long getParkingSpotId();
+	
+
+	/**
+	 * @return the parking spot's unique code
+	 */
+	String getParkingSpotCode();
+	
+}

@@ -1,0 +1,4 @@
+dependencies {
+	compile project(':parking-system-management-model')
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.24.Final'
+}
