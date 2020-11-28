@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.data.api.reservation;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.annotation.Nullable;
@@ -13,7 +14,13 @@ import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 
 @Entity
-public class ReservationEntity {
+public class ReservationEntity implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 *  identifier for the entity
 	 */
@@ -24,7 +31,7 @@ public class ReservationEntity {
 	/**
 	 *  unique code for the entity
 	 */
-	@Id
+	@GeneratedValue
 	String code;	
 
 	/**

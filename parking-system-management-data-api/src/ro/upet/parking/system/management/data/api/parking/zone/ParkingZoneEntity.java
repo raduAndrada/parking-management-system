@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.data.api.parking.zone;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,13 @@ import javax.persistence.ManyToOne;
 import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
 
 @Entity
-public class ParkingZoneEntity {
+public class ParkingZoneEntity implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 *  identifier for the entity
 	 */
@@ -22,7 +29,7 @@ public class ParkingZoneEntity {
 	/**
 	 *  unique code for the entity
 	 */
-	@Id
+	@GeneratedValue
 	String code;	
 
 	/**

@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.data.api.user;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -12,7 +13,13 @@ import javax.persistence.OneToOne;
 import ro.upet.parking.system.management.data.api.payment.options.PaymentOptionsEntity;
 
 @Entity
-public class UserEntity {
+public class UserEntity implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 
 	/**
 	 * identifier for the entity
@@ -24,7 +31,7 @@ public class UserEntity {
 	/**
 	 * unique code for the entity
 	 */	
-	@Id
+	@GeneratedValue
 	String code;	
 
 	/**

@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ro.upet.parking.system.management.model.base.MembershipType;
-import ro.utcn.parking.system.management.model.membership.ImtMembership;
 
 
 /**

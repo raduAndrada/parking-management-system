@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.data.api.membership;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Entity;
@@ -12,8 +13,13 @@ import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.MembershipType;
 
 @Entity
-public class MembershipEntity {
+public class MembershipEntity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 *  identifier for the entity
 	 */
@@ -24,7 +30,7 @@ public class MembershipEntity {
 	/**
 	 *  unique code for the entity
 	 */
-	@Id
+	@GeneratedValue
 	String code;	
 
 	/**

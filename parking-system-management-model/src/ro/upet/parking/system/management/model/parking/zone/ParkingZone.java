@@ -7,8 +7,6 @@ import org.immutables.value.Value;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import ro.utcn.parking.system.management.model.parking.zone.ImtParkingZone;
-
 /**
  * @author Andrada
  * Parking zone model

@@ -1,17 +1,24 @@
 package ro.upet.parking.system.management.data.api.vehicle;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.Size;
 
 @Entity
-public class VehicleEntity {
+public class VehicleEntity implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 *  identifier for the entity
 	 */
@@ -22,7 +29,7 @@ public class VehicleEntity {
 	/**
 	 *  unique code for the entity
 	 */
-	@Id
+	@GeneratedValue
 	String code;	
 
 	/**
@@ -53,7 +60,7 @@ public class VehicleEntity {
 	/**
 	 *  the id of the owner of the vehicle
 	 */
-	@OneToMany
+	@ManyToOne
 	UserEntity user;
 
 	public Long getId() {

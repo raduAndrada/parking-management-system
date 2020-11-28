@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.data.api.payment.options.PaymentOptionsEntity;
+import ro.upet.parking.system.management.model.payment.options.ImtPaymentOptions;
 import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
-import ro.utcn.parking.system.management.model.payment.options.ImtPaymentOptions;
 
 /**
  * 

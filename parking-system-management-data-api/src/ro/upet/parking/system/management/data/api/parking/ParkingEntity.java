@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.data.api.parking;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Entity;
@@ -7,7 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class ParkingEntity {
+public class ParkingEntity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 *  identifier for the entity
 	 */
@@ -18,7 +24,7 @@ public class ParkingEntity {
 	/**
 	 *  unique code for the entity
 	 */
-	@Id
+	@GeneratedValue
 	String code;	
 
 	/**

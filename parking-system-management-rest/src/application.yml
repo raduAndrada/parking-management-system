@@ -1,0 +1,17 @@
+server.port: 8000
+
+spring:
+  tomcat:
+      max-wait: 10000
+      max-active: 5
+      test-on-borrow: true
+  main:
+    banner-mode: "off"
+    
+spring.jpa.generate-ddl: true
+spring.jpa.hibernate.ddl-auto: create
+spring.datasource.initialization-mode: always
+spring.datasource.platform: postgres
+spring.datasource.url: jdbc:postgresql://localhost:5432/parking-management-system-db
+spring.datasource.username: postgres
+spring.datasource.password: warlord

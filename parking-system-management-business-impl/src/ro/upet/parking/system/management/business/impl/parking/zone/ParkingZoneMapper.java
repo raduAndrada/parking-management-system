@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
+import ro.upet.parking.system.management.model.parking.zone.ImtParkingZone;
 import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
-import ro.utcn.parking.system.management.model.parking.zone.ImtParkingZone;
 
 /**
  * 
