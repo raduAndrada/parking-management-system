@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 /**
- * 
  * @author Andrada
  * Model that represents a level in a parking
  */

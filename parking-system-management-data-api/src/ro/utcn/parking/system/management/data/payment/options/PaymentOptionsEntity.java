@@ -14,15 +14,14 @@ public class PaymentOptionsEntity {
 	/**
 	 *  identifier for the entity
 	 */
-	 @Id
-	 @GeneratedValue
+	@Id
+	@GeneratedValue
 	Long id;
 	
 	/**
 	 *  unique code for the entity
 	 */
-	 @Id
-	 @GeneratedValue
+	@Id
 	String code;	
 
 	/**

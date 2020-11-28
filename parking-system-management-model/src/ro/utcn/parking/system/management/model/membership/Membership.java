@@ -24,18 +24,15 @@ public interface Membership {
 	 */
 	Long getId();
 	
-
 	/**
 	 * @return unique code for the entity
 	 */
 	String getCode();	
-	
 
 	/**
 	 * @return creation time
 	 */
 	Instant getCreatedAt();
-	
 
 	/**
 	 * @return last update time

@@ -1,6 +1,7 @@
 include 'parking-system-management-model'
 include 'parking-system-management-business-api'
-include 'parking-system-management-data'
+include 'parking-system-management-data-api'
+include 'parking-system-management-data-impl'
 include 'parking-system-management-business-impl'
 include 'parking-system-management-rest'
 include 'parking-system-management-ui'

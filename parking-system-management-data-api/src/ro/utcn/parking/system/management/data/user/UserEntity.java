@@ -17,15 +17,14 @@ public class UserEntity {
 	/**
 	 * identifier for the entity
 	 */
-	 @Id
-	 @GeneratedValue
+	@Id
+	@GeneratedValue
 	Long id;
 	
 	/**
 	 * unique code for the entity
 	 */	
-	 @Id
-	 @GeneratedValue
+	@Id
 	String code;	
 
 	/**
@@ -76,8 +75,8 @@ public class UserEntity {
 	/**
 	 * payment options of the user
 	 */
-	@OneToOne(mappedBy="mainMenu", cascade = CascadeType.ALL)
-	PaymentOptionsEntity paymentOptionsEntity;
+	@OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+	PaymentOptionsEntity paymentOptions;
 	
 	
 }
