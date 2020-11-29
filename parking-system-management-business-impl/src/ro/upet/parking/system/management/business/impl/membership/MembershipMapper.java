@@ -3,6 +3,8 @@ package ro.upet.parking.system.management.business.impl.membership;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
+import ro.upet.parking.system.management.business.impl.user.UserMapper;
 import ro.upet.parking.system.management.data.api.membership.MembershipEntity;
 import ro.upet.parking.system.management.model.membership.ImtMembership;
 import ro.upet.parking.system.management.model.membership.Membership;
@@ -25,6 +27,8 @@ public class MembershipMapper {
 		entity.setCreatedAt(membership.getCreatedAt());
 		entity.setMembershipType(membership.getMembershipType());
 		entity.setUpdatedAt(membership.getUpdatedAt());
+		entity.setUser(UserMapper.toUserEntity(membership.getUser()));
+		entity.setParkingSpot(ParkingSpotMapper.toParkingSpotEntity(membership.getParkingSpot()));
 		return entity;
 	}
 	
@@ -38,11 +42,9 @@ public class MembershipMapper {
 				.createdAt(entity.getCreatedAt())
 				.id(entity.getId())
 				.membershipType(entity.getMembershipType())
-				.parkingSpotCode(entity.getParkingSpot().getCode())
-				.parkingSpotId(entity.getParkingSpot().getId())
+				.parkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
 				.updatedAt(entity.getUpdatedAt())
-				.userCode(entity.getUser().getCode())
-				.userId(entity.getUser().getId())
+				.user(UserMapper.toUser(entity.getUser()))
 				.build();
 	}
 	

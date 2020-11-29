@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.reservation;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,7 +11,6 @@ import ro.upet.parking.system.management.business.api.reservation.ReservationSer
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
 import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
 import ro.upet.parking.system.management.data.impl.reservation.ReservationRepository;
-import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
 import ro.upet.parking.system.management.model.reservation.Reservation;
 
 /**
@@ -22,9 +22,6 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Inject
 	ReservationRepository reservationRepo;
-	
-	@Inject
-	VehicleRepository vehicleRepo;
 	
 	@Inject
 	ParkingSpotRepository parkingSpotRepo;
@@ -62,8 +59,9 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public Reservation addReservation(final Reservation reservation) {
 		final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-		entity.setVehicle(vehicleRepo.getOne(reservation.getVehicleId()));
 		entity.setParkingSpot(parkingSpotRepo.getOne(reservation.getParkingSpotId()));
+		entity.setCreatedAt(Instant.now());
+		entity.setUpdatedAt(Instant.now());
 		final ReservationEntity savedEntity = reservationRepo.save(entity);
 		return ReservationMapper.toReservation(savedEntity);
 	}
@@ -75,8 +73,8 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public Reservation updateReservation(final Reservation reservation) {
 		final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-		entity.setVehicle(vehicleRepo.getOne(reservation.getVehicleId()));
 		entity.setParkingSpot(parkingSpotRepo.getOne(reservation.getParkingSpotId()));
+		entity.setUpdatedAt(Instant.now());
 		final ReservationEntity savedEntity = reservationRepo.save(entity);
 		return ReservationMapper.toReservation(savedEntity);
 	}

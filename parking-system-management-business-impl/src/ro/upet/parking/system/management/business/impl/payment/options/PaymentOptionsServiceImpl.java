@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.payment.options;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,6 +60,8 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	public PaymentOptions addPaymentOptions(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = PaymentOptionsMapper.toPaymentOptionsEntity(paymentOptions);
 		entity.setUser(userRepo.getOne(paymentOptions.getUserId()));
+		entity.setCreatedAt(Instant.now());
+		entity.setUpdatedAt(Instant.now());
 		final PaymentOptionsEntity savedEntity = paymentOptionsRepo.save(entity);
 		return PaymentOptionsMapper.toPaymentOptions(savedEntity);
 	}
@@ -71,6 +74,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	public PaymentOptions updatePaymentOptions(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = PaymentOptionsMapper.toPaymentOptionsEntity(paymentOptions);
 		entity.setUser(userRepo.getOne(paymentOptions.getUserId()));
+		entity.setUpdatedAt(Instant.now());
 		final PaymentOptionsEntity savedEntity = paymentOptionsRepo.save(entity);
 		return PaymentOptionsMapper.toPaymentOptions(savedEntity);
 	}

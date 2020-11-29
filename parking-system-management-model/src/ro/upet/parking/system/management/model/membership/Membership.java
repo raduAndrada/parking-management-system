@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ro.upet.parking.system.management.model.base.MembershipType;
+import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
+import ro.upet.parking.system.management.model.user.User;
 
 
 /**
@@ -45,24 +47,16 @@ public interface Membership {
 	MembershipType getMembershipType();
 	
 	/**
-	 * @return the user's identifier
+	 * @return the user
 	 */
-	Long getUserId();
+	User getUser();
+	
 	
 	/**
-	 * @return user's unique code
+	 * @return the parking spot
 	 */
-	String getUserCode();
-	
-	/**
-	 * @return the parking spot's id
-	 */
-	Long getParkingSpotId();
+	ParkingSpot getParkingSpot();
 	
 
-	/**
-	 * @return the parking spot's unique code
-	 */
-	String getParkingSpotCode();
 	
 }

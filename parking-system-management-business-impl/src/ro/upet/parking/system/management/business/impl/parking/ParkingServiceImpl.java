@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.parking;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -54,6 +55,8 @@ public class ParkingServiceImpl implements ParkingService{
 	@Override
 	public Parking addParking(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
+		entity.setCreatedAt(Instant.now());
+		entity.setUpdatedAt(Instant.now());
 		final ParkingEntity savedEntity = parkingRepo.save(entity);
 		return ParkingMapper.toParking(savedEntity);
 	}
@@ -65,6 +68,7 @@ public class ParkingServiceImpl implements ParkingService{
 	@Override
 	public Parking updateParking(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
+		entity.setUpdatedAt(Instant.now());
 		final ParkingEntity savedEntity = parkingRepo.save(entity);
 		return ParkingMapper.toParking(savedEntity);
 	}

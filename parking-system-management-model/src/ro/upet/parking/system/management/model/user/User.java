@@ -75,16 +75,6 @@ public interface User {
 	String getAddress();
 	
 	/**
-	 * @return the id of the payment options
-	 */
-	Long getPaymentOptionsId();
-	
-	/**
-	 * @return the code of the payment options
-	 */
-	String getPaymentOptionsCode();
-	
-	/**
 	 * @return get the type of the user
 	 */
 	UserType getUserType();

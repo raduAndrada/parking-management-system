@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.vehicle;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
 import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
-import ro.upet.parking.system.management.data.impl.user.UserRepository;
 import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
@@ -23,8 +23,6 @@ public class VehicleServiceImpl implements VehicleService {
 	@Inject
 	VehicleRepository vehicleRepo;
 
-	@Inject
-	UserRepository userRepo;
 
 	@Inject
 	ParkingSpotRepository parkingSpotRepo;
@@ -60,7 +58,8 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle addVehicle(final Vehicle vehicle) {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
-		entity.setUser(userRepo.getOne(vehicle.getUserId()));
+		entity.setCreatedAt(Instant.now());
+		entity.setUpdatedAt(Instant.now());
 		final VehicleEntity savedEntity = vehicleRepo.save(entity);
 		return VehicleMapper.toVehicle(savedEntity);
 	}
@@ -71,7 +70,7 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle updateVehicle(final Vehicle vehicle) {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
-		entity.setUser(userRepo.getOne(vehicle.getUserId()));
+		entity.setUpdatedAt(Instant.now());
 		final VehicleEntity savedEntity = vehicleRepo.save(entity);
 		return VehicleMapper.toVehicle(savedEntity);
 	}

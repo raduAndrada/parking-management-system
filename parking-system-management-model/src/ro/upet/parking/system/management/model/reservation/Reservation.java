@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ro.upet.parking.system.management.model.base.ReservationStatus;
+import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 /**
  * @author Andrada
@@ -63,19 +64,9 @@ public interface Reservation {
 	
 
 	/**
-	 * @return registration number of the vehicle that will be parked 
-	 */
-	String getVehicleLicencePlate();
-	
-	/**
-	 * @return the id of the vehicle
-	 */
-	Long getVehicleId();
-
-	/**
 	 * @return vehicle code
 	 */
-	String getVehicleCode();	
+	Vehicle getVehicle();	
 	
 	/**
 	 * @return parking spot id

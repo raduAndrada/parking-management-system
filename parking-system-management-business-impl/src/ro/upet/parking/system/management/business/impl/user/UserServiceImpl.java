@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.user;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
-import ro.upet.parking.system.management.data.impl.payment.options.PaymentOptionsRepository;
 import ro.upet.parking.system.management.data.impl.user.UserRepository;
 import ro.upet.parking.system.management.model.user.User;
 
@@ -55,6 +55,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User addUser(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
+		entity.setCreatedAt(Instant.now());
+		entity.setUpdatedAt(Instant.now());
 		final UserEntity savedEntity = userRepo.save(entity);
 		return UserMapper.toUser(savedEntity);
 	}
@@ -66,6 +68,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User updateUser(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
+		entity.setUpdatedAt(Instant.now());
 		final UserEntity savedEntity = userRepo.save(entity);
 		return UserMapper.toUser(savedEntity);
 	}

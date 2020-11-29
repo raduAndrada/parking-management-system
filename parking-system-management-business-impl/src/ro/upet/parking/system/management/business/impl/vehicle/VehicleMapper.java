@@ -3,6 +3,7 @@ package ro.upet.parking.system.management.business.impl.vehicle;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ro.upet.parking.system.management.business.impl.user.UserMapper;
 import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 import ro.upet.parking.system.management.model.vehicle.ImtVehicle;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
@@ -27,6 +28,7 @@ public class VehicleMapper {
 		entity.setLicencePlate(vehicle.getLicencePlate());
 		entity.setName(vehicle.getName());
 		entity.setSize(vehicle.getSize());
+		entity.setUser(UserMapper.toUserEntity(vehicle.getUser()));
 		return entity;
 	}
 	
@@ -40,8 +42,7 @@ public class VehicleMapper {
 				.createdAt(entity.getCreatedAt())
 				.id(entity.getId())
 				.updatedAt(entity.getUpdatedAt())
-				.userCode(entity.getUser().getCode())
-				.userId(entity.getUser().getId())
+				.user(UserMapper.toUser(entity.getUser()))
 				.licencePlate(entity.getLicencePlate())
 				.name(entity.getName())
 				.size(entity.getSize())

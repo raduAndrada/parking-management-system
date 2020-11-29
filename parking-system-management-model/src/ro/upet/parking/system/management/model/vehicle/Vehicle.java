@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ro.upet.parking.system.management.model.base.Size;
+import ro.upet.parking.system.management.model.user.User;
 
 /**
  * 
@@ -56,12 +57,8 @@ public interface Vehicle {
 	Size getSize();
 
 	/**
-	 * @return the id of the owner of the vehicle
+	 * @return the owner of the vehicle
 	 */
-	Long getUserId();
+	User getUser();
 
-	/**
-	 * @return the code of the owner of the vehicle
-	 */
-	String getUserCode();
 }

@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.parking.zone;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,6 +60,8 @@ public class ParkingZoneServiceImpl implements ParkingZoneService{
 	public ParkingZone addParkingZone(final ParkingZone parkingZone) {
 		final ParkingZoneEntity entity = ParkingZoneMapper.toParkingZoneEntity(parkingZone);
 		entity.setParkingLevel(parkingLevelRepo.getOne(parkingZone.getParkingLevelId()));
+		entity.setCreatedAt(Instant.now());
+		entity.setUpdatedAt(Instant.now());
 		final ParkingZoneEntity savedEntity = parkingZoneRepo.save(entity);
 		return ParkingZoneMapper.toParkingZone(savedEntity);
 	}
@@ -71,6 +74,7 @@ public class ParkingZoneServiceImpl implements ParkingZoneService{
 	public ParkingZone updateParkingZone(final ParkingZone parkingZone) {
 		final ParkingZoneEntity entity = ParkingZoneMapper.toParkingZoneEntity(parkingZone);
 		entity.setParkingLevel(parkingLevelRepo.getOne(parkingZone.getParkingLevelId()));
+		entity.setUpdatedAt(Instant.now());
 		final ParkingZoneEntity savedEntity = parkingZoneRepo.save(entity);
 		return ParkingZoneMapper.toParkingZone(savedEntity);
 	}

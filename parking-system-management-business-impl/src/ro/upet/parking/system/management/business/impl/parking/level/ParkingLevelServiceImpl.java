@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.parking.level;
 
+import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -60,6 +61,8 @@ public class ParkingLevelServiceImpl implements ParkingLevelService{
 	public ParkingLevel addParkingLevel(final ParkingLevel parkingLevel) {
 		final ParkingLevelEntity entity = ParkingLevelMapper.toParkingLevelEntity(parkingLevel);
 		entity.setParking(parkingRepo.getOne(parkingLevel.getParkingId()));
+		entity.setCreatedAt(Instant.now());
+		entity.setUpdatedAt(Instant.now());
 		final ParkingLevelEntity savedEntity = parkingLevelRepo.save(entity);
 		return ParkingLevelMapper.toParkingLevel(savedEntity);
 	}
@@ -72,6 +75,7 @@ public class ParkingLevelServiceImpl implements ParkingLevelService{
 	public ParkingLevel updateParkingLevel(final ParkingLevel parkingLevel) {
 		final ParkingLevelEntity entity = ParkingLevelMapper.toParkingLevelEntity(parkingLevel);
 		entity.setParking(parkingRepo.getOne(parkingLevel.getParkingId()));
+		entity.setUpdatedAt(Instant.now());
 		final ParkingLevelEntity savedEntity = parkingLevelRepo.save(entity);
 		return ParkingLevelMapper.toParkingLevel(savedEntity);
 	}
