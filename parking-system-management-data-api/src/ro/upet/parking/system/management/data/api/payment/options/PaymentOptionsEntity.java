@@ -63,6 +63,9 @@ public class PaymentOptionsEntity implements Serializable {
 	 */
 	String stripeId;
 	
+	/**
+	 * owner of this payment options
+	 */
 	@OneToOne
 	UserEntity user;
 
