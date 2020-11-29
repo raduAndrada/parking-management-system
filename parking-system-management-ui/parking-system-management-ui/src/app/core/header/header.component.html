@@ -1,0 +1,49 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark elegant-color-dark fixed-top" [containerInside]="false">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand> 
+      <!-- <a class="navbar-brand"> <img src="../../../assets/TLGLOGO.png" /> </a> -->
+    </mdb-navbar-brand>
+  
+    <!-- Collapsible content -->
+    <links>
+  
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngFor="let item of menuItems">
+          <a class="nav-link waves-light" mdbWavesEffect routerLink="{{item.value}}" title="{{item.key}}"><span><i class="{{item.iconClass}}"></i>{{item.key}} </span></a>
+        </li>
+  
+        <!-- Dropdown -->
+        <li class="nav-item dropdown" mdbDropdown *ngFor="let item of menuDropdowns">
+          <a mdbDropdownToggle mdbWavesEffect  type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              <span><i class="{{item.iconClass}}"></i> {{item.key}} </span><span class="caret"></span></a>
+          <div class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a *ngFor="let subItem of item.submenu"
+              class="dropdown-item waves-light" mdbWavesEffect routerLink="{{item.value + subItem.value}}"><span>{{subItem.key}}</span></a>
+          </div>
+        </li>
+  
+      </ul>
+      <!-- Links -->
+  
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+          <li class="nav-item" *ngFor="let socialItem of socialItems">
+              <a class="nav-link waves-effect waves-light" style="color: #33b5e5" href="{{socialItem.value}}"
+                placement="bottom" ngbTooltip="{{socialItem.tooltip}}">
+                  <mdb-icon fab icon="{{socialItem.key}}"></mdb-icon>
+                  </a>
+            </li>
+
+            <!-- <li *ngIf="authService.authenticated" class="nav-item">
+              <a class="nav-link waves-effect waves-light" 
+                style="color: #33b5e5" (click)="logout()"
+                 title="Log out">
+                 <i class="fas fa-sign-out-alt"></i></a>
+            </li> -->
+      </ul>
+    </links>
+    <!-- Collapsible content -->
+  
+  </mdb-navbar>
+

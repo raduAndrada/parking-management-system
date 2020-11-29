@@ -1,0 +1,13 @@
+span {
+    color:#33b5e5;
+}
+.navbar .dropdown-menu a {
+    color:#33b5e5 !important;
+}
+.dropdown-item :hover { 
+    color: blueviolet;
+}
+.dropdown-toggle {
+    color: blueviolet;
+}
+

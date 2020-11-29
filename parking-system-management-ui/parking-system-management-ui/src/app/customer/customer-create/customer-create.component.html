@@ -1,0 +1,72 @@
+<div class="col-md-12 col-sm-12 col-lg-12"> 
+    <div class="form-group float-label-control">
+      <label><span>Name*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="John Doe"
+        title="Name"
+        name="name"
+        [(ngModel)]="toAdd.name"
+      />
+    </div>
+    <div class="form-group float-label-control">
+      <label><span>Birthday</span></label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="01/01/2001"
+        title="Birthday"
+        [(ngModel)]="toAdd.birthday"
+        name="birthday"
+      />
+    </div>
+    <div class="form-group float-label-control">
+      <label><span>Username*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="someone123"
+        title="username"
+        [(ngModel)]="toAdd.username"
+        name="username"
+      />
+    </div>
+    <div class="form-group float-label-control">
+      <label><span>Password*</span></label>
+      <input
+        type="password"
+        class="form-control"
+        placeholder="123456"
+        title="password"
+        [(ngModel)]="toAdd.password"
+        name="password"
+      />
+      <div class="form-group float-label-control">
+        <label><span>Email*</span></label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="someone123@email.com"
+          title="email"
+          [(ngModel)]="toAdd.email"
+          name="email"
+        />
+      </div>
+      <div class="form-group float-label-control">
+        <label><span>Address</span></label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Luceafarului, Cluj-Napoca, Cluj, Romania"
+          title="address"
+          [(ngModel)]="toAdd.address"
+          name="address"
+        />
+      </div>
+      <vehicle-create 
+        [user]="toAdd">
+      </vehicle-create>
+    </div>
+  </div>
+  
