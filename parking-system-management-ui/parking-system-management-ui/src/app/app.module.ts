@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { MDBBootstrapModule } from "angular-bootstrap-md";
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +17,7 @@ import { CustomerCreateComponent } from './customer/customer-create/customer-cre
 import { VehicleCreateComponent } from './customer/customer-create/vehicle-create/vehicle-create.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './core/header/header.component';
+import { AddressComponent } from './core/address/address.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { HeaderComponent } from './core/header/header.component';
     UserListComponent,
     CustomerCreateComponent,
     VehicleCreateComponent,
-    HeaderComponent
+    HeaderComponent,
+    AddressComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { HeaderComponent } from './core/header/header.component';
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
     AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

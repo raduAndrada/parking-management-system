@@ -1,5 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { MenuService } from '../MenuService.service';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {faHome, faUsers, faParking} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'header',
@@ -18,13 +20,15 @@ export class HeaderComponent implements OnInit {
 
   constructor(
       private readonly menuService: MenuService,
-     // public readonly authService: AuthService
-  ) { }
+     // public readonly authService: AuthService,
+     private library: FaIconLibrary
+  ) { 
+    library.addIcons(faHome, faUsers, faParking);
+  }
 
   ngOnInit() {
     this.menuItems = this.menuService.getMenuLinks();
     this.socialItems = this.menuService.getSocialLinks();
-    this.menuDropdowns = this.menuService.getDropdowns();
   }
 
   // public logout() {

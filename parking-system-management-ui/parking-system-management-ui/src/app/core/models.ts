@@ -55,13 +55,29 @@ export interface Membership extends ActionAudit {
 export interface Parking extends ActionAudit {
   
     name: string;
-  
+    
     location: string;
   
     opensAt: string;
 
     closesAt: string;
+
 }
+
+
+export interface ParkingCreate {
+  
+    parking: Parking;
+
+    numberOfLevels: string;
+  
+    parkingZoneStartingLetter: string;
+
+    parkingZoneEndingLetter: string;
+
+    parkingZoneSpotNumber: number;
+}
+
 
 export interface Parking extends ActionAudit {
   

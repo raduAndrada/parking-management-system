@@ -1,1 +1,96 @@
-<p>parking-create works!</p>
+<div class="col-md-12 col-sm-12 col-lg-12"> 
+    <div class="form-group float-label-control">
+      <label><span>Name*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Iulius Mall Parking"
+        title="Name"
+        name="name"
+        [(ngModel)]="toAdd.parking.name"
+      />
+    </div>
+    <div class="form-group float-label-control">
+      <label><span>Location</span></label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Street: X, nb: 12, Cluj-Napoca, Cluj, Romania"
+        title="Location"
+        [(ngModel)]="toAdd.parking.location"
+        name="location"
+      />
+    </div>
+    <div class="form-group float-label-control">
+      <label><span>Opening Hour</span></label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="05:00"
+        title="opening hour"
+        [(ngModel)]="toAdd.parking.opensAt"
+        name="openingHour"
+      />
+    </div>
+    <div class="form-group float-label-control">
+      <label><span>Closing hour</span></label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="12:00"
+        title="closing hour"
+        [(ngModel)]="toAdd.parking.closesAt"
+        name="closingHour"
+      />
+      <div class="form-group float-label-control">
+        <label><span>Number of levels</span></label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="3"
+          title="number of levels"
+          [(ngModel)]="toAdd.numberOfLevels"
+          name="numberOfLevels"
+        />
+      </div>
+      <div class="form-group float-label-control">
+        <label><span>Parking zone starting letter</span></label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="A"
+          title="zone staring letter"
+          [(ngModel)]="toAdd.parkingZoneStartingLetter"
+          maxlength="1"
+          name="parkingZoneStartingLetter"
+        />
+      </div>
+      <div class="form-group float-label-control">
+        <label><span>Parking zone ending letter</span></label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="H"
+          title="zone ending letter"
+          [(ngModel)]="toAdd.parkingZoneEndingLetter"
+          maxlength="1"
+          name="parkingZoneEndingLetter"
+        />
+      </div>
+      <div class="form-group float-label-control">
+        <label><span>Number of spots per zone</span></label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="15"
+          title="number of spots per zone"
+          [(ngModel)]="toAdd.parkingZoneSpotNumber"
+          name="parkingZoneSpotNumber"
+        />
+      </div>
+    </div>
+    <button id="save-btn" class="btn btn-success btn-md" (click)="create()">
+        <fa-icon [icon]="['fas', 'save']"></fa-icon> <span>Save</span>
+      </button>
+  </div>
+  
