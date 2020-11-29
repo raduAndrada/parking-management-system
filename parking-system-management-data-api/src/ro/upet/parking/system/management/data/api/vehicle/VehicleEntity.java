@@ -3,6 +3,7 @@ package ro.upet.parking.system.management.data.api.vehicle;
 import java.io.Serializable;
 import java.time.Instant;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -60,7 +61,7 @@ public class VehicleEntity implements Serializable {
 	/**
 	 *  the id of the owner of the vehicle
 	 */
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.PERSIST)
 	UserEntity user;
 
 	public Long getId() {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ro.upet.parking.system.management.business.api.parking.ParkingService;
 import ro.upet.parking.system.management.model.parking.Parking;
+import ro.upet.parking.system.management.model.parking.ParkingCreate;
 
 /**
  * @author Andrada
@@ -84,6 +85,22 @@ public class ParkingRest {
 		final Parking createdParking;
 		try {
 			createdParking = parkingService.addParking(parking);
+		} catch (final Exception e) {
+			return null;
+		}
+		return ResponseEntity.ok(createdParking);
+	}
+	
+	/**
+	 * 
+	 * @param parkingCreate the parking to be added
+	 * @return the created entity
+	 */
+	@PostMapping("/configure")
+	public ResponseEntity<ParkingCreate> postParking(@RequestBody final ParkingCreate parkingCreate) {
+		final ParkingCreate createdParking;
+		try {
+			createdParking = parkingService.configureParking(parkingCreate);
 		} catch (final Exception e) {
 			return null;
 		}

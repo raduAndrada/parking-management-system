@@ -50,7 +50,7 @@ public class ParkingZoneEntity implements Serializable {
 	/**
 	 *  the level
 	 */
-	@ManyToOne(cascade= CascadeType.ALL)
+	@ManyToOne(cascade= CascadeType.MERGE)
 	ParkingLevelEntity parkingLevel;
 
 	public Long getId() {

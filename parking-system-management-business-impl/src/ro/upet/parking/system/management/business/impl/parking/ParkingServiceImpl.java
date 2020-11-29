@@ -9,8 +9,15 @@ import org.springframework.stereotype.Service;
 
 import ro.upet.parking.system.management.business.api.parking.ParkingService;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
+import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
+import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
+import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 import ro.upet.parking.system.management.data.impl.parking.ParkingRepository;
+import ro.upet.parking.system.management.data.impl.parking.level.ParkingLevelRepository;
+import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
+import ro.upet.parking.system.management.data.impl.parking.zone.ParkingZoneRepository;
 import ro.upet.parking.system.management.model.parking.Parking;
+import ro.upet.parking.system.management.model.parking.ParkingCreate;
 
 /**
  * @author Andrada
@@ -20,7 +27,16 @@ import ro.upet.parking.system.management.model.parking.Parking;
 public class ParkingServiceImpl implements ParkingService{
 	
 	@Inject
-	ParkingRepository parkingRepo;
+	private ParkingRepository parkingRepo;
+	
+	@Inject
+	private ParkingLevelRepository parkingLevelRepo;
+	
+	@Inject
+	private ParkingZoneRepository parkingZoneRepo;
+	
+	@Inject
+	private ParkingSpotRepository parkingSpotRepo;
 
 	/**
 	 * {@inheritDoc}
@@ -95,6 +111,43 @@ public class ParkingServiceImpl implements ParkingService{
 	public Parking removeParkingByCode(final String parkingCode) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ParkingCreate configureParking(final ParkingCreate parkingCreate) {
+		final ParkingEntity parking = ParkingMapper.toParkingEntity(addParking(parkingCreate.getParking()));
+		final Instant now = Instant.now();
+		for (int level = 0; level < parkingCreate.getNumberOfLevels(); level ++) {
+		   final ParkingLevelEntity ple = new ParkingLevelEntity();
+		        ple.setCreatedAt(now);
+		        ple.setUpdatedAt(now);
+		        ple.setNumber("" + level);
+		        ple.setParking(parking);
+		        final ParkingLevelEntity savedPle = parkingLevelRepo.save(ple);
+			for(char zone = parkingCreate.getParkingZoneStartingLetter(); zone <= parkingCreate.getParkingZoneEndingLetter(); zone++ )
+		    {
+				final ParkingZoneEntity pze = new ParkingZoneEntity();
+				pze.setLetter("" + zone);
+				pze.setCreatedAt(now);
+				pze.setUpdatedAt(now);
+				pze.setParkingLevel(savedPle);
+				final ParkingZoneEntity savedPze = parkingZoneRepo.save(pze);
+				
+				for (int spot= 0; spot < parkingCreate.getParkingZoneSpotNumber(); spot++) {
+					final ParkingSpotEntity pse = new ParkingSpotEntity();
+					pse.setNumber("" + zone + spot);
+					pse.setCreatedAt(now);
+					pse.setUpdatedAt(now);
+					pse.setParkingZone(savedPze);
+					final ParkingSpotEntity savedPse = parkingSpotRepo.save(pse);
+				}
+		    }
+		}
+		
+		return parkingCreate;
 	}
 	
 	

@@ -3,6 +3,7 @@ package ro.upet.parking.system.management.business.api.parking;
 import java.util.List;
 
 import ro.upet.parking.system.management.model.parking.Parking;
+import ro.upet.parking.system.management.model.parking.ParkingCreate;
 
 public interface ParkingService{
 	/**
@@ -46,4 +47,11 @@ public interface ParkingService{
 	 * @return the deleted entity
 	 */
 	public Parking removeParkingByCode(final String parkingCode);
+	
+
+	/**
+	 * @param parkingCreate the configuration for the parking
+	 * @return the createad parking
+	 */
+	public ParkingCreate configureParking(final ParkingCreate parkingCreate);
 }

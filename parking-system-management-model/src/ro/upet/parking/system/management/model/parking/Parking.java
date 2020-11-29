@@ -50,12 +50,12 @@ public interface Parking {
 	/**
 	 * @return open time
 	 */
-	Instant getOpensAt();
+	String getOpensAt();
 	
 	/**
 	 * @return closing time
 	 */
-	Instant getClosesAt();
+	String getClosesAt();
 
 	
 }

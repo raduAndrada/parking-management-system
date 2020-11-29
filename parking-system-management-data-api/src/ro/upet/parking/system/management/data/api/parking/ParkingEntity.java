@@ -50,12 +50,12 @@ public class ParkingEntity implements Serializable {
 	/**
 	 *  open time
 	 */
-	Instant opensAt;
+	String opensAt;
 	
 	/**
 	 *  closing time
 	 */
-	Instant closesAt;
+	String closesAt;
 
 	public Long getId() {
 		return id;
@@ -105,19 +105,19 @@ public class ParkingEntity implements Serializable {
 		this.location = location;
 	}
 
-	public Instant getOpensAt() {
+	public String getOpensAt() {
 		return opensAt;
 	}
 
-	public void setOpensAt(Instant opensAt) {
+	public void setOpensAt(String opensAt) {
 		this.opensAt = opensAt;
 	}
 
-	public Instant getClosesAt() {
+	public String getClosesAt() {
 		return closesAt;
 	}
 
-	public void setClosesAt(Instant closesAt) {
+	public void setClosesAt(String closesAt) {
 		this.closesAt = closesAt;
 	}
 	
