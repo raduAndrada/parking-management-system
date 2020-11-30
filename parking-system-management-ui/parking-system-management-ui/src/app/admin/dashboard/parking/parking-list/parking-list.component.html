@@ -1,1 +1,26 @@
-<p>parking-list works!</p>
+<div class="col-md-12 col-lg-12 col-sm-12">
+    <button class="btn btn-success pull-left" (click)="addParking()">
+        <fa-icon [icon]="['fas', 'plus']"></fa-icon> <span>New</span>
+    </button>
+    <br />
+    <table mdbTable>
+        <thead class="black white-text">
+        <tr>
+            <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr mdbTableCol *ngFor="let parking of parkingList">
+            <th scope="row">{{parking.id}}</th>
+            <td >{{parking.code}}</td>
+            <td >{{parking.name}}</td>
+            <td >{{parking.location}}</td>
+            <td>
+                <a class="btn btn-link pull-left" (click)="viewParking(parking.id)">
+                    <span> Expand</span>
+                </a>  
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

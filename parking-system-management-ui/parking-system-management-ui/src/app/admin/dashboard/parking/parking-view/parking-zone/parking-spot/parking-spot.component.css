@@ -1,0 +1,14 @@
+.free-spot {
+    height: 50px;
+    background-color: rgb(96, 158, 33);
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+}
+.occupied-spot {
+    height: 50px;
+    background-color: rgb(202, 60, 25);
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+}

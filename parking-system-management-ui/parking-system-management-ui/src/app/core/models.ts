@@ -79,22 +79,29 @@ export interface ParkingCreate {
 }
 
 
-export interface Parking extends ActionAudit {
+export interface ParkingLevel extends ActionAudit {
   
     number: string;
   
-    parkingId?: number;
+    parkingZones: ParkingSpot[];
+
+}
+
+export interface ParkingZone extends ActionAudit {
   
-    parkingCode?: string;
+    letter: string;
+  
+    parkingSpots: ParkingSpot[];
+
 }
 
 export interface ParkingSpot extends ActionAudit {
   
     number: string;
   
-    parkingZoneId?: number;
-  
-    parkingZoneCode?: string;
+    available?: boolean;
+
+    rentable?: boolean;
 
 }
 

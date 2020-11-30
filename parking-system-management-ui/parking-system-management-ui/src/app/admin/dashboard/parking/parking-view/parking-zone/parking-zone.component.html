@@ -1,0 +1,10 @@
+<div class="row col-md-10">
+    <div class="col-md-2">
+    <h3> Zone {{parkingZone.letter}} </h3>
+    </div>
+    <div class="row col-md-10" >
+        <div *ngFor="let spot of parkingZone.parkingSpots" >
+            <parking-spot [parkingSpot]="spot"></parking-spot>
+        </div>  
+    </div>
+</div>

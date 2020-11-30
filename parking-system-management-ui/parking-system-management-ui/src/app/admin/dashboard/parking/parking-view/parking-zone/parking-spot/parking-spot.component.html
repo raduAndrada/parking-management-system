@@ -1,0 +1,8 @@
+<div [ngClass]="{
+    'free-spot': parkingSpot.available,
+    'occupied-spot': (!parkingSpot.available || parkingSpot.rentable)
+    }">
+    <span><b>{{parkingSpot.number}}</b></span>
+</div>
+
+ 

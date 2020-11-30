@@ -1,1 +1,13 @@
-<p>generic-list works!</p>
+<table mdbTable>
+    <thead class="black white-text">
+      <tr>
+        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mdbTableCol *ngFor="let el of elements">
+        <th scope="row">{{el.id}}</th>
+        <td *ngFor="let key of elementKeys" >{{el[key]}}</td>
+      </tr>
+    </tbody>
+  </table>

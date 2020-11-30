@@ -18,6 +18,9 @@ import { VehicleCreateComponent } from './customer/customer-create/vehicle-creat
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './core/header/header.component';
 import { AddressComponent } from './core/address/address.component';
+import { ParkingViewComponent } from './admin/dashboard/parking/parking-view/parking-view.component';
+import { ParkingZoneComponent } from './admin/dashboard/parking/parking-view/parking-zone/parking-zone.component';
+import { ParkingSpotComponent } from './admin/dashboard/parking/parking-view/parking-zone/parking-spot/parking-spot.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { AddressComponent } from './core/address/address.component';
     CustomerCreateComponent,
     VehicleCreateComponent,
     HeaderComponent,
-    AddressComponent
+    AddressComponent,
+    ParkingViewComponent,
+    ParkingZoneComponent,
+    ParkingSpotComponent
   ],
   imports: [
     BrowserModule,

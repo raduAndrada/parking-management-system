@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Parking, ParkingCreate, Size } from 'src/app/core/models';
+import { ParkingCreate } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from 'src/app/core/RestService.service';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 export class ParkingCreateComponent implements OnInit {
 
   toAdd: ParkingCreate = {
-    parking: {closesAt: '', location: '', name: '', number: '', opensAt: ''},
+    parking: {closesAt: '', location: '', name: '', opensAt: ''},
     numberOfLevels: '',
     parkingZoneEndingLetter: '',
     parkingZoneStartingLetter: '',
