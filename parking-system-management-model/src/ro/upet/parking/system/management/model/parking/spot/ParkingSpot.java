@@ -50,6 +50,11 @@ public interface ParkingSpot {
 	 * @return true if it can be rent through a membership, false otherwise
 	 */
 	Boolean isRentable();
+	
+	/**
+	 * @return true if it is rented through a membership, false otherwise
+	 */
+	Boolean isRented();
 
 	
 }

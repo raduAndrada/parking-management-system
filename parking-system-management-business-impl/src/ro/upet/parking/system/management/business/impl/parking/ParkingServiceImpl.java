@@ -142,6 +142,9 @@ public class ParkingServiceImpl implements ParkingService{
 				for (int spot= 0; spot < parkingCreate.getParkingZoneSpotNumber(); spot++) {
 					final ParkingSpotEntity pse = new ParkingSpotEntity();
 					pse.setNumber("" + zone + spot);
+					pse.setAvailable(Boolean.TRUE);
+					pse.setRentable(Boolean.FALSE);
+					pse.setRented(Boolean.FALSE);
 					pse.setCreatedAt(now);
 					pse.setUpdatedAt(now);
 					final ParkingSpotEntity savedPse = parkingSpotRepo.save(pse);

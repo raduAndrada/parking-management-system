@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 
 @Entity

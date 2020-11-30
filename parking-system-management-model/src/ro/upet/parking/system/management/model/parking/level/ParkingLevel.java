@@ -8,6 +8,7 @@ import org.immutables.value.Value;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import ro.upet.parking.system.management.model.parking.Parking;
 import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 
 
@@ -48,12 +49,8 @@ public interface ParkingLevel {
 	/**
 	 * @return id for the parking
 	 */
-	Long getParkingId();
+	Parking getParking();
 	
-	/**
-	 * @return code for the parking
-	 */
-	String getParkingCode();
 	
 	/**
 	 * @return the parking zones for this level

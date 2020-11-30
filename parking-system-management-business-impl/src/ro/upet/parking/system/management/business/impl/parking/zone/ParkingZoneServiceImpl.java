@@ -2,7 +2,6 @@ package ro.upet.parking.system.management.business.impl.parking.zone;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import ro.upet.parking.system.management.business.api.parking.zone.ParkingZoneService;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
-import ro.upet.parking.system.management.data.impl.parking.level.ParkingLevelRepository;
 import ro.upet.parking.system.management.data.impl.parking.zone.ParkingZoneRepository;
 import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ro.upet.parking.system.management.business.api.parking.level.ParkingLevelService;
 import ro.upet.parking.system.management.model.parking.level.ParkingLevel;
-import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 
 /**
  * @author Andrada

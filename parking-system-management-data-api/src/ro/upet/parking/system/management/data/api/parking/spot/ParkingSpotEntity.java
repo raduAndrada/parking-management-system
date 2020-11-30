@@ -3,16 +3,12 @@ package ro.upet.parking.system.management.data.api.parking.spot;
 import java.io.Serializable;
 import java.time.Instant;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
-
-import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 
 @Entity
 @Table(name = "parking_spots")
@@ -62,6 +58,12 @@ public class ParkingSpotEntity implements Serializable {
 	 */
 	@ColumnDefault("false")
 	Boolean rentable;
+	
+	/**
+	 * true if it can be rented, false otherwise
+	 */
+	@ColumnDefault("false")
+	Boolean rented;
 
 
 	public Long getId() {
@@ -120,9 +122,14 @@ public class ParkingSpotEntity implements Serializable {
 	public void setRentable(Boolean rentable) {
 		this.rentable = rentable;
 	}
-	
-	
-	
 
+	public Boolean getRented() {
+		return rented;
+	}
+
+	public void setRented(Boolean rented) {
+		this.rented = rented;
+	}
+	
 	
 }
