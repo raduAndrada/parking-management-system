@@ -51,7 +51,6 @@ public interface Membership {
 	 */
 	User getUser();
 	
-	
 	/**
 	 * @return the parking spot
 	 */

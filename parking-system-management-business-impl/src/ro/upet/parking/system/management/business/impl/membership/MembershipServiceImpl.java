@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.impl.membership;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -103,6 +104,14 @@ public class MembershipServiceImpl implements MembershipService{
 	public Membership removeMembershipByCode(final String membershipCode) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Membership> getMembershipListByUserId(Long userId) {
+		return getMembershipList().stream().filter(m -> m.getUser().getId().equals(userId)).collect(Collectors.toList());
 	}
 	
 	

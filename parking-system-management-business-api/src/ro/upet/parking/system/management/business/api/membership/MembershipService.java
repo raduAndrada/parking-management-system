@@ -51,5 +51,10 @@ public interface MembershipService{
 	 * @return the deleted entity
 	 */
 	public Membership removeMembershipByCode(final String membershipCode);
-	
+
+	/**
+	 * @param userId the user owning the memberships
+	 * @return the is of memberships belonging to the user with the corresponding id
+	 */
+	public List<Membership> getMembershipListByUserId(final Long userId);
 }

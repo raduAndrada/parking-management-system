@@ -47,7 +47,7 @@ public interface User {
 	/**
 	 * @return birthday of the user
 	 */
-	LocalDate getBirthday();
+	String getBirthday();
 	
 	/**
 	 * @return unique username

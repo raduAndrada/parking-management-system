@@ -72,6 +72,20 @@ public class MembershipRest {
 			return ResponseEntity.ok(membershipList);
 		}
 	}
+	
+	/**
+	 * @param userId the user
+	 * @return the list with all the memberships of a user
+	 */
+	@GetMapping("/user/{userId}")
+	public ResponseEntity<List<Membership>> getMembershipsForUser(@PathVariable final Long userId) {
+		final List<Membership> membershipList= membershipService.getMembershipListByUserId(userId);
+		if (membershipList == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(membershipList);
+		}
+	}
 
 	/**
 	 * 
