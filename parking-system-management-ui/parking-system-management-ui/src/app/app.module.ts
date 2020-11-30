@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatTabsModule } from '@angular/material/tabs'
+import { MatButtonModule } from '@angular/material/button';
 
 import { MDBBootstrapModule } from "angular-bootstrap-md";
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +23,7 @@ import { AddressComponent } from './core/address/address.component';
 import { ParkingViewComponent } from './admin/dashboard/parking/parking-view/parking-view.component';
 import { ParkingZoneComponent } from './admin/dashboard/parking/parking-view/parking-zone/parking-zone.component';
 import { ParkingSpotComponent } from './admin/dashboard/parking/parking-view/parking-zone/parking-spot/parking-spot.component';
+import { ParkingLevelComponent } from './admin/dashboard/parking/parking-view/parking-level/parking-level.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { ParkingSpotComponent } from './admin/dashboard/parking/parking-view/par
     AddressComponent,
     ParkingViewComponent,
     ParkingZoneComponent,
-    ParkingSpotComponent
+    ParkingSpotComponent,
+    ParkingLevelComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,9 @@ import { ParkingSpotComponent } from './admin/dashboard/parking/parking-view/par
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatTabsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

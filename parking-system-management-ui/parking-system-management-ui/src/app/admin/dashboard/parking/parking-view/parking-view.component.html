@@ -1,1 +1,10 @@
-<p>parking-view works!</p>
+<div class="container col">
+      <h1> </h1>
+      <br />
+    <div *ngFor="let parkingLevel of parkingLevels" > 
+        <parking-level [parkingLevel]="parkingLevel" ></parking-level>
+        <br/>
+    </div>
+    
+  </div>
+  

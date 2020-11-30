@@ -1,8 +1,11 @@
 <div [ngClass]="{
-    'free-spot': parkingSpot.available,
-    'occupied-spot': (!parkingSpot.available || parkingSpot.rentable)
+    'free-spot': parkingSpot.isAvailable,
+    'occupied-spot': (!parkingSpot.isAvailable || parkingSpot.isRented)
     }">
     <span><b>{{parkingSpot.number}}</b></span>
+</div>
+<div>
+    <button (click)="rentParkingSpot()" class="btn btn-sm btn-link" [disabled]="parkingSpot.isRented" title="allow a parking spot to be rented"> Allow <fa-icon [icon]="['fas','money-bill-wave']"></fa-icon></button>
 </div>
 
  

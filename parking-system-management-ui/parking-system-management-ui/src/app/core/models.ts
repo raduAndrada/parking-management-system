@@ -85,6 +85,8 @@ export interface ParkingLevel extends ActionAudit {
   
     parkingZones: ParkingSpot[];
 
+    parking: Parking;
+
 }
 
 export interface ParkingZone extends ActionAudit {
@@ -99,9 +101,11 @@ export interface ParkingSpot extends ActionAudit {
   
     number: string;
   
-    available?: boolean;
+    isAvailable?: boolean;
 
-    rentable?: boolean;
+    isRentable?: boolean;
+
+    isRented?: boolean;
 
 }
 
