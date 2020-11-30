@@ -3,6 +3,7 @@ package ro.upet.parking.system.management.business.impl.parking.zone;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 import ro.upet.parking.system.management.model.parking.zone.ImtParkingZone;
 import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
@@ -37,10 +38,9 @@ public class ParkingZoneMapper {
 				.code(entity.getCode())
 				.createdAt(entity.getCreatedAt())
 				.id(entity.getId())
-				.parkingLevelCode(entity.getParkingLevel().getCode())
-				.parkingLevelId(entity.getParkingLevel().getId())
 				.updatedAt(entity.getUpdatedAt())
 				.letter(entity.getLetter())
+				.parkingSpots(ParkingSpotMapper.toParkingSpotList(entity.getParkingSpots()))
 				.build();
 	}
 	

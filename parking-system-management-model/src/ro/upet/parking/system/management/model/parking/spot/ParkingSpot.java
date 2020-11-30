@@ -40,15 +40,16 @@ public interface ParkingSpot {
 	 * @return number of the parking spot
 	 */
 	String getNumber();
-
-	/**
-	 * @return id for the parking zone
-	 */
-	Long getParkingZoneId();
 	
 	/**
-	 * @return parking zone's code
+	 * @return true if the spot is free, false otherwise
 	 */
-	String getParkingZoneCode();
+	Boolean isAvailable();
+	
+	/**
+	 * @return true if it can be rent through a membership, false otherwise
+	 */
+	Boolean isRentable();
+
 	
 }

@@ -2,16 +2,21 @@ package ro.upet.parking.system.management.data.api.parking.level;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
+import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 
 @Entity
+@Table(name = "parking_levels")
 public class ParkingLevelEntity implements Serializable {
 	
 	/**
@@ -52,6 +57,12 @@ public class ParkingLevelEntity implements Serializable {
 	 */
 	@ManyToOne(cascade= CascadeType.MERGE)
 	ParkingEntity parking;
+	
+	/**
+	 *  parking zones
+	 */
+	@OneToMany(cascade= CascadeType.MERGE)
+	List<ParkingZoneEntity> parkingZones;
 
 	public Long getId() {
 		return id;
@@ -99,6 +110,14 @@ public class ParkingLevelEntity implements Serializable {
 
 	public void setParking(ParkingEntity parking) {
 		this.parking = parking;
+	}
+
+	public List<ParkingZoneEntity> getParkingZones() {
+		return parkingZones;
+	}
+
+	public void setParkingZones(List<ParkingZoneEntity> parkingZones) {
+		this.parkingZones = parkingZones;
 	}
 
 	

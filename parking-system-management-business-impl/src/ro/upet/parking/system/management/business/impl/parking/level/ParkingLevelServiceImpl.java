@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.impl.parking.level;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -102,6 +103,16 @@ public class ParkingLevelServiceImpl implements ParkingLevelService{
 	public ParkingLevel removeParkingLevelByCode(final String parkingLevelCode) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ParkingLevel> getParkingLevelListByParking(final Long parkingId) {
+		return ParkingLevelMapper.toParkingLevelList(parkingLevelRepo.findAll().stream()
+																.filter(pl -> pl.getParking().getId().equals(parkingId))
+																.collect(Collectors.toList()));
 	}
 	
 	

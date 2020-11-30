@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.impl.parking.spot;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -22,9 +23,6 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	
 	@Inject
 	ParkingSpotRepository parkingSpotRepo;
-	
-	@Inject
-	ParkingZoneRepository parkingZoneRepo;
 	
 	/**
 	 * {@inheritDoc}
@@ -59,7 +57,6 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	@Override
 	public ParkingSpot addParkingSpot(final ParkingSpot parkingSpot) {
 		final ParkingSpotEntity entity = ParkingSpotMapper.toParkingSpotEntity(parkingSpot);
-		entity.setParkingZone(parkingZoneRepo.getOne(parkingSpot.getParkingZoneId()));
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
 		final ParkingSpotEntity savedEntity = parkingSpotRepo.save(entity);
@@ -73,7 +70,6 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	@Override
 	public ParkingSpot updateParkingSpot(final ParkingSpot parkingSpot) {
 		final ParkingSpotEntity entity = ParkingSpotMapper.toParkingSpotEntity(parkingSpot);
-		entity.setParkingZone(parkingZoneRepo.getOne(parkingSpot.getParkingZoneId()));
 		entity.setUpdatedAt(Instant.now());
 		final ParkingSpotEntity savedEntity = parkingSpotRepo.save(entity);
 		return ParkingSpotMapper.toParkingSpot(savedEntity);
@@ -102,6 +98,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
 	
 }

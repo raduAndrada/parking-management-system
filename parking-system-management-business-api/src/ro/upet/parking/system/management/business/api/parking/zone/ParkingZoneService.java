@@ -46,4 +46,6 @@ public interface ParkingZoneService {
 	 * @return the deleted entity
 	 */
 	public ParkingZone removeParkingZoneByCode(final String parkingZoneCode);
+	
+	
 }

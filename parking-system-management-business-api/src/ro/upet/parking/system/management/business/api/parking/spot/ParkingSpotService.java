@@ -46,4 +46,5 @@ public interface ParkingSpotService{
 	 * @return the deleted entity
 	 */
 	public ParkingSpot removeParkingSpotByCode(final String parkingSpotCode);
+	
 }

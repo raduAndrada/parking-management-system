@@ -2,16 +2,20 @@ package ro.upet.parking.system.management.data.api.parking.zone;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
+import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 
 @Entity
+@Table(name = "parking_zones")
 public class ParkingZoneEntity implements Serializable {
 	
 	/**
@@ -48,10 +52,10 @@ public class ParkingZoneEntity implements Serializable {
 	String letter;
 
 	/**
-	 *  the level
+	 *  the spots
 	 */
-	@ManyToOne(cascade= CascadeType.MERGE)
-	ParkingLevelEntity parkingLevel;
+	@OneToMany(cascade= CascadeType.MERGE)
+	List<ParkingSpotEntity> parkingSpots;
 
 	public Long getId() {
 		return id;
@@ -93,13 +97,14 @@ public class ParkingZoneEntity implements Serializable {
 		this.letter = letter;
 	}
 
-	public ParkingLevelEntity getParkingLevel() {
-		return parkingLevel;
+	public List<ParkingSpotEntity> getParkingSpots() {
+		return parkingSpots;
 	}
 
-	public void setParkingLevel(ParkingLevelEntity parkingLevel) {
-		this.parkingLevel = parkingLevel;
+	public void setParkingSpots(List<ParkingSpotEntity> parkingSpots) {
+		this.parkingSpots = parkingSpots;
 	}
+
 
 	
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ro.upet.parking.system.management.business.api.parking.level.ParkingLevelService;
 import ro.upet.parking.system.management.model.parking.level.ParkingLevel;
+import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 
 /**
  * @author Andrada
@@ -66,6 +67,20 @@ public class ParkingLevelRest {
 	@GetMapping
 	public ResponseEntity<List<ParkingLevel>> getParkingLevels() {
 		final List<ParkingLevel> parkingLevelList= parkingLevelService.getParkingLevelList();
+		if (parkingLevelList == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(parkingLevelList);
+		}
+	}
+	
+	/**
+	 * @param parkingId the id of the parking 
+	 * @return the list of all the levels for the parking 
+	 */
+	@GetMapping("/parking/{parkingId}")
+	public ResponseEntity<List<ParkingLevel>> getParkingZonesByParking(@PathVariable final Long parkingId) {
+		final List<ParkingLevel> parkingLevelList= parkingLevelService.getParkingLevelListByParking(parkingId);
 		if (parkingLevelList == null) {
 			return ResponseEntity.notFound().build();
 		} else {

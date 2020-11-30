@@ -8,11 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.PaymentStatus;
 
 @Entity
+@Table(name = "payment_options")
 public class PaymentOptionsEntity implements Serializable {
 	
 	/**

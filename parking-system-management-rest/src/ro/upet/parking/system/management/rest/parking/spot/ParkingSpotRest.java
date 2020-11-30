@@ -73,6 +73,7 @@ public class ParkingSpotRest {
 		}
 	}
 
+
 	/**
 	 * 
 	 * @param parkingSpot the parkingSpot to be added

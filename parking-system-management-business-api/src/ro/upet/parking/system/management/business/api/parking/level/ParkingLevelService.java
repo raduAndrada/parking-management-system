@@ -46,4 +46,10 @@ public interface ParkingLevelService {
 	 * @return the deleted entity
 	 */
 	public ParkingLevel removeParkingLevelByCode(final String parkingLevelCode);
+	
+	/**
+	 * @param parkingId the parking
+	 * @return the list of all the levels of the parking
+	 */
+	public List<ParkingLevel> getParkingLevelListByParking(final Long parkingId);
 }

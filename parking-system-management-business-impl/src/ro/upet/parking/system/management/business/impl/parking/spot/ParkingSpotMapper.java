@@ -25,6 +25,8 @@ public class ParkingSpotMapper {
 		entity.setCreatedAt(parkingSpot.getCreatedAt());
 		entity.setUpdatedAt(parkingSpot.getUpdatedAt());
 		entity.setNumber(parkingSpot.getNumber());
+		entity.setAvailable(parkingSpot.isAvailable());
+		entity.setRentable(parkingSpot.isRentable());
 		return entity;
 	}
 	
@@ -37,10 +39,10 @@ public class ParkingSpotMapper {
 				.code(entity.getCode())
 				.createdAt(entity.getCreatedAt())
 				.id(entity.getId())
-				.parkingZoneCode(entity.getParkingZone().getCode())
-				.parkingZoneId(entity.getParkingZone().getId())
 				.updatedAt(entity.getUpdatedAt())
 				.number(entity.getNumber())
+				.isRentable(entity.getRentable())
+				.isAvailable(entity.getRentable())
 				.build();
 	}
 	

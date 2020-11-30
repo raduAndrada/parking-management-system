@@ -1,11 +1,14 @@
 package ro.upet.parking.system.management.model.parking.zone;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 
 /**
  * @author Andrada
@@ -41,14 +44,10 @@ public interface ParkingZone {
 	 */
 	String getLetter();
 
+
 	/**
-	 * @return the id for the level
+	 * @return list of all the parking spots
 	 */
-	Long getParkingLevelId();
-	
-	/**
-	 * @return code of the level
-	 */
-	String getParkingLevelCode();
+	List<ParkingSpot> getParkingSpots();
 	
 }

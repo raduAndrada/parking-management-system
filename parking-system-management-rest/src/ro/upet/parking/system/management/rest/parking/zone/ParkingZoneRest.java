@@ -72,6 +72,7 @@ public class ParkingZoneRest {
 			return ResponseEntity.ok(parkingZoneList);
 		}
 	}
+	
 
 	/**
 	 * 

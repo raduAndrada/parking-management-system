@@ -8,10 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 
 @Entity
+@Table(name = "parking_spots")
 public class ParkingSpotEntity implements Serializable {
 	
 	/**
@@ -46,12 +50,19 @@ public class ParkingSpotEntity implements Serializable {
 	 *  number of the parking spot
 	 */
 	String number;
-
+	
 	/**
-	 *  the parking zone
+	 * true if the spot is free, false otherwise
 	 */
-	@ManyToOne(cascade= CascadeType.MERGE)
-	ParkingZoneEntity parkingZone;
+	@ColumnDefault("true")
+	Boolean available;
+	
+	/**
+	 * true if it can be rent through a membership, false otherwise
+	 */
+	@ColumnDefault("false")
+	Boolean rentable;
+
 
 	public Long getId() {
 		return id;
@@ -93,13 +104,24 @@ public class ParkingSpotEntity implements Serializable {
 		this.number = number;
 	}
 
-	public ParkingZoneEntity getParkingZone() {
-		return parkingZone;
+
+	public Boolean getAvailable() {
+		return available;
 	}
 
-	public void setParkingZone(ParkingZoneEntity parkingZone) {
-		this.parkingZone = parkingZone;
+	public void setAvailable(Boolean available) {
+		this.available = available;
 	}
+
+	public Boolean getRentable() {
+		return rentable;
+	}
+
+	public void setRentable(Boolean rentable) {
+		this.rentable = rentable;
+	}
+	
+	
 	
 
 	

@@ -4,8 +4,11 @@ import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
 
 import ro.upet.parking.system.management.business.api.parking.ParkingService;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
@@ -117,6 +120,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public ParkingCreate configureParking(final ParkingCreate parkingCreate) {
 		final ParkingEntity parking = ParkingMapper.toParkingEntity(addParking(parkingCreate.getParking()));
 		final Instant now = Instant.now();
@@ -126,25 +130,29 @@ public class ParkingServiceImpl implements ParkingService{
 		        ple.setUpdatedAt(now);
 		        ple.setNumber("" + level);
 		        ple.setParking(parking);
-		        final ParkingLevelEntity savedPle = parkingLevelRepo.save(ple);
+		        
+		        final List<ParkingZoneEntity> parkingZones = Lists.newArrayList();
 			for(char zone = parkingCreate.getParkingZoneStartingLetter(); zone <= parkingCreate.getParkingZoneEndingLetter(); zone++ )
 		    {
 				final ParkingZoneEntity pze = new ParkingZoneEntity();
 				pze.setLetter("" + zone);
 				pze.setCreatedAt(now);
 				pze.setUpdatedAt(now);
-				pze.setParkingLevel(savedPle);
-				final ParkingZoneEntity savedPze = parkingZoneRepo.save(pze);
-				
+				final List<ParkingSpotEntity> parkingSpots = Lists.newArrayList();
 				for (int spot= 0; spot < parkingCreate.getParkingZoneSpotNumber(); spot++) {
 					final ParkingSpotEntity pse = new ParkingSpotEntity();
 					pse.setNumber("" + zone + spot);
 					pse.setCreatedAt(now);
 					pse.setUpdatedAt(now);
-					pse.setParkingZone(savedPze);
 					final ParkingSpotEntity savedPse = parkingSpotRepo.save(pse);
+					parkingSpots.add(savedPse);
 				}
+				pze.setParkingSpots(parkingSpots);
+				final ParkingZoneEntity savedPze = parkingZoneRepo.save(pze);
+				parkingZones.add(savedPze);
 		    }
+			ple.setParkingZones(parkingZones);
+			final ParkingLevelEntity savedPle = parkingLevelRepo.save(ple);
 		}
 		
 		return parkingCreate;

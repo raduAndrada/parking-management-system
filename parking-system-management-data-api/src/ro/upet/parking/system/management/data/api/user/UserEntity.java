@@ -7,10 +7,12 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import ro.upet.parking.system.management.model.base.UserType;
 
 @Entity
+@Table(name = "users")
 public class UserEntity implements Serializable {
 	
 	/**
