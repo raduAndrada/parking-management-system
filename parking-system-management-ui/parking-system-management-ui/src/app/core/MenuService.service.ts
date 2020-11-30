@@ -7,7 +7,7 @@ const socialLinks = [
 
 const menuLinks = [
     {key: "Home", value: "/home", iconClass: ['fas', 'home']},
-    {key: "Customers" , value: "/customers", iconClass: ['fas', 'users']},
+    {key: "Customers" , value: "/users", iconClass: ['fas', 'users']},
     {key: "Parkings" , value: "/parkings", iconClass: ['fas', 'parking']},
 ];
 

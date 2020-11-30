@@ -5,7 +5,10 @@
     <span><b>{{parkingSpot.number}}</b></span>
 </div>
 <div>
-    <button (click)="rentParkingSpot()" class="btn btn-sm btn-link" [disabled]="parkingSpot.isRented" title="allow a parking spot to be rented"> Allow <fa-icon [icon]="['fas','money-bill-wave']"></fa-icon></button>
+    <button (click)="rentParkingSpot()" class="btn btn-sm btn-link" [disabled]="parkingSpot.isRented" title="allow a parking spot to be rented"> 
+                        <span> 
+                        {{!parkingSpot.isRentable? 'Enable': 'Disable'}} </span> 
+                        <fa-icon [icon]="['fas','money-bill-wave']"></fa-icon></button>
 </div>
 
  

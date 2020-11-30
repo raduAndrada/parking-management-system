@@ -1,0 +1,25 @@
+<div class="col-md-12 col-lg-12 col-sm-12">
+    <button class="btn btn-success float-right border" (click)="addMembership()">
+        <fa-icon [icon]="['fas', 'plus']"></fa-icon> <span>New</span>
+    </button>
+    <table mdbTable>
+        <thead class="black white-text">
+        <tr>
+            <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr mdbTableCol *ngFor="let membership of membershipList">
+            <th scope="row">{{membership.id}}</th>
+            <td >{{membership.code}}</td>
+            <td >{{membership.parkingSpot.number}}</td>
+            <td >{{membership.membershipType}}</td>
+            <td>
+                <a class="btn btn-link pull-left" (click)="cancel(membership.id)">
+                    <span> Cancel </span>
+                </a>  
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

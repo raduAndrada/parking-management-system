@@ -1,0 +1,34 @@
+<div class="col-md-12 col-sm-12 col-lg-12"> 
+    <div class="form-group float-label-control">
+        <label for="parking">Membership Type</label> 
+           <select  [(ngModel)]="selectedType" name="type" class="form-control" >
+            <option *ngFor="let type of types" [value]="type">
+                {{type}}
+            </option>
+            </select>
+    </div>
+
+    <div class="form-group float-label-control">
+        <label for="parking">Parking</label> 
+        <select  [(ngModel)]="selectedParking" name="parking" (change)="onParkingChange()" class="form-control">
+          <option *ngFor="let parking of parkings" [value]="parking.id">
+            {{parking.name}}
+          </option>
+        </select>
+
+    </div>
+
+    <div class="form-group float-label-control">
+        <label for="parkingLevel">Parking Level</label> 
+        <select  [(ngModel)]="selectedParkingLevel" name="parkingLevel" class="form-control">
+          <option *ngFor="let parkingLevel of parkingLevels" [value]="parkingLevel.id">
+            {{parkingLevel.number}}
+          </option>
+        </select>
+    </div>
+
+    <button id="save-btn" class="btn btn-success btn-md" (click)="addMembership() ">
+        <fa-icon [icon]="['fas', 'save']"></fa-icon> <span>Save</span>
+      </button>
+  </div>
+

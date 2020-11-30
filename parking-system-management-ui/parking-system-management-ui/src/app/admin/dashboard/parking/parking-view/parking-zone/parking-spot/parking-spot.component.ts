@@ -29,6 +29,9 @@ export class ParkingSpotComponent implements OnInit {
 
   rentParkingSpot() {
     this.parkingSpot.isRentable = !this.parkingSpot.isRentable;
+    this.parkingSpotService
+                        .update(this.parkingSpot, '/v1/parkingSpots')
+                        .subscribe(updated => this.parkingSpot = updated);
   }
 
 }

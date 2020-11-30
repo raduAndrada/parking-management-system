@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { MDBBootstrapModule } from "angular-bootstrap-md";
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +27,9 @@ import { ParkingViewComponent } from './admin/dashboard/parking/parking-view/par
 import { ParkingZoneComponent } from './admin/dashboard/parking/parking-view/parking-zone/parking-zone.component';
 import { ParkingSpotComponent } from './admin/dashboard/parking/parking-view/parking-zone/parking-spot/parking-spot.component';
 import { ParkingLevelComponent } from './admin/dashboard/parking/parking-view/parking-level/parking-level.component';
+import { UserViewComponent } from './admin/dashboard/user/user-view/user-view.component';
+import { MembershipListComponent } from './admin/dashboard/user/user-view/membership-list/membership-list.component';
+import { MembershipCreateComponent } from './admin/dashboard/user/user-view/membership-create/membership-create.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +46,10 @@ import { ParkingLevelComponent } from './admin/dashboard/parking/parking-view/pa
     ParkingViewComponent,
     ParkingZoneComponent,
     ParkingSpotComponent,
-    ParkingLevelComponent
+    ParkingLevelComponent,
+    UserViewComponent,
+    MembershipListComponent,
+    MembershipCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +60,10 @@ import { ParkingLevelComponent } from './admin/dashboard/parking/parking-view/pa
     AppRoutingModule,
     FontAwesomeModule,
     MatTabsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

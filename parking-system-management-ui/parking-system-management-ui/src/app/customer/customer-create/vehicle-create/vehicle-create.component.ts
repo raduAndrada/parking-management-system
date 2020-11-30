@@ -26,7 +26,7 @@ export class VehicleCreateComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private vehickeService: RestService<Vehicle>,
+    private vehicleService: RestService<Vehicle>,
     private router: Router,
     private library: FaIconLibrary
   ) {
@@ -37,7 +37,7 @@ export class VehicleCreateComponent implements OnInit {
 
   create() {
     this.toAdd.user = this.user;
-    const added = this.vehickeService
+    const added = this.vehicleService
       .create(this.toAdd, '/v1/vehicles')
       .subscribe((added) => {
         console.log(added);
