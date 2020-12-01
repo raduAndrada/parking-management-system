@@ -8,7 +8,6 @@ import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css'],
   providers: [RestService]
 })
 export class UserListComponent implements OnInit {

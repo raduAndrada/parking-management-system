@@ -9,14 +9,16 @@ import { ParkingViewComponent } from './admin/dashboard/parking/parking-view/par
 import { UserListComponent } from './admin/dashboard/user/user-list/user-list.component';
 import { UserViewComponent } from './admin/dashboard/user/user-view/user-view.component';
 import { MembershipCreateComponent } from './admin/dashboard/user/user-view/membership-create/membership-create.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
     { path: "customers/create", component: CustomerCreateComponent, pathMatch: "full"},
+    { path: "login", component: LoginComponent, pathMatch: "full"},
     { path: "parkings/create", component: ParkingCreateComponent, pathMatch: "full"},
     { path: "parkings/:id", component: ParkingViewComponent, pathMatch: "full"},
     { path: "parkings", component: ParkingListComponent, pathMatch: "full"},
     { path: "users", component: UserListComponent, pathMatch: "full"},
-     { path: "users/:id/membership-create", component: MembershipCreateComponent, pathMatch: "full"},
+    { path: "users/:id/membership-create", component: MembershipCreateComponent, pathMatch: "full"},
     { path: "users/:id", component: UserViewComponent, pathMatch: "full"},
     { path: "" , redirectTo: "/customers", pathMatch: "full"},
   ];

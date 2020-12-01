@@ -8,7 +8,6 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 @Component({
   selector: 'app-parking-create',
   templateUrl: './parking-create.component.html',
-  styleUrls: ['./parking-create.component.css'],
   providers: [RestService]
 })
 export class ParkingCreateComponent implements OnInit {

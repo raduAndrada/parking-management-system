@@ -21,7 +21,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="Street: X, nb: 12, Cluj-Napoca, Cluj, Romania"
+        placeholder="Cluj-Napoca, Cluj"
         title="Location"
         [(ngModel)]="toAdd.parking.location"
         name="location"
@@ -32,7 +32,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="05:00"
+        placeholder="hh:mm"
         title="opening hour"
         [(ngModel)]="toAdd.parking.opensAt"
         name="openingHour"
@@ -43,7 +43,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="12:00"
+        placeholder="hh:mm"
         title="closing hour"
         [(ngModel)]="toAdd.parking.closesAt"
         name="closingHour"
@@ -57,6 +57,7 @@
           title="number of levels"
           [(ngModel)]="toAdd.numberOfLevels"
           name="numberOfLevels"
+          min="1"
         />
       </div>
       <div class="form-group float-label-control">
@@ -92,6 +93,7 @@
           title="number of spots per zone"
           [(ngModel)]="toAdd.parkingZoneSpotNumber"
           name="parkingZoneSpotNumber"
+          min="1"
         />
       </div>
     </div>

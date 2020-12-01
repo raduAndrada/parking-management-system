@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from 'src/app/core/RestService.service';
-import { Parking, ParkingLevel } from 'src/app/core/models';
+import { ParkingLevel } from 'src/app/core/models';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'parking-view',
   templateUrl: './parking-view.component.html',
-  styleUrls: ['./parking-view.component.css'],
   providers: [RestService]
 })
 export class ParkingViewComponent implements OnInit {

@@ -8,7 +8,6 @@ import { faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'parking-list',
   templateUrl: './parking-list.component.html',
-  styleUrls: ['./parking-list.component.css'],
   providers: [RestService]
 })
 export class ParkingListComponent implements OnInit {

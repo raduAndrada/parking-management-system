@@ -1,8 +1,8 @@
 <div class="col-md-12 col-lg-12 col-sm-12">
     <div  class="text-center row">
         <a class="btn btn-link btn-lg">Parkings</a> 
-      </div>
-      <hr/>
+    </div>
+    <hr/>
     <button class="btn btn-success float-right border" (click)="addParking()">
         <fa-icon [icon]="['fas', 'plus']"></fa-icon> <span>New</span>
     </button>
@@ -20,7 +20,7 @@
             <td >{{parking.name}}</td>
             <td >{{parking.location}}</td>
             <td>
-                <a class="btn btn-link pull-left" (click)="viewParking(parking.id)">
+                <a class="btn btn-link float-left" (click)="viewParking(parking.id)">
                     <span> Expand</span>
                 </a>  
             </td>

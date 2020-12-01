@@ -8,7 +8,6 @@ import {faSave} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'vehicle-create',
   templateUrl: './vehicle-create.component.html',
-  styleUrls: ['./vehicle-create.component.css'],
   providers: [RestService]
 })
 export class VehicleCreateComponent implements OnInit {

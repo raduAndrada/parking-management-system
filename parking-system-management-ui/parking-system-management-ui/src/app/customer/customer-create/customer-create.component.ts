@@ -7,7 +7,6 @@ import {  faArrowRight } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-customer-create',
   templateUrl: './customer-create.component.html',
-  styleUrls: ['./customer-create.component.css']
 })
 export class CustomerCreateComponent implements OnInit {
   toAdd: User = {

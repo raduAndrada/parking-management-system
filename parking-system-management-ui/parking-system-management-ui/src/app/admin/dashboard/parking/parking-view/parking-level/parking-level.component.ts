@@ -3,8 +3,7 @@ import { ParkingLevel } from 'src/app/core/models';
 
 @Component({
   selector: 'parking-level',
-  templateUrl: './parking-level.component.html',
-  styleUrls: ['./parking-level.component.css']
+  templateUrl: './parking-level.component.html'
 })
 export class ParkingLevelComponent implements OnInit {
 

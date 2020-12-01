@@ -3,8 +3,8 @@
       <a class="btn btn-link btn-lg" (click)="back()">Parkings</a> 
     </div>
     <hr/>
-      <h1>{{parkingName}}  Parking</h1>
-      <br />
+    <h1>{{parkingName}}  Parking</h1>
+    <br />
     <div *ngFor="let parkingLevel of parkingLevels" > 
         <parking-level [parkingLevel]="parkingLevel" ></parking-level>
         <br/>

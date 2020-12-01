@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { RestService } from 'src/app/core/RestService.service';
-import { Parking, ParkingLevel, Membership, MembershipType, User, MembershipCreate } from 'src/app/core/models';
+import { Parking, ParkingLevel, MembershipCreate } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faSave, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -9,7 +9,6 @@ import { ConfirmationModalComponent } from 'src/app/core/confirmation-modal/conf
 @Component({
   selector: 'membership-create',
   templateUrl: './membership-create.component.html',
-  styleUrls: ['./membership-create.component.css'],
   providers: [RestService]
 })
 export class MembershipCreateComponent implements OnInit {

@@ -12,7 +12,6 @@ export class RestService<T> {
 
   getList(url: String): Observable<T[]> {
     return this.http.get<T[]>(this.baseUrl + url).pipe(
-      tap((_) => console.log(_)),
       catchError(this.handleError<T[]>('getList'))
     );
   }
@@ -20,7 +19,6 @@ export class RestService<T> {
   getById(id: number, url: String): Observable<T> {
     const urlTemp = this.baseUrl + url + '/id/' + id;
     return this.http.get<T>(urlTemp).pipe(
-      tap((_) => console.log(_)),
       catchError(this.handleError<T>('getById'))
     );
   }
@@ -28,7 +26,6 @@ export class RestService<T> {
   update(updateDetails: T, url: String): Observable<T> {
     const urlTemp = this.baseUrl + url;
     return this.http.put<T>(urlTemp, updateDetails).pipe(
-      tap((_) => console.log(_)),
       catchError(this.handleError<T>('update'))
     );
   }
@@ -36,7 +33,6 @@ export class RestService<T> {
   create(toAdd: T, url: String): Observable<T> {
     const urlTemp = this.baseUrl + url;
     return this.http.post<T>(urlTemp, toAdd).pipe(
-      tap((_) => console.log(_)),
       catchError(this.handleError<T>('create'))
     );
   }
@@ -44,7 +40,6 @@ export class RestService<T> {
   delete(deleteId: number, url: String): Observable<T> {
     const urlTemp = this.baseUrl + url + '/' + deleteId;
     return this.http.delete<T>(urlTemp).pipe(
-      tap((_) => console.log(_)),
       catchError(this.handleError<T>('create'))
     );
   }

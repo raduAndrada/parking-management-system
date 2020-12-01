@@ -2,8 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'generic-list',
-  templateUrl: './generic-list.component.html',
-  styleUrls: ['./generic-list.component.css']
+  templateUrl: './generic-list.component.html'
 })
 export class GenericListComponent implements OnInit {
 

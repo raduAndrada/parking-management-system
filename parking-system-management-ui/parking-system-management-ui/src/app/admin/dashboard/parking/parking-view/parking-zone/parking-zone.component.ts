@@ -3,8 +3,7 @@ import { ParkingZone } from 'src/app/core/models';
 
 @Component({
   selector: 'parking-zone',
-  templateUrl: './parking-zone.component.html',
-  styleUrls: ['./parking-zone.component.css']
+  templateUrl: './parking-zone.component.html'
 })
 export class ParkingZoneComponent implements OnInit {
 
