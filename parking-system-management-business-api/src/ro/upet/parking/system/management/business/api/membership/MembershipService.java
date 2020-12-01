@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.api.membership;
 
 import java.util.List;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.model.membership.Membership;
 import ro.upet.parking.system.management.model.membership.MembershipCreate;
 
@@ -15,7 +16,7 @@ public interface MembershipService{
 	 * @param membershipId the id of the membership searched
 	 * @return the requested membership
 	 */
-	public Membership getMembershipById(final Long membershipId);
+	public Membership getMembershipById(final Long membershipId) ;
 	
 	/**
 	 * @param membershipCode the code of the membership searched 
@@ -43,9 +44,9 @@ public interface MembershipService{
 	/**
 	 * @param membershipId the id of the entity that will be deleted
 	 * @return the deleted entity
-	 * @throws Exception if the membership doesn't exist
+	 * @throws BusinessException if the membership doesn't exist
 	 */
-	public Membership removeMembershipById(final Long membershipId) throws Exception;
+	public Membership removeMembershipById(final Long membershipId) throws BusinessException;
 	
 	/**
 	 * @param membershipCode the code of the entity that will be deleted

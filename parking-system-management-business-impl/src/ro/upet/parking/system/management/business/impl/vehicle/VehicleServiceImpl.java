@@ -7,9 +7,10 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
+import ro.upet.parking.system.management.business.api.vehicle.VehicleValidator;
 import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
-import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
 import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
@@ -21,11 +22,11 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 public class VehicleServiceImpl implements VehicleService {
 
 	@Inject
-	VehicleRepository vehicleRepo;
+	private VehicleRepository vehicleRepo;
 
-
+	
 	@Inject
-	ParkingSpotRepository parkingSpotRepo;
+	private  VehicleValidator vehicleValidator;
 
 	/**
 	 * {@inheritDoc}
@@ -56,12 +57,15 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle addVehicle(final Vehicle vehicle) {
+	public Vehicle addVehicle(final Vehicle vehicle) throws BusinessException {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
-		final VehicleEntity savedEntity = vehicleRepo.save(entity);
-		return VehicleMapper.toVehicle(savedEntity);
+		if (vehicleValidator.validate(vehicle)) {
+			final VehicleEntity savedEntity = vehicleRepo.save(entity);
+			return VehicleMapper.toVehicle(savedEntity);
+		} 
+		throw new BusinessException("The licence plate for this vehicle is invalid");
 	}
 
 	/**
@@ -79,10 +83,10 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle removeVehicleById(final Long vehicleId) throws Exception {
+	public Vehicle removeVehicleById(final Long vehicleId) throws BusinessException {
 		final VehicleEntity entity = vehicleRepo.getOne(vehicleId);
 		if (entity == null) {
-			throw new Exception();
+			throw new BusinessException("The vehicle does not exist");
 		}
 		vehicleRepo.deleteById(vehicleId);
 		return VehicleMapper.toVehicle(entity);

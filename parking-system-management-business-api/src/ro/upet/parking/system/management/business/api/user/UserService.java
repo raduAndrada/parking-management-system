@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.api.user;
 
 import java.util.List;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.model.user.User;
 
 public interface UserService {	
@@ -25,8 +26,9 @@ public interface UserService {
 	/**
 	 * @param user the entity to be added
 	 * @return the added entity
+	 * @throws BusinessException if the username or email is taken
 	 */
-	public User addUser(final User user);
+	public User addUser(final User user) throws BusinessException;
 	
 	/**
 	 * @param user the updated user
@@ -37,9 +39,9 @@ public interface UserService {
 	/**
 	 * @param userId the id of the entity that will be deleted
 	 * @return the deleted entity
-	 * @throws Exception 
+	 * @throws BusinessException if the user does not exist
 	 */
-	public User removeUserById(final Long userId) throws Exception;
+	public User removeUserById(final Long userId) throws BusinessException;
 	
 	/**
 	 * @param userCode the code of the entity that will be deleted

@@ -1,7 +1,6 @@
 package ro.upet.parking.system.management.model.user;
 
 import java.time.Instant;
-import java.time.LocalDate;
 
 import org.immutables.value.Value;
 

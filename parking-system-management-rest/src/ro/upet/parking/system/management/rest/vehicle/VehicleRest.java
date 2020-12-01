@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.rest.vehicle;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -28,6 +29,8 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 @CrossOrigin(maxAge = 3600)
 public class VehicleRest {
 
+	private static final Logger LOGGER  = Logger.getLogger(VehicleRest.class.getName());
+	
 	@Inject
 	private VehicleService vehicleService;
 	
@@ -37,8 +40,10 @@ public class VehicleRest {
 	 */
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<Vehicle> getVehicle(@PathVariable final String code) {
+		LOGGER.info(String.format("REST request to GET vehicle by code: %s", code));
 		final Vehicle vehicle = vehicleService.getVehicleByCode(code);
 		if (vehicle == null) {
+			LOGGER.info(String.format("Vehicle with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(vehicle);
@@ -51,8 +56,10 @@ public class VehicleRest {
 	 */
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<Vehicle> getVehicle(@PathVariable final Long id) {
+		LOGGER.info(String.format("REST request to GET vehicle by id: %s", id));
 		final Vehicle vehicle = vehicleService.getVehicleById(id);
 		if (vehicle == null) {
+			LOGGER.info(String.format("Vehicle with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(vehicle);
@@ -65,8 +72,10 @@ public class VehicleRest {
 	 */
 	@GetMapping
 	public ResponseEntity<List<Vehicle>> getVehicles() {
+		LOGGER.info(String.format("REST request to GET all vehicles"));
 		final List<Vehicle> vehicleList= vehicleService.getVehicleList();
 		if (vehicleList == null) {
+			LOGGER.info(String.format("No vehicles found"));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(vehicleList);
@@ -81,10 +90,12 @@ public class VehicleRest {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<Vehicle> postVehicle(@RequestBody final Vehicle vehicle) {
+		LOGGER.info(String.format("REST request to POST vehicle : %s", vehicle.toString()));
 		final Vehicle createdVehicle;
 		try {
 			createdVehicle = vehicleService.addVehicle(vehicle);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong creating the vehicle : %s", vehicle.toString()));
 			return null;
 		}
 		return ResponseEntity.ok(createdVehicle);
@@ -99,10 +110,12 @@ public class VehicleRest {
 	@PutMapping
 	@Transactional
 	public ResponseEntity<Vehicle> putVehicle(@RequestBody final Vehicle vehicle) {
+		LOGGER.info(String.format("REST request to PUT vehicle : %s", vehicle.toString()));
 		final Vehicle updatedVehicle;
 		try {
 			updatedVehicle = vehicleService.updateVehicle(vehicle);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong updating the vehicle: %s", vehicle.toString()));
 			return null;
 		}
 		return ResponseEntity.ok(updatedVehicle);
@@ -117,10 +130,12 @@ public class VehicleRest {
 	@DeleteMapping(path = "/id/{id}")
 	@Transactional
 	public ResponseEntity<Vehicle> deleteVehicle(@PathVariable final Long id) {
+		LOGGER.info(String.format("REST request to DELETE vehicle with id : %s", id));
 		final Vehicle deletedVehicle;
 		try {
 			deletedVehicle = vehicleService.removeVehicleById(id);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong deleting the vehicle with the id: %s", id));
 			return null;
 		}
 		return ResponseEntity.ok(deletedVehicle);
@@ -134,10 +149,12 @@ public class VehicleRest {
 	@DeleteMapping(path = "/code/{code}")
 	@Transactional
 	public ResponseEntity<Vehicle> deleteVehicle(@PathVariable final String code) {
+		LOGGER.info(String.format("REST request to DELETE vehicle with code : %s", code));
 		final Vehicle deletedVehicle;
 		try {
 			deletedVehicle = vehicleService.removeVehicleByCode(code);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong deleting the vehicle with the code: %s", code));
 			return null;
 		}
 		return ResponseEntity.ok(deletedVehicle);

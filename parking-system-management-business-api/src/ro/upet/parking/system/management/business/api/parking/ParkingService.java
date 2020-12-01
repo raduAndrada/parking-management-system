@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.api.parking;
 
 import java.util.List;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.model.parking.Parking;
 import ro.upet.parking.system.management.model.parking.ParkingCreate;
 
@@ -38,9 +39,9 @@ public interface ParkingService{
 	/**
 	 * @param parkingId the id of the entity that will be deleted
 	 * @return the deleted entity
-	 * @throws Exception 
+	 * @throws BusinessException if the parking doesn't exist
 	 */
-	public Parking removeParkingById(final Long parkingId) throws Exception;
+	public Parking removeParkingById(final Long parkingId) throws BusinessException;
 	
 	/**
 	 * @param parkingCode the code of the entity that will be deleted

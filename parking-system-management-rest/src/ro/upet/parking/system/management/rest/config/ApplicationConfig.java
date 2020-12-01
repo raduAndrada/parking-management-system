@@ -11,7 +11,9 @@ import ro.upet.parking.system.management.business.api.parking.zone.ParkingZoneSe
 import ro.upet.parking.system.management.business.api.payment.options.PaymentOptionsService;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
 import ro.upet.parking.system.management.business.api.user.UserService;
+import ro.upet.parking.system.management.business.api.user.UserValidator;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
+import ro.upet.parking.system.management.business.api.vehicle.VehicleValidator;
 import ro.upet.parking.system.management.business.impl.membership.MembershipServiceImpl;
 import ro.upet.parking.system.management.business.impl.parking.ParkingServiceImpl;
 import ro.upet.parking.system.management.business.impl.parking.level.ParkingLevelServiceImpl;
@@ -20,7 +22,9 @@ import ro.upet.parking.system.management.business.impl.parking.zone.ParkingZoneS
 import ro.upet.parking.system.management.business.impl.payment.options.PaymentOptionsServiceImpl;
 import ro.upet.parking.system.management.business.impl.reservation.ReservationServiceImpl;
 import ro.upet.parking.system.management.business.impl.user.UserServiceImpl;
+import ro.upet.parking.system.management.business.impl.user.UserValidatorImpl;
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleServiceImpl;
+import ro.upet.parking.system.management.business.impl.vehicle.VehicleValidatorImpl;
 
 @Configuration
 public class ApplicationConfig {
@@ -67,6 +71,16 @@ public class ApplicationConfig {
 	@Bean
 	public VehicleService vehicleService() {
 		return new VehicleServiceImpl();
+	}
+
+	@Bean
+	public VehicleValidator vehicleValidator() {
+		return new VehicleValidatorImpl();
+	}
+	
+	@Bean
+	public UserValidator userValidator() {
+		return new UserValidatorImpl();
 	}
 
 

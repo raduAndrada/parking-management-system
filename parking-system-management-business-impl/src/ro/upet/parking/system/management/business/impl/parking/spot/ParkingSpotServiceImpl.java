@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.parking.spot.ParkingSpotService;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
@@ -78,10 +79,10 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ParkingSpot removeParkingSpotById(final Long parkingSpotId) throws Exception {
+	public ParkingSpot removeParkingSpotById(final Long parkingSpotId) throws BusinessException {
 		final ParkingSpotEntity entity = parkingSpotRepo.getOne(parkingSpotId);
 		if (entity == null ) {
-			throw new Exception();
+			throw new BusinessException("Parking spot does not exist");
 		}
 		parkingSpotRepo.deleteById(parkingSpotId);
 		return ParkingSpotMapper.toParkingSpot(entity);

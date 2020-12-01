@@ -21,7 +21,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="01/01/2001"
+        placeholder="2001-01-01"
         title="Birthday"
         [(ngModel)]="toAdd.birthday"
         name="birthday"
@@ -57,6 +57,17 @@
           title="email"
           [(ngModel)]="toAdd.email"
           name="email"
+        />
+      </div>
+      <div class="form-group float-label-control">
+        <label><span>Phone number*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="07XXXXXXXXX"
+          title="phoneNumber"
+          [(ngModel)]="toAdd.phoneNumber"
+          name="phoneNumber"
         />
       </div>
       <div class="form-group float-label-control">

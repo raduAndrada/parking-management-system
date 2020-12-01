@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.rest.user;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -27,6 +28,8 @@ import ro.upet.parking.system.management.model.user.User;
 @RequestMapping(value = "/v1/users")
 @CrossOrigin(maxAge = 3600)
 public class UserRest {
+	
+	private static final Logger LOGGER  = Logger.getLogger(UserRest.class.getName());
 
 	@Inject
 	private UserService userService;
@@ -37,8 +40,10 @@ public class UserRest {
 	 */
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<User> getUser(@PathVariable final String code) {
+		LOGGER.info(String.format("REST request to GET user by code: %s", code));
 		final User user = userService.getUserByCode(code);
 		if (user == null) {
+			LOGGER.info(String.format("User with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(user);
@@ -51,8 +56,10 @@ public class UserRest {
 	 */
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<User> getUser(@PathVariable final Long id) {
+		LOGGER.info(String.format("REST request to GET user by id: %s", id));
 		final User user = userService.getUserById(id);
 		if (user == null) {
+			LOGGER.info(String.format("User with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(user);
@@ -65,8 +72,10 @@ public class UserRest {
 	 */
 	@GetMapping
 	public ResponseEntity<List<User>> getUsers() {
+		LOGGER.info(String.format("REST request to GET all users"));
 		final List<User> userList= userService.getUserList();
 		if (userList == null) {
+			LOGGER.info(String.format("No users found"));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(userList);
@@ -81,10 +90,12 @@ public class UserRest {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<User> postUser(@RequestBody final User user) {
+		LOGGER.info(String.format("REST request to POST user : %s", user));
 		final User createdUser;
 		try {
 			createdUser = userService.addUser(user);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong creating the user : %s", user));
 			return null;
 		}
 		return ResponseEntity.ok(createdUser);
@@ -99,10 +110,12 @@ public class UserRest {
 	@PutMapping
 	@Transactional
 	public ResponseEntity<User> putUser(@RequestBody final User user) {
+		LOGGER.info(String.format("REST request to PUT user : %s", user));
 		final User updatedUser;
 		try {
 			updatedUser = userService.updateUser(user);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong updating the user: %s", user));
 			return null;
 		}
 		return ResponseEntity.ok(updatedUser);
@@ -117,10 +130,12 @@ public class UserRest {
 	@DeleteMapping(path = "/id/{id}")
 	@Transactional
 	public ResponseEntity<User> deleteUser(@PathVariable final Long id) {
+		LOGGER.info(String.format("REST request to DELETE user with id : %s", id));
 		final User deletedUser;
 		try {
 			deletedUser = userService.removeUserById(id);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong deleting the user with the id: %s", id));
 			return null;
 		}
 		return ResponseEntity.ok(deletedUser);
@@ -134,10 +149,12 @@ public class UserRest {
 	@DeleteMapping(path = "/code/{code}")
 	@Transactional
 	public ResponseEntity<User> deleteUser(@PathVariable final String code) {
+		LOGGER.info(String.format("REST request to DELETE user with code : %s", code));
 		final User deletedUser;
 		try {
 			deletedUser = userService.removeUserByCode(code);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong deleting the user with the code: %s", code));
 			return null;
 		}
 		return ResponseEntity.ok(deletedUser);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.parking.ParkingService;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
 import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
@@ -97,10 +98,10 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Parking removeParkingById(final Long parkingId) throws Exception {
+	public Parking removeParkingById(final Long parkingId) throws BusinessException {
 		final ParkingEntity entity = parkingRepo.getOne(parkingId);
 		if (entity == null ) {
-			throw new Exception();
+			throw new BusinessException("Parking does not exist");
 		}
 		parkingRepo.deleteById(parkingId);
 		return ParkingMapper.toParking(entity);
@@ -132,7 +133,7 @@ public class ParkingServiceImpl implements ParkingService{
 		        ple.setParking(parking);
 		        
 		        final List<ParkingZoneEntity> parkingZones = Lists.newArrayList();
-			for(char zone = parkingCreate.getParkingZoneStartingLetter(); zone <= parkingCreate.getParkingZoneEndingLetter(); zone++ )
+			for(char zone = Character.toUpperCase(parkingCreate.getParkingZoneStartingLetter()); zone <= Character.toUpperCase(parkingCreate.getParkingZoneEndingLetter()); zone++ )
 		    {
 				final ParkingZoneEntity pze = new ParkingZoneEntity();
 				pze.setLetter("" + zone);
@@ -155,7 +156,7 @@ public class ParkingServiceImpl implements ParkingService{
 				parkingZones.add(savedPze);
 		    }
 			ple.setParkingZones(parkingZones);
-			final ParkingLevelEntity savedPle = parkingLevelRepo.save(ple);
+			parkingLevelRepo.save(ple);
 		}
 		
 		return parkingCreate;

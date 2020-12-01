@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.api.reservation;
 
 import java.util.List;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.model.reservation.Reservation;
 
 public interface ReservationService {
@@ -37,13 +38,19 @@ public interface ReservationService {
 	/**
 	 * @param ReservationId the id of the entity that will be deleted
 	 * @return the deleted entity
-	 * @throws Exception 
+	 * @throws BusinessException if the reservation does not exist
 	 */
-	public Reservation removeReservationById(final Long ReservationId) throws Exception;
+	public Reservation removeReservationById(final Long ReservationId) throws BusinessException;
 	
 	/**
 	 * @param ReservationCode the code of the entity that will be deleted
 	 * @return the deleted entity
 	 */
 	public Reservation removeReservationByCode(final String ReservationCode);
+	
+	/**
+	 * @param reservation the details for the reservation
+	 * @return the created reservation
+	 */
+	public Reservation reserveSpot(final Reservation reservation);
 }

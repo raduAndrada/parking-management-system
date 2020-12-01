@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.payment.options.PaymentOptionsService;
 import ro.upet.parking.system.management.data.api.payment.options.PaymentOptionsEntity;
 import ro.upet.parking.system.management.data.impl.payment.options.PaymentOptionsRepository;
@@ -84,10 +85,10 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaymentOptions removePaymentOptionsById(final Long paymentOptionsId) throws Exception {
+	public PaymentOptions removePaymentOptionsById(final Long paymentOptionsId) throws BusinessException {
 		final PaymentOptionsEntity entity = paymentOptionsRepo.getOne(paymentOptionsId);
 		if (entity == null ) {
-			throw new Exception();
+			throw new BusinessException("Payment Options does not exist");
 		}
 		paymentOptionsRepo.deleteById(paymentOptionsId);
 		return PaymentOptionsMapper.toPaymentOptions(entity);

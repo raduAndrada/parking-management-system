@@ -7,7 +7,9 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.user.UserService;
+import ro.upet.parking.system.management.business.api.user.UserValidator;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.data.impl.user.UserRepository;
 import ro.upet.parking.system.management.model.user.User;
@@ -20,8 +22,10 @@ import ro.upet.parking.system.management.model.user.User;
 public class UserServiceImpl implements UserService{
 	
 	@Inject
-	UserRepository userRepo;
+	private UserRepository userRepo;
 	
+	@Inject
+	private UserValidator userValidator;
 	/**
 	 * {@inheritDoc}
 	 */
@@ -57,8 +61,11 @@ public class UserServiceImpl implements UserService{
 		final UserEntity entity = UserMapper.toUserEntity(user);
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
+		if (userValidator.validate(user)) {
 		final UserEntity savedEntity = userRepo.save(entity);
 		return UserMapper.toUser(savedEntity);
+		}
+		throw new BusinessException("The username or the email are already taken");
 	}
 
 
@@ -78,10 +85,10 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User removeUserById(final Long userId) throws Exception {
+	public User removeUserById(final Long userId) throws BusinessException {
 		final UserEntity entity = userRepo.getOne(userId);
 		if (entity == null ) {
-			throw new Exception();
+			throw new BusinessException("The user does not exist");
 		}
 		userRepo.deleteById(userId);
 		return UserMapper.toUser(entity);

@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.api.vehicle;
 
 import java.util.List;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 public interface VehicleService {
@@ -25,8 +26,9 @@ public interface VehicleService {
 	/**
 	 * @param vehicle the entity to be added
 	 * @return the added entity
+	 * @throws BusinessException if the vehicle number already exists in the database or if it doesn't pass the validation
 	 */
-	public Vehicle addVehicle(final Vehicle vehicle);
+	public Vehicle addVehicle(final Vehicle vehicle) throws BusinessException;
 	
 	/**
 	 * @param vehicle the updated vehicle
@@ -37,9 +39,9 @@ public interface VehicleService {
 	/**
 	 * @param vehicleId the id of the entity that will be deleted
 	 * @return the deleted entity
-	 * @throws Exception 
+	 * @throws BusinessException  if the vehicle does not exist
 	 */
-	public Vehicle removeVehicleById(final Long vehicleId) throws Exception;
+	public Vehicle removeVehicleById(final Long vehicleId) throws BusinessException;
 	
 	/**
 	 * @param vehicleCode the code of the entity that will be deleted

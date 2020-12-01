@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.rest.reservation;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -28,6 +29,8 @@ import ro.upet.parking.system.management.model.reservation.Reservation;
 @CrossOrigin(maxAge = 3600)
 public class ReservationRest {
 
+	private static final Logger LOGGER  = Logger.getLogger(ReservationRest.class.getName());
+	
 	@Inject
 	private ReservationService reservationService;
 	
@@ -37,8 +40,10 @@ public class ReservationRest {
 	 */
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<Reservation> getReservation(@PathVariable final String code) {
+		LOGGER.info(String.format("REST request to GET reservation by code: %s", code));
 		final Reservation reservation = reservationService.getReservationByCode(code);
 		if (reservation == null) {
+			LOGGER.info(String.format("Reservation with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(reservation);
@@ -51,8 +56,10 @@ public class ReservationRest {
 	 */
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<Reservation> getReservation(@PathVariable final Long id) {
+		LOGGER.info(String.format("REST request to GET reservation by id: %s", id));
 		final Reservation reservation = reservationService.getReservationById(id);
 		if (reservation == null) {
+			LOGGER.info(String.format("Reservation with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(reservation);
@@ -65,8 +72,10 @@ public class ReservationRest {
 	 */
 	@GetMapping
 	public ResponseEntity<List<Reservation>> getReservations() {
+		LOGGER.info(String.format("REST request to GET all reservations"));
 		final List<Reservation> reservationList= reservationService.getReservationList();
 		if (reservationList == null) {
+			LOGGER.info(String.format("No reservations found"));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(reservationList);
@@ -81,10 +90,12 @@ public class ReservationRest {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<Reservation> postReservation(@RequestBody final Reservation reservation) {
+		LOGGER.info(String.format("REST request to POST reservation : %s", reservation));
 		final Reservation createdReservation;
 		try {
 			createdReservation = reservationService.addReservation(reservation);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong creating the reservation : %s", reservation));
 			return null;
 		}
 		return ResponseEntity.ok(createdReservation);
@@ -99,10 +110,12 @@ public class ReservationRest {
 	@PutMapping
 	@Transactional
 	public ResponseEntity<Reservation> putReservation(@RequestBody final Reservation reservation) {
+		LOGGER.info(String.format("REST request to PUT reservation : %s", reservation));
 		final Reservation updatedReservation;
 		try {
 			updatedReservation = reservationService.updateReservation(reservation);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong updating the reservation: %s", reservation));
 			return null;
 		}
 		return ResponseEntity.ok(updatedReservation);
@@ -117,10 +130,12 @@ public class ReservationRest {
 	@DeleteMapping(path = "/id/{id}")
 	@Transactional
 	public ResponseEntity<Reservation> deleteReservation(@PathVariable final Long id) {
+		LOGGER.info(String.format("REST request to DELETE reservation with id : %s", id));
 		final Reservation deletedReservation;
 		try {
 			deletedReservation = reservationService.removeReservationById(id);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong deleting the reservation with the id: %s", id));
 			return null;
 		}
 		return ResponseEntity.ok(deletedReservation);
@@ -134,10 +149,12 @@ public class ReservationRest {
 	@DeleteMapping(path = "/code/{code}")
 	@Transactional
 	public ResponseEntity<Reservation> deleteReservation(@PathVariable final String code) {
+		LOGGER.info(String.format("REST request to DELETE reservation with code : %s", code));
 		final Reservation deletedReservation;
 		try {
 			deletedReservation = reservationService.removeReservationByCode(code);
 		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong deleting the reservation with the code: %s", code));
 			return null;
 		}
 		return ResponseEntity.ok(deletedReservation);

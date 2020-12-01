@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.api.payment.options;
 
 import java.util.List;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
 
 public interface PaymentOptionsService {
@@ -37,9 +38,9 @@ public interface PaymentOptionsService {
 	/**
 	 * @param paymentOptionsId the id of the entity that will be deleted
 	 * @return the deleted entity
-	 * @throws Exception 
+	 * @throws BusinessException payment options does not exist
 	 */
-	public PaymentOptions removePaymentOptionsById(final Long paymentOptionsId) throws Exception;
+	public PaymentOptions removePaymentOptionsById(final Long paymentOptionsId) throws BusinessException;
 	
 	/**
 	 * @param paymentOptionsCode the code of the entity that will be deleted

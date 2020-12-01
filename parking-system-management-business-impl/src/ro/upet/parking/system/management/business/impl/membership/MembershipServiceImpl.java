@@ -8,10 +8,10 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.membership.MembershipService;
 import ro.upet.parking.system.management.business.impl.parking.level.ParkingLevelMapper;
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotFinder;
-import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.business.impl.user.UserMapper;
 import ro.upet.parking.system.management.data.api.membership.MembershipEntity;
 import ro.upet.parking.system.management.data.impl.membership.MembershipRepository;
@@ -96,10 +96,10 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Membership removeMembershipById(final Long membershipId) throws Exception {
+	public Membership removeMembershipById(final Long membershipId) throws BusinessException {
 		final MembershipEntity entity = membershipRepo.getOne(membershipId);
 		if (entity == null ) {
-			throw new Exception();
+			throw new BusinessException("Membership does not exist");
 		}
 		membershipRepo.deleteById(membershipId);
 		return MembershipMapper.toMembership(entity);
