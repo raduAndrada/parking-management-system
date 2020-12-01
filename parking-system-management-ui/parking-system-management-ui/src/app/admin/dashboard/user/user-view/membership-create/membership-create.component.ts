@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RestService } from 'src/app/core/RestService.service';
-import { Parking, ParkingLevel, Membership, MembershipType, User } from 'src/app/core/models';
+import { Parking, ParkingLevel, Membership, MembershipType, User, MembershipCreate } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -13,8 +13,6 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 })
 export class MembershipCreateComponent implements OnInit {
 
-  @Input() public user: User; 
-
   public types = ['PERMANENT','YEAR','HALF_YEAR','SEASON','MONTH'];
 
   selectedParking: number;
@@ -22,20 +20,28 @@ export class MembershipCreateComponent implements OnInit {
   selectedType: string;
   parkings: Parking[];
   parkingLevels: ParkingLevel[];
+  userId: string;
 
 
 
-  toAdd: Membership = {membershipType: MembershipType.SEASON, parkingSpot: null, user: null};
+  toAdd: MembershipCreate = {
+    membershipType : '',
+    parkingId: null,
+    parkingLevelId: null,
+    userId: null
+  };
 
   constructor(  
       private parkingService: RestService<Parking>,
       private parkingLevelService: RestService<ParkingLevel>,
-      private membershipService: RestService<Membership>,
+      private membershipService: RestService<MembershipCreate>,
       private route: ActivatedRoute,
       private router: Router,
       private library: FaIconLibrary
       ) {
       library.addIcons(faSave); 
+      const href = this.router.url;
+      this.userId = href.replace( /^\D+/g, '');
       const parkingUrl = '/v1/parkings';
       this.parkingService.getList(parkingUrl).subscribe((parkings: Parking[]) => {
         this.parkings = parkings;
@@ -47,9 +53,12 @@ export class MembershipCreateComponent implements OnInit {
   }
 
   addMembership() {
-    this.toAdd.user = this.user;
+    this.toAdd.userId = parseInt(this.userId);
+    this.toAdd.membershipType = this.selectedType;
+    this.toAdd.parkingId = this.selectedParking;
+    this.toAdd.parkingLevelId = this.selectedParkingLevel;
     const added = this.membershipService
-      .create(this.toAdd, '/v1/memberships')
+      .create(this.toAdd, '/v1/memberships/create')
       .subscribe((added) => {
         console.log(added);
         this.router.navigate(['users']);
@@ -57,10 +66,12 @@ export class MembershipCreateComponent implements OnInit {
   }
 
   onParkingChange() {
-    this.selectedParkingLevel = 0;
     const parkingUrl = '/v1/parkingLevels/parking/' + this.selectedParking;
     this.parkingLevelService.getList(parkingUrl).subscribe((parkingLevels: ParkingLevel[]) => {
       this.parkingLevels = parkingLevels;
+      if (parkingLevels !== null && parkingLevels.length > 0) {
+        this.selectedParkingLevel = parkingLevels[0].id ;
+      }
     });
   }
 

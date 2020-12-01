@@ -13,6 +13,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 })
 export class MembershipListComponent implements OnInit {
 
+  
+
   membershipList: Membership[];
   headElements = ['ID', 'Code', 'Spot Number', 'Membership Type'];
 
@@ -37,8 +39,10 @@ export class MembershipListComponent implements OnInit {
     this.router.navigate(['membership-create'], { relativeTo: this.route });
   }
 
-  viewUser(membershipId) {
-    this.router.navigate([membershipId], { relativeTo: this.route });
+  cancel(membershipId) {
+    const membershipUrl = '/v1/memberships/id';
+    this.membershipService.delete(membershipId, membershipUrl).subscribe(temp => console.log(temp));
+    this.router.navigate(['users']);
   }
 
 }

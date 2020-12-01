@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.hibernate.hql.internal.ast.tree.IsNullLogicOperatorNode;
-import org.springframework.data.mapping.AccessOptions.SetOptions.SetNulls;
-
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.model.parking.spot.ImtParkingSpot;
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;

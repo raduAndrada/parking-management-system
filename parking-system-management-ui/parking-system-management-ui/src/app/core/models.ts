@@ -45,11 +45,22 @@ export enum UserType {
 
 export interface Membership extends ActionAudit {
   
-    membershipType: MembershipType;
+    membershipType: string;
   
     user: User;
   
     parkingSpot: ParkingSpot;
+}
+
+export interface MembershipCreate {
+  
+    membershipType: string;
+  
+    parkingLevelId: number;
+  
+    parkingId: number;
+
+    userId: number;
 }
 
 export interface Parking extends ActionAudit {

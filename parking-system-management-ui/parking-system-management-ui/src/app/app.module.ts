@@ -30,6 +30,7 @@ import { ParkingLevelComponent } from './admin/dashboard/parking/parking-view/pa
 import { UserViewComponent } from './admin/dashboard/user/user-view/user-view.component';
 import { MembershipListComponent } from './admin/dashboard/user/user-view/membership-list/membership-list.component';
 import { MembershipCreateComponent } from './admin/dashboard/user/user-view/membership-create/membership-create.component';
+import { ConfirmationModalComponent } from './core/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MembershipCreateComponent } from './admin/dashboard/user/user-view/memb
     ParkingLevelComponent,
     UserViewComponent,
     MembershipListComponent,
-    MembershipCreateComponent
+    MembershipCreateComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     BrowserModule,

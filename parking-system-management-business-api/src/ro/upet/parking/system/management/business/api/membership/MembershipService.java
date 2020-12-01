@@ -3,6 +3,7 @@ package ro.upet.parking.system.management.business.api.membership;
 import java.util.List;
 
 import ro.upet.parking.system.management.model.membership.Membership;
+import ro.upet.parking.system.management.model.membership.MembershipCreate;
 
 /**
  * @author Andrada
@@ -57,4 +58,15 @@ public interface MembershipService{
 	 * @return the is of memberships belonging to the user with the corresponding id
 	 */
 	public List<Membership> getMembershipListByUserId(final Long userId);
+	
+
+	/**
+	 * @param membershipCreate the details of the membership to be created
+	 * @return the created membership
+	 */
+	public Membership addMembership(final MembershipCreate membershipCreate);
+	
+
+
+
 }

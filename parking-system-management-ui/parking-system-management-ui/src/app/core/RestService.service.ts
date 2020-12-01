@@ -41,6 +41,14 @@ export class RestService<T> {
     );
   }
 
+  delete(deleteId: number, url: String): Observable<T> {
+    const urlTemp = this.baseUrl + url + '/' + deleteId;
+    return this.http.delete<T>(urlTemp).pipe(
+      tap((_) => console.log(_)),
+      catchError(this.handleError<T>('create'))
+    );
+  }
+
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead

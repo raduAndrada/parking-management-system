@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ro.upet.parking.system.management.business.api.membership.MembershipService;
 import ro.upet.parking.system.management.model.membership.Membership;
+import ro.upet.parking.system.management.model.membership.MembershipCreate;
 
 /**
  * @author Andrada
@@ -98,6 +99,24 @@ public class MembershipRest {
 		final Membership createdMembership;
 		try {
 			createdMembership = membershipService.addMembership(membership);
+		} catch (final Exception e) {
+			return null;
+		}
+		return ResponseEntity.ok(createdMembership);
+	}
+	
+	
+
+	/**
+	 * 
+	 * @param membership the membership to be added
+	 * @return the created entity
+	 */
+	@PostMapping("/create")
+	public ResponseEntity<Membership> postMembership(@RequestBody final MembershipCreate membershipCreate) {
+		final Membership createdMembership;
+		try {
+			createdMembership = membershipService.addMembership(membershipCreate);
 		} catch (final Exception e) {
 			return null;
 		}
