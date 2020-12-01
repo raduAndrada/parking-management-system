@@ -1,4 +1,10 @@
 <div class="col-md-12 col-lg-12 col-sm-12">
+    <div  class="text-center row">
+        <a class="btn btn-link btn-lg" > Customers </a>
+    </div>
+    <button class="btn btn-success float-right border" (click)="addUser()">
+        <fa-icon [icon]="['fas', 'plus']"></fa-icon> <span>New</span>
+    </button>
     <table mdbTable>
         <thead class="black white-text">
         <tr>

@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { RestService } from 'src/app/core/RestService.service';
 import { Parking, ParkingLevel, Membership, MembershipType, User, MembershipCreate } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { ConfirmationModalComponent } from 'src/app/core/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'membership-create',
@@ -12,6 +13,8 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
   providers: [RestService]
 })
 export class MembershipCreateComponent implements OnInit {
+
+  @ViewChild("modalConfirmation") modalConfirmation:  ConfirmationModalComponent;
 
   public types = ['PERMANENT','YEAR','HALF_YEAR','SEASON','MONTH'];
 
@@ -39,7 +42,7 @@ export class MembershipCreateComponent implements OnInit {
       private router: Router,
       private library: FaIconLibrary
       ) {
-      library.addIcons(faSave); 
+      library.addIcons(faSave, faArrowRight); 
       const href = this.router.url;
       this.userId = href.replace( /^\D+/g, '');
       const parkingUrl = '/v1/parkings';
@@ -52,17 +55,27 @@ export class MembershipCreateComponent implements OnInit {
     
   }
 
+  back() {
+    this.router.navigate(['users']);
+  }
+
+
   addMembership() {
-    this.toAdd.userId = parseInt(this.userId);
-    this.toAdd.membershipType = this.selectedType;
-    this.toAdd.parkingId = this.selectedParking;
-    this.toAdd.parkingLevelId = this.selectedParkingLevel;
-    const added = this.membershipService
-      .create(this.toAdd, '/v1/memberships/create')
-      .subscribe((added) => {
-        console.log(added);
-        this.router.navigate(['users']);
+    const modalRef = this.modalConfirmation.open();
+    modalRef.result.then((result) => {
+     if (result === "Ok") {
+      this.toAdd.userId = parseInt(this.userId);
+      this.toAdd.membershipType = this.selectedType;
+      this.toAdd.parkingId = this.selectedParking;
+      this.toAdd.parkingLevelId = this.selectedParkingLevel;
+      const added = this.membershipService
+        .create(this.toAdd, '/v1/memberships/create')
+        .subscribe((added) => {
+          this.router.navigate(['users']);
       });
+     }
+   });
+
   }
 
   onParkingChange() {

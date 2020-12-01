@@ -39,4 +39,9 @@ export class ParkingViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  back() {
+    this.router.navigate(['parkings']);
+  }
+
+
 }

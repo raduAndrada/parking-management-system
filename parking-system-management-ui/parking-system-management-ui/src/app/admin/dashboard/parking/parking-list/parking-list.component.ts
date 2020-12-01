@@ -3,7 +3,7 @@ import { Parking } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from 'src/app/core/RestService.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'parking-list',
@@ -22,7 +22,7 @@ export class ParkingListComponent implements OnInit {
     private router: Router,
     private library: FaIconLibrary
     ) {
-    library.addIcons(faPlus);
+    library.addIcons(faPlus, faArrowRight);
     const parkingUrl = '/v1/parkings';
     this.parkingService.getList(parkingUrl).subscribe((parkingList: Parking[]) => {
       this.parkingList = parkingList;
@@ -38,6 +38,5 @@ export class ParkingListComponent implements OnInit {
   viewParking(parkingId) {
     this.router.navigate([parkingId], { relativeTo: this.route });
   }
-
 
 }

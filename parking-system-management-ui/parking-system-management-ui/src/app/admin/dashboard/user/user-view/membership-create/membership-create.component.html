@@ -1,4 +1,8 @@
 <div class="col-md-12 col-sm-12 col-lg-12"> 
+  <div  class="text-center row">
+    <a class="btn btn-link btn-lg" (click)="back()">Customers</a> <a class="btn btn-link btn-lg" disabled >  <fa-icon [icon]="['fas', 'arrow-right']"></fa-icon> </a> <a class="btn btn-link btn-lg"> create membership </a>
+  </div>
+  <hr/>
     <div class="form-group float-label-control">
         <label for="parking">Membership Type</label> 
            <select  [(ngModel)]="selectedType" name="type" class="form-control" >
@@ -32,3 +36,8 @@
       </button>
   </div>
 
+
+  <confirmation-modal #modalConfirmation
+    [confirmationMessage]="'Are you sure you want to create this membership for the user with the id'"
+    [changedName]="userId">
+</confirmation-modal>

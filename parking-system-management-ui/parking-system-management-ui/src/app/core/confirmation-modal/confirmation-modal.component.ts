@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ContentChild } from "@angular/core";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+
+
 
 @Component({
-  selector: 'app-confirmation-modal',
+  selector: 'confirmation-modal',
   templateUrl: './confirmation-modal.component.html',
   styleUrls: ['./confirmation-modal.component.css']
 })
 export class ConfirmationModalComponent implements OnInit {
+  @ViewChild("content") content;
 
-  constructor() { }
+  @Input() confirmationMessage: string;
+  @Input() changedName: string;
 
-  ngOnInit(): void {
+  public modalRef: NgbModalRef;
+  public closeResult: string;
+
+
+  constructor(private modalService: NgbModal) { }
+
+  ngOnInit() {
   }
+
+  public open() {
+    return this.modalService.open(this.content,  { windowClass: "dark-modal", size: "lg" });
+
+  }
+
 
 }

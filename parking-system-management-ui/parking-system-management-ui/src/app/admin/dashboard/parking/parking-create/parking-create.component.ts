@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ParkingCreate } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from 'src/app/core/RestService.service';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -27,19 +27,22 @@ export class ParkingCreateComponent implements OnInit {
     private router: Router,    
     private library: FaIconLibrary
     ) {
-      library.addIcons(faSave);
+      library.addIcons(faSave, faArrowRight);
   }
 
   ngOnInit(): void {}
 
   create() {
-    console.log(this.toAdd);
     const added = this.parkingService
       .create(this.toAdd, '/v1/parkings/configure')
       .subscribe((added) => {
-        console.log(added);
         this.router.navigate(['parkings']);
       });
   }
+
+  back() {
+    this.router.navigate(['parkings']);
+  }
+
 
 }

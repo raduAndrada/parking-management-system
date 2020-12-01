@@ -40,7 +40,6 @@ export class VehicleCreateComponent implements OnInit {
     const added = this.vehicleService
       .create(this.toAdd, '/v1/vehicles')
       .subscribe((added) => {
-        console.log(added);
         this.router.navigate(['customers']);
       });
   }

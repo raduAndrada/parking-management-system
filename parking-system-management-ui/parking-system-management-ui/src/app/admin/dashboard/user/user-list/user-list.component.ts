@@ -3,6 +3,7 @@ import { User } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from 'src/app/core/RestService.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'user-list',
@@ -19,7 +20,9 @@ export class UserListComponent implements OnInit {
     private userService: RestService<User>,
     private route: ActivatedRoute,
     private router: Router,
+    private library: FaIconLibrary
     ) {
+    library.addIcons(faPlus, faTrash);
     const userUrl = '/v1/users';
     this.userService.getList(userUrl).subscribe((userList: User[]) => {
       this.userList = userList;
@@ -29,7 +32,7 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {}
 
   addUser() {
-    this.router.navigate(['create'], { relativeTo: this.route });
+    this.router.navigate(['customers','create'], );
   }
 
   viewUser(userId) {

@@ -1,4 +1,9 @@
 <div class="col-md-12 col-lg-12 col-sm-12">
+    <div  class="text-center row">
+        <a class="btn btn-link btn-lg" (click)="back()">Customers</a> <a class="btn btn-link btn-lg" disabled >  <fa-icon [icon]="['fas', 'arrow-right']"></fa-icon> </a> <a class="btn btn-link btn-lg"> memberships</a>
+    </div>
+    <hr/>
+
     <button class="btn btn-success float-right border" (click)="addMembership()">
         <fa-icon [icon]="['fas', 'plus']"></fa-icon> <span>New</span>
     </button>
@@ -15,11 +20,17 @@
             <td >{{membership.parkingSpot.number}}</td>
             <td >{{membership.membershipType}}</td>
             <td>
-                <a class="btn btn-link pull-left" (click)="cancel(membership.id)">
-                    <span> Cancel </span>
+                <a class="btn btn-sm btn-danger" (click)="cancel(membership.id)">
+                    <fa-icon [icon]="['fas', 'trash']"></fa-icon>
                 </a>  
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+
+<confirmation-modal #modalConfirmation
+    [confirmationMessage]="'Are you sure you want to delete this '"
+    [changedName]="'membership'">
+</confirmation-modal>
