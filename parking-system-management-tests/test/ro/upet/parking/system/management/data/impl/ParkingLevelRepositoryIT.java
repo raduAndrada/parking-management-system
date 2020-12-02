@@ -32,6 +32,12 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	    private static final ParkingLevelEntity PARKING_LEVEL_1 = new ParkingLevelEntity();
 	    private static final ParkingLevelEntity PARKING_LEVEL_2 = new ParkingLevelEntity();
 	    
+	    @Inject
+	    private ParkingLevelRepository parkingLevelRepo;
+	    
+	    @Inject
+	    private ParkingRepository parkingRepo;
+	    
 	    @Before
 	    public void init() {
 	    	final ParkingEntity temp = parkingRepo.save(new ParkingEntity());
@@ -42,13 +48,6 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	    	PARKING_LEVEL_2.setNumber(PARKING_LEVEL_NUMBER2);
 	    	PARKING_LEVEL_2.setParking(temp);
 	    }
-	    
-
-	    @Inject
-	    protected ParkingLevelRepository parkingLevelRepo;
-	    
-	    @Inject
-	    protected ParkingRepository parkingRepo;
 	    
 	    @Test
 	    @Transactional

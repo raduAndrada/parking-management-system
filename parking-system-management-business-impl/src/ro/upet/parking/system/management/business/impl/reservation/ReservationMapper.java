@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.business.impl.reservation;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
@@ -28,7 +29,8 @@ public class ReservationMapper {
 		entity.setEndTime(reservation.getEndTime());
 		entity.setNotes(reservation.getNotes());
 		entity.setStartTime(reservation.getStartTime());
-		entity.setVehicle(VehicleMapper.toVehicleEntity(reservation.getVehicle()));
+		entity.setVehicle(Objects.nonNull(entity.getVehicle()) ? VehicleMapper.toVehicleEntity(reservation.getVehicle()) : null);
+		entity.setReservationStatus(reservation.getReservationStatus());
 		return entity;
 	}
 	
@@ -47,7 +49,9 @@ public class ReservationMapper {
 				.endTime(entity.getEndTime())
 				.startTime(entity.getStartTime())
 				.reservationStatus(entity.getReservationStatus())
-				.vehicle(VehicleMapper.toVehicle(entity.getVehicle()))
+				.vehicle(Objects.nonNull(entity.getVehicle()) ? VehicleMapper.toVehicle(entity.getVehicle()) : null)
+				.notes(entity.getNotes())
+				.reservationStatus(entity.getReservationStatus())
 				.build();
 	}
 	

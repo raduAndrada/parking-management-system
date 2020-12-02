@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import ro.upet.parking.system.management.business.api.core.BusinessException;
@@ -26,7 +27,8 @@ import ro.upet.parking.system.management.model.reservation.Reservation;
 @Service
 public class ReservationServiceImpl implements ReservationService{
 	
-	public static final Integer RESERVATION_EXPIRATION_TIME = 60 * 15; // 15 minutes
+	@Value("${reserversion.claim.allocated.time}")	
+	private Integer RESERVATION_EXPIRATION_TIME; // 15 minutes
 	
 	@Inject
 	ReservationRepository reservationRepo;
@@ -81,7 +83,7 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public Reservation updateReservation(final Reservation reservation) {
 		final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-		entity.setParkingSpot(parkingSpotRepo.getOne(reservation.getParkingSpotId()));
+		entity.setParkingSpot(parkingSpotRepo.findById(reservation.getParkingSpotId()).get());
 		entity.setUpdatedAt(Instant.now());
 		final ReservationEntity savedEntity = reservationRepo.save(entity);
 		return ReservationMapper.toReservation(savedEntity);

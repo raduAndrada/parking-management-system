@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.business.impl.parking.level;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.business.impl.parking.ParkingMapper;
@@ -27,6 +28,7 @@ public class ParkingLevelMapper {
 		entity.setCreatedAt(parkingLevel.getCreatedAt());
 		entity.setUpdatedAt(parkingLevel.getUpdatedAt());
 		entity.setNumber(parkingLevel.getNumber());
+		entity.setParking(ParkingMapper.toParkingEntity(parkingLevel.getParking()));
 		return entity;
 	}
 	
@@ -42,7 +44,9 @@ public class ParkingLevelMapper {
 				.updatedAt(entity.getUpdatedAt())
 				.number(entity.getNumber())
 				.parking(ParkingMapper.toParking(entity.getParking()))
-				.parkingZones(ParkingZoneMapper.toParkingZoneList(entity.getParkingZones()))
+				.parkingZones(Objects.nonNull(entity.getParkingZones()) && !entity.getParkingZones().isEmpty() ? 
+																				ParkingZoneMapper.toParkingZoneList(entity.getParkingZones())
+																				: null)
 				.build();
 	}
 	

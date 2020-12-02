@@ -1,4 +1,5 @@
 server.port: 8000
+reserversion.claim.allocated.time: 900
 
 spring:
   tomcat:

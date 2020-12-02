@@ -15,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ro.upet.parking.system.management.data.DataTests;
-import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
 import ro.upet.parking.system.management.data.impl.parking.ParkingRepository;
 

@@ -30,16 +30,15 @@ public class ParkingZoneRepositoryIT extends DataTests {
 	    private static final ParkingZoneEntity PARKING_ZONE_1 = new ParkingZoneEntity();
 	    private static final ParkingZoneEntity PARKING_ZONE_2 = new ParkingZoneEntity();
 	    
+	    @Inject
+	    private ParkingZoneRepository parkingZoneRepo;
+	    
 	    @Before
 	    public void init() {
 	    	PARKING_ZONE_1.setLetter(PARKING_ZONE_LETTER1);
 	    	
 	    	PARKING_ZONE_2.setLetter(PARKING_ZONE_LETTER2);
 	    }
-	    
-
-	    @Inject
-	    protected ParkingZoneRepository parkingZoneRepo;
 	    
 	    @Test
 	    @Transactional

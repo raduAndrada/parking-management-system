@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.impl.user;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.data.api.user.UserEntity;
@@ -26,7 +27,7 @@ public class UserMapper {
 		entity.setCreatedAt(user.getCreatedAt());
 		entity.setUpdatedAt(user.getUpdatedAt());
 		entity.setAddress(user.getAddress());
-		entity.setBirthday(LocalDate.parse(user.getBirthday()));
+		entity.setBirthday(!Objects.isNull(user.getBirthday()) ? LocalDate.parse(user.getBirthday()): null);
 		entity.setEmail(user.getEmail());
 		entity.setName(user.getName());
 		entity.setPassword(user.getPassword());
@@ -46,7 +47,7 @@ public class UserMapper {
 				.id(entity.getId())
 				.updatedAt(entity.getUpdatedAt())
 				.address(entity.getAddress())
-				.birthday(entity.getBirthday().toString())
+				.birthday(!Objects.isNull(entity.getBirthday()) ? entity.getBirthday().toString(): null)
 				.email(entity.getEmail())
 				.name(entity.getName())
 				.password(entity.getPassword())

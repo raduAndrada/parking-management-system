@@ -41,13 +41,13 @@ public class MembershipRepositoryIT extends DataTests {
 	    private static final MembershipEntity MEMBERSHIP_2 = new MembershipEntity();
 	    
 	    @Inject
-	    protected MembershipRepository membershipRepo;
+	    private MembershipRepository membershipRepo;
 	    
 	    @Inject
-	    protected UserRepository userRepo;
+	    private UserRepository userRepo;
 	    
 	    @Inject
-	    protected ParkingSpotRepository parkingSpotRepo;
+	    private ParkingSpotRepository parkingSpotRepo;
 
 
 	    

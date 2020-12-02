@@ -3,6 +3,8 @@ package ro.upet.parking.system.management.model.parking.zone;
 import java.time.Instant;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -48,6 +50,7 @@ public interface ParkingZone {
 	/**
 	 * @return list of all the parking spots
 	 */
+	@Nullable
 	List<ParkingSpot> getParkingSpots();
 	
 }

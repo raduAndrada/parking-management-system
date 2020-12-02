@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.business.impl.parking.zone;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
@@ -40,7 +41,7 @@ public class ParkingZoneMapper {
 				.id(entity.getId())
 				.updatedAt(entity.getUpdatedAt())
 				.letter(entity.getLetter())
-				.parkingSpots(ParkingSpotMapper.toParkingSpotList(entity.getParkingSpots()))
+				.parkingSpots((Objects.nonNull(entity.getParkingSpots()) && !entity.getParkingSpots().isEmpty()) ? ParkingSpotMapper.toParkingSpotList(entity.getParkingSpots()) : null)
 				.build();
 	}
 	

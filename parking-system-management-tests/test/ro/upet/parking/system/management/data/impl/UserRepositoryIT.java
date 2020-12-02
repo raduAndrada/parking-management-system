@@ -38,6 +38,9 @@ public class UserRepositoryIT extends DataTests {
     private static final UserEntity USER_1 = new UserEntity();
     private static final UserEntity USER_2 = new UserEntity();
     
+    @Inject
+    private UserRepository userRepo;
+
     @Before
     public void init() {
     	USER_1.setUsername(USER_USERNAME1);
@@ -53,10 +56,6 @@ public class UserRepositoryIT extends DataTests {
     	USER_2.setPhoneNumber(USER_PHONENUMBER2);
     }
     
-
-    @Inject
-    protected UserRepository userRepo;
-
     @Test
     @Transactional
     public void addUser_test_success() {

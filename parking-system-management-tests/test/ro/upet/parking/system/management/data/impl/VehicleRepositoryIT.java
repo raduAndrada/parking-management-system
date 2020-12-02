@@ -32,7 +32,10 @@ public class VehicleRepositoryIT extends DataTests {
 	    
 	    private static final VehicleEntity VEHICLE_1 = new VehicleEntity();
 	    private static final VehicleEntity VEHICLE_2 = new VehicleEntity();
-	    
+
+	    @Inject
+	    private VehicleRepository vehicleRepo;
+
 	    @Before
 	    public void init() {
 	    	VEHICLE_1.setName(VEHICLE_NAME1);
@@ -44,10 +47,6 @@ public class VehicleRepositoryIT extends DataTests {
 	    	VEHICLE_2.setUser(new UserEntity());
 	    }
 	    
-
-	    @Inject
-	    protected VehicleRepository vehicleRepo;
-
 	    @Test
 	    @Transactional
 	    public void addVehicle_test_success() {

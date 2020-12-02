@@ -38,7 +38,13 @@ public class PaymentOptionsRepositoryIT extends DataTests {
 	    
 	    private static final PaymentOptionsEntity PAYMENT_OPTIONS_1 = new PaymentOptionsEntity();
 	    private static final PaymentOptionsEntity PAYMENT_OPTIONS_2 = new PaymentOptionsEntity();
+
+	    @Inject
+	    private PaymentOptionsRepository paymentOptionsRepo;
 	    
+	    @Inject
+	    private UserRepository userRepo;
+
 	    @Before
 	    public void init() {
 	    	PAYMENT_OPTIONS_1.setStartPeriod(PAYMENT_OPTIONS_START_PERIOD1);
@@ -56,13 +62,6 @@ public class PaymentOptionsRepositoryIT extends DataTests {
 	    	PAYMENT_OPTIONS_1.setUser(temp2);
 	    }
 	    
-
-	    @Inject
-	    protected PaymentOptionsRepository paymentOptionsRepo;
-	    
-	    @Inject
-	    protected UserRepository userRepo;
-
 	    @Test
 	    @Transactional
 	    public void addPaymentOptions_test_success() {

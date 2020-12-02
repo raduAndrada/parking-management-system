@@ -30,6 +30,9 @@ public class ParkingSpotRepositoryIT extends DataTests {
 	    private static final ParkingSpotEntity PARKING_SPOT_1 = new ParkingSpotEntity();
 	    private static final ParkingSpotEntity PARKING_SPOT_2 = new ParkingSpotEntity();
 	    
+	    @Inject
+	    private ParkingSpotRepository parkingSpotRepo;
+	    
 	    @Before
 	    public void init() {
 	    	PARKING_SPOT_1.setNumber(PARKING_SPOT_NUMBER1);
@@ -42,11 +45,7 @@ public class ParkingSpotRepositoryIT extends DataTests {
 	    	PARKING_SPOT_1.setAvailable(false);
 	    	PARKING_SPOT_1.setRented(false);
 	    }
-	    
 
-	    @Inject
-	    protected ParkingSpotRepository parkingSpotRepo;
-	    
 	    @Test
 	    @Transactional
 	    public void addParkingSpot_test_success() {
