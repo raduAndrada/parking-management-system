@@ -16,7 +16,7 @@ public class UserValidatorImpl implements UserValidator {
 	 */
 	@Override
 	public boolean validate(User user) {
-		if (userRepo.findByUsernameOptional(user.getUsername()).isPresent() || userRepo.findByEmailOptional(user.getEmail()).isPresent()) {
+		if (userRepo.findByUsername(user.getUsername()).isPresent() || userRepo.findByEmail(user.getEmail()).isPresent()) {
 			return false;
 		}
 		return true;

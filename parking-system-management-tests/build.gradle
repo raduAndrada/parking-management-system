@@ -5,10 +5,6 @@ dependencies {
 	testCompile 'org.springframework.boot:spring-boot-starter-test:2.4.0'
 	testCompile 'org.springframework:spring-test:5.3.1'
 	testCompile 'com.h2database:h2:1.4.200'
-	testCompile 'org.testcontainers:testcontainers:1.15.0'
-	testCompile 'org.testcontainers:postgresql:1.15.0'
 	testCompile 'org.testcontainers:junit-jupiter:1.15.0'
-	
-	
 	
 }
