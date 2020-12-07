@@ -24,6 +24,7 @@ public class PaymentOptionsRest extends BaseRest<PaymentOptions>{
 	private PaymentOptionsService service;
 	
 	@Override
+	@Inject
 	public void setService(BaseService<PaymentOptions> service) {
 		super.setService(this.service);
 	}

@@ -24,6 +24,7 @@ public class ParkingSpotRest extends BaseRest<ParkingSpot>{
 	private ParkingSpotService service;
 	
 	@Override
+	@Inject
 	public void setService(BaseService<ParkingSpot> service) {
 		super.setService(this.service);
 	}

@@ -30,6 +30,7 @@ public class ParkingLevelRest extends BaseRest<ParkingLevel>{
 	
 	
 	@Override
+	@Inject
 	public void setService(BaseService<ParkingLevel> service) {
 		super.setService(this.service);
 	}

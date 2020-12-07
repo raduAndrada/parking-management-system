@@ -1,7 +1,6 @@
 package ro.upet.parking.system.management.rest.membership;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -34,6 +33,7 @@ public class MembershipRest extends BaseRest<Membership>{
 	
 	
 	@Override
+	@Inject
 	public void setService(BaseService<Membership> service) {
 		super.setService(this.service);
 	}

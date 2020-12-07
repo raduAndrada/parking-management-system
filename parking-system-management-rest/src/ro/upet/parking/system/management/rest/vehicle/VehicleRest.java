@@ -29,6 +29,7 @@ public class VehicleRest extends BaseRest<Vehicle> {
 	private VehicleService service;
 
 	@Override
+	@Inject
 	public void setService(BaseService<Vehicle> service) {
 		super.setService(this.service);
 	}

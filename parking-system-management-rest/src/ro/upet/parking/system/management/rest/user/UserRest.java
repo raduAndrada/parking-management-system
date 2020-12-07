@@ -27,6 +27,7 @@ public class UserRest extends BaseRest<User> {
 	private UserService service;
 
 	@Override
+	@Inject
 	public void setService(BaseService<User> service) {
 		super.setService(this.service);
 	}

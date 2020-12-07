@@ -29,6 +29,7 @@ public class ReservationRest extends BaseRest<Reservation>{
 	private ReservationService service;
 	
 	@Override
+	@Inject
 	public void setService(BaseService<Reservation> service) {
 		super.setService(this.service);
 	}
