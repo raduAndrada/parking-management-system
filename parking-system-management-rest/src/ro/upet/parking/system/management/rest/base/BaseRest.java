@@ -3,7 +3,6 @@ package ro.upet.parking.system.management.rest.base;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ import ro.upet.parking.system.management.business.api.core.BaseService;
 
 public class BaseRest<T> {
 	
-	private static final Logger LOGGER  = Logger.getLogger(BaseRest.class.getName());
+	protected static final Logger LOGGER  = Logger.getLogger(BaseRest.class.getName());
 
 	private static final String CODE_PATH = "/code/{code}";
 	private static final String ID_PATH = "/id/{id}";

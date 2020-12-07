@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +28,6 @@ import ro.upet.parking.system.management.rest.base.BaseRest;
 @RequestMapping(value = "/v1/memberships")
 @CrossOrigin(maxAge = 3600)
 public class MembershipRest extends BaseRest<Membership>{
-	
-	private static final Logger LOGGER  = Logger.getLogger(MembershipRest.class.getName());
 
 	@Inject
 	private MembershipService service;

@@ -1,8 +1,6 @@
 package ro.upet.parking.system.management.model.vehicle;
 
 
-import java.time.Instant;
-
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

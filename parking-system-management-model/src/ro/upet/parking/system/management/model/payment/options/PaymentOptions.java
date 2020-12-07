@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.model.payment.options;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 import org.immutables.value.Value;

@@ -2,8 +2,6 @@ package ro.upet.parking.system.management.model.base;
 
 import java.time.Instant;
 
-import org.immutables.value.Value;
-
 
 public interface BaseModel {
 	
