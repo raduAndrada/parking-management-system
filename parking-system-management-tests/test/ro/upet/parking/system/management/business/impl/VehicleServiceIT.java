@@ -56,7 +56,7 @@ public class VehicleServiceIT extends BusinessTests {
     @Test
     @Transactional
     public void addVehicle_test_success() {
-        final Vehicle actualResult = vehicleService.addVehicle(VEHICLE_1);
+        final Vehicle actualResult = vehicleService.add(VEHICLE_1);
         final Vehicle expectedResult = ImtVehicle.copyOf(VEHICLE_1)
         											.withUser(actualResult.getUser())
         											.withId(actualResult.getId())
@@ -69,8 +69,8 @@ public class VehicleServiceIT extends BusinessTests {
     @Test(expected = BusinessException.class)
     @Transactional
     public void addVehicle_test_fail_licencePlateTaken() {
-        vehicleService.addVehicle(VEHICLE_1);
-        vehicleService.addVehicle(VEHICLE_1);
+        vehicleService.add(VEHICLE_1);
+        vehicleService.add(VEHICLE_1);
     }
     
     @Test
@@ -81,9 +81,9 @@ public class VehicleServiceIT extends BusinessTests {
     	ve.setUser(ue);
     	ve.setName(VEHICLE_NAME1);
     	ve = vehicleRepo.save(ve);
-    	final List<Vehicle> actualResult = vehicleService.getVehicleList();	
-        vehicleService.removeVehicleById(ve.getId());
-        final List<Vehicle> expectedResult = vehicleService.getVehicleList();
+    	final List<Vehicle> actualResult = vehicleService.getList();	
+        vehicleService.removeById(ve.getId());
+        final List<Vehicle> expectedResult = vehicleService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
     }
@@ -96,7 +96,7 @@ public class VehicleServiceIT extends BusinessTests {
     	UserEntity ue = new UserEntity();
     	ve.setUser(ue);
     	ve = vehicleRepo.save(ve);
-        final Vehicle actualResult = vehicleService.getVehicleById(ve.getId());
+        final Vehicle actualResult = vehicleService.getById(ve.getId());
         final Vehicle expectedResult = ImtVehicle.builder()
     											.id(actualResult.getId())
     											.name(VEHICLE_NAME1)
@@ -123,7 +123,7 @@ public class VehicleServiceIT extends BusinessTests {
     	ve.setUser(ue);
     	vehicleRepo.save(ve);
     	
-        final List<Vehicle> actualResult = vehicleService.getVehicleList();	
+        final List<Vehicle> actualResult = vehicleService.getList();	
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size()).isEqualTo(2);
     }
@@ -136,7 +136,7 @@ public class VehicleServiceIT extends BusinessTests {
     	ve.setUser(ue);
     	ve.setName(VEHICLE_NAME1);
     	ve = vehicleRepo.save(ve);
-        final Vehicle actualResult = vehicleService.updateVehicle(ImtVehicle.copyOf(VEHICLE_1).withId(ve.getId()));
+        final Vehicle actualResult = vehicleService.update(ImtVehicle.copyOf(VEHICLE_1).withId(ve.getId()));
         final Vehicle expectedResult = ImtVehicle.copyOf(VEHICLE_1)
         											.withUser(actualResult.getUser())
         											.withId(actualResult.getId())

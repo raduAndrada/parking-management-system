@@ -10,6 +10,7 @@ import org.immutables.value.Value;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 
 /**
@@ -19,28 +20,8 @@ import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 @Value.Immutable
 @JsonSerialize(as = ImtParkingZone.class)
 @JsonDeserialize(builder = ImtParkingZone.Builder.class)
-public interface ParkingZone {
+public interface ParkingZone extends BaseModel {
 
-	/**
-	 * @return identifier for the entity
-	 */
-	Long getId();
-	
-	/**
-	 * @return unique code for the entity
-	 */
-	String getCode();	
-
-	/**
-	 * @return creation time
-	 */
-	Instant getCreatedAt();
-
-	/**
-	 * @return last update time
-	 */
-	Instant getUpdatedAt();
-	
 	/**
 	 * @return the letter for the zone
 	 */

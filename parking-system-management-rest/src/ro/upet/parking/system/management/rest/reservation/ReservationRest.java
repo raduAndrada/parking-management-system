@@ -41,7 +41,7 @@ public class ReservationRest {
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<Reservation> getReservation(@PathVariable final String code) {
 		LOGGER.info(String.format("REST request to GET reservation by code: %s", code));
-		final Reservation reservation = reservationService.getReservationByCode(code);
+		final Reservation reservation = reservationService.getByCode(code);
 		if (reservation == null) {
 			LOGGER.info(String.format("Reservation with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
@@ -57,7 +57,7 @@ public class ReservationRest {
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<Reservation> getReservation(@PathVariable final Long id) {
 		LOGGER.info(String.format("REST request to GET reservation by id: %s", id));
-		final Reservation reservation = reservationService.getReservationById(id);
+		final Reservation reservation = reservationService.getById(id);
 		if (reservation == null) {
 			LOGGER.info(String.format("Reservation with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
@@ -73,7 +73,7 @@ public class ReservationRest {
 	@GetMapping
 	public ResponseEntity<List<Reservation>> getReservations() {
 		LOGGER.info(String.format("REST request to GET all reservations"));
-		final List<Reservation> reservationList= reservationService.getReservationList();
+		final List<Reservation> reservationList= reservationService.getList();
 		if (reservationList == null) {
 			LOGGER.info(String.format("No reservations found"));
 			return ResponseEntity.notFound().build();
@@ -93,7 +93,7 @@ public class ReservationRest {
 		LOGGER.info(String.format("REST request to POST reservation : %s", reservation));
 		final Reservation createdReservation;
 		try {
-			createdReservation = reservationService.addReservation(reservation);
+			createdReservation = reservationService.add(reservation);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong creating the reservation : %s", reservation));
 			return null;
@@ -113,7 +113,7 @@ public class ReservationRest {
 		LOGGER.info(String.format("REST request to PUT reservation : %s", reservation));
 		final Reservation updatedReservation;
 		try {
-			updatedReservation = reservationService.updateReservation(reservation);
+			updatedReservation = reservationService.update(reservation);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong updating the reservation: %s", reservation));
 			return null;
@@ -133,7 +133,7 @@ public class ReservationRest {
 		LOGGER.info(String.format("REST request to DELETE reservation with id : %s", id));
 		final Reservation deletedReservation;
 		try {
-			deletedReservation = reservationService.removeReservationById(id);
+			deletedReservation = reservationService.removeById(id);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the reservation with the id: %s", id));
 			return null;
@@ -152,7 +152,7 @@ public class ReservationRest {
 		LOGGER.info(String.format("REST request to DELETE reservation with code : %s", code));
 		final Reservation deletedReservation;
 		try {
-			deletedReservation = reservationService.removeReservationByCode(code);
+			deletedReservation = reservationService.removeByCode(code);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the reservation with the code: %s", code));
 			return null;

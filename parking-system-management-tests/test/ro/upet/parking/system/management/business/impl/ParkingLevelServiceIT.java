@@ -51,7 +51,7 @@ public class ParkingLevelServiceIT extends BusinessTests {
     	final Parking p = ParkingMapper.toParking(pe);
     	
     	
-        final ParkingLevel actualResult = parkingLevelService.addParkingLevel(ImtParkingLevel.copyOf(PARKING_LEVEL_1).withParking(p));
+        final ParkingLevel actualResult = parkingLevelService.add(ImtParkingLevel.copyOf(PARKING_LEVEL_1).withParking(p));
         final ParkingLevel expectedResult = ImtParkingLevel.copyOf(PARKING_LEVEL_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())
@@ -73,9 +73,9 @@ public class ParkingLevelServiceIT extends BusinessTests {
     	ple.setNumber("1");
     	ple = parkingLevelRepo.save(ple);
     	
-    	final List<ParkingLevel> actualResult = parkingLevelService.getParkingLevelList();	
-        parkingLevelService.removeParkingLevelById(ple.getId());
-        final List<ParkingLevel> expectedResult = parkingLevelService.getParkingLevelList();
+    	final List<ParkingLevel> actualResult = parkingLevelService.getList();	
+        parkingLevelService.removeById(ple.getId());
+        final List<ParkingLevel> expectedResult = parkingLevelService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
     }
@@ -90,7 +90,7 @@ public class ParkingLevelServiceIT extends BusinessTests {
     	ple.setParking(pe);
     	ple.setNumber("1");
     	ple = parkingLevelRepo.save(ple);
-        final ParkingLevel actualResult = parkingLevelService.getParkingLevelById(ple.getId());
+        final ParkingLevel actualResult = parkingLevelService.getById(ple.getId());
         final ParkingLevel expectedResult = ImtParkingLevel.builder()
     											.id(actualResult.getId())
     											.createdAt(actualResult.getCreatedAt())
@@ -118,7 +118,7 @@ public class ParkingLevelServiceIT extends BusinessTests {
     	ple.setParking(pe);
     	parkingLevelRepo.save(ple);
     	
-        final List<ParkingLevel> actualResult = parkingLevelService.getParkingLevelList();	
+        final List<ParkingLevel> actualResult = parkingLevelService.getList();	
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size()).isEqualTo(2);
     }
@@ -133,7 +133,7 @@ public class ParkingLevelServiceIT extends BusinessTests {
     	ple = parkingLevelRepo.save(ple);
     	ple.setParking(pe);
     	final Parking p = ParkingMapper.toParking(pe);
-        final ParkingLevel actualResult = parkingLevelService.updateParkingLevel(ImtParkingLevel.copyOf(PARKING_LEVEL_1).withId(ple.getId()).withParking(p));
+        final ParkingLevel actualResult = parkingLevelService.update(ImtParkingLevel.copyOf(PARKING_LEVEL_1).withId(ple.getId()).withParking(p));
         final ParkingLevel expectedResult = ImtParkingLevel.copyOf(PARKING_LEVEL_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())

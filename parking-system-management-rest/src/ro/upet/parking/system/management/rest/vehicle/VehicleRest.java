@@ -41,7 +41,7 @@ public class VehicleRest {
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<Vehicle> getVehicle(@PathVariable final String code) {
 		LOGGER.info(String.format("REST request to GET vehicle by code: %s", code));
-		final Vehicle vehicle = vehicleService.getVehicleByCode(code);
+		final Vehicle vehicle = vehicleService.getByCode(code);
 		if (vehicle == null) {
 			LOGGER.info(String.format("Vehicle with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
@@ -57,7 +57,7 @@ public class VehicleRest {
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<Vehicle> getVehicle(@PathVariable final Long id) {
 		LOGGER.info(String.format("REST request to GET vehicle by id: %s", id));
-		final Vehicle vehicle = vehicleService.getVehicleById(id);
+		final Vehicle vehicle = vehicleService.getById(id);
 		if (vehicle == null) {
 			LOGGER.info(String.format("Vehicle with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
@@ -73,7 +73,7 @@ public class VehicleRest {
 	@GetMapping
 	public ResponseEntity<List<Vehicle>> getVehicles() {
 		LOGGER.info(String.format("REST request to GET all vehicles"));
-		final List<Vehicle> vehicleList= vehicleService.getVehicleList();
+		final List<Vehicle> vehicleList= vehicleService.getList();
 		if (vehicleList == null) {
 			LOGGER.info(String.format("No vehicles found"));
 			return ResponseEntity.notFound().build();
@@ -93,7 +93,7 @@ public class VehicleRest {
 		LOGGER.info(String.format("REST request to POST vehicle : %s", vehicle.toString()));
 		final Vehicle createdVehicle;
 		try {
-			createdVehicle = vehicleService.addVehicle(vehicle);
+			createdVehicle = vehicleService.add(vehicle);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong creating the vehicle : %s", vehicle.toString()));
 			return null;
@@ -113,7 +113,7 @@ public class VehicleRest {
 		LOGGER.info(String.format("REST request to PUT vehicle : %s", vehicle.toString()));
 		final Vehicle updatedVehicle;
 		try {
-			updatedVehicle = vehicleService.updateVehicle(vehicle);
+			updatedVehicle = vehicleService.update(vehicle);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong updating the vehicle: %s", vehicle.toString()));
 			return null;
@@ -133,7 +133,7 @@ public class VehicleRest {
 		LOGGER.info(String.format("REST request to DELETE vehicle with id : %s", id));
 		final Vehicle deletedVehicle;
 		try {
-			deletedVehicle = vehicleService.removeVehicleById(id);
+			deletedVehicle = vehicleService.removeById(id);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the vehicle with the id: %s", id));
 			return null;
@@ -152,7 +152,7 @@ public class VehicleRest {
 		LOGGER.info(String.format("REST request to DELETE vehicle with code : %s", code));
 		final Vehicle deletedVehicle;
 		try {
-			deletedVehicle = vehicleService.removeVehicleByCode(code);
+			deletedVehicle = vehicleService.removeByCode(code);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the vehicle with the code: %s", code));
 			return null;

@@ -7,6 +7,7 @@ import org.immutables.value.Value;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.base.UserType;
 
 /**
@@ -16,28 +17,7 @@ import ro.upet.parking.system.management.model.base.UserType;
 @Value.Immutable
 @JsonSerialize(as = ImtUser.class)
 @JsonDeserialize(builder = ImtUser.Builder.class)
-public interface User {
-
-	/**
-	 * @return identifier for the entity
-	 */
-	Long getId();
-	
-	/**
-	 * @return unique code for the entity
-	 */
-	String getCode();	
-
-	/**
-	 * @return creation time
-	 */
-	Instant getCreatedAt();
-
-	/**
-	 * @return last update time
-	 */
-	Instant getUpdatedAt();
-	
+public interface User extends BaseModel {
 	/**
 	 * @return first name and last name of the user
 	 */

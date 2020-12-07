@@ -41,7 +41,7 @@ public class ParkingServiceIT extends BusinessTests {
     @Test
     @Transactional
     public void addParking_test_success() {
-        final Parking actualResult = parkingService.addParking(PARKING_1);
+        final Parking actualResult = parkingService.add(PARKING_1);
         final Parking expectedResult = ImtParking.copyOf(PARKING_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())
@@ -57,9 +57,9 @@ public class ParkingServiceIT extends BusinessTests {
     	pe.setName("Test Parking 1");
     	pe = parkingRepo.save(pe);
     	
-    	final List<Parking> actualResult = parkingService.getParkingList();	
-        parkingService.removeParkingById(pe.getId());
-        final List<Parking> expectedResult = parkingService.getParkingList();
+    	final List<Parking> actualResult = parkingService.getList();	
+        parkingService.removeById(pe.getId());
+        final List<Parking> expectedResult = parkingService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
     }
@@ -70,7 +70,7 @@ public class ParkingServiceIT extends BusinessTests {
     	ParkingEntity pe = new ParkingEntity();
     	pe.setName("Test Parking 1");
     	pe = parkingRepo.save(pe);
-        final Parking actualResult = parkingService.getParkingById(pe.getId());
+        final Parking actualResult = parkingService.getById(pe.getId());
         final Parking expectedResult = ImtParking.builder()
     											.id(actualResult.getId())
     											.createdAt(actualResult.getCreatedAt())
@@ -91,7 +91,7 @@ public class ParkingServiceIT extends BusinessTests {
     	pe = new ParkingEntity();
     	parkingRepo.save(pe);
     	
-        final List<Parking> actualResult = parkingService.getParkingList();	
+        final List<Parking> actualResult = parkingService.getList();	
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size()).isEqualTo(2);
     }
@@ -101,7 +101,7 @@ public class ParkingServiceIT extends BusinessTests {
     public void updateParking_test_success() {
        	ParkingEntity pe = new ParkingEntity();
     	pe = parkingRepo.save(pe);
-        final Parking actualResult = parkingService.updateParking(ImtParking.copyOf(PARKING_1).withId(pe.getId()));
+        final Parking actualResult = parkingService.update(ImtParking.copyOf(PARKING_1).withId(pe.getId()));
         final Parking expectedResult = ImtParking.copyOf(PARKING_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())

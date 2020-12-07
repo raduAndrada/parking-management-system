@@ -8,6 +8,7 @@ import org.immutables.value.Value;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.base.PaymentStatus;
 
 
@@ -18,27 +19,7 @@ import ro.upet.parking.system.management.model.base.PaymentStatus;
 @Value.Immutable
 @JsonSerialize(as = ImtPaymentOptions.class)
 @JsonDeserialize(builder = ImtPaymentOptions.Builder.class)
-public interface PaymentOptions {
-
-	/**
-	 * @return identifier for the entity
-	 */
-	Long getId();
-	
-	/**
-	 * @return unique code for the entity
-	 */
-	String getCode();	
-
-	/**
-	 * @return creation time
-	 */
-	Instant getCreatedAt();
-
-	/**
-	 * @return last update time
-	 */
-	Instant getUpdatedAt();
+public interface PaymentOptions extends BaseModel{
 	
 	/**
 	 * @return status of the payment

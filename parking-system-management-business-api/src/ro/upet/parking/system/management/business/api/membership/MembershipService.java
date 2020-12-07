@@ -2,7 +2,7 @@ package ro.upet.parking.system.management.business.api.membership;
 
 import java.util.List;
 
-import ro.upet.parking.system.management.business.api.core.BusinessException;
+import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.model.membership.Membership;
 import ro.upet.parking.system.management.model.membership.MembershipCreate;
 
@@ -10,50 +10,9 @@ import ro.upet.parking.system.management.model.membership.MembershipCreate;
  * @author Andrada
  * Business level logic for memberships 
  */
-public interface MembershipService{
+public interface MembershipService extends BaseService<Membership>{
 	
-	/**
-	 * @param membershipId the id of the membership searched
-	 * @return the requested membership
-	 */
-	public Membership getMembershipById(final Long membershipId) ;
 	
-	/**
-	 * @param membershipCode the code of the membership searched 
-	 * @return the requested membership
-	 */
-	public Membership getMembershipByCode(final String membershipCode);
-	
-	/**
-	 * @return the list of all the memberships
-	 */
-	public List<Membership> getMembershipList();
-	
-	/**
-	 * @param membership the entity to be added
-	 * @return the added entity
-	 */
-	public Membership addMembership(final Membership membership);
-	
-	/**
-	 * @param membership the updated membership
-	 * @return the updated entity
-	 */
-	public Membership updateMembership(final Membership membership);
-	
-	/**
-	 * @param membershipId the id of the entity that will be deleted
-	 * @return the deleted entity
-	 * @throws BusinessException if the membership doesn't exist
-	 */
-	public Membership removeMembershipById(final Long membershipId) throws BusinessException;
-	
-	/**
-	 * @param membershipCode the code of the entity that will be deleted
-	 * @return the deleted entity
-	 */
-	public Membership removeMembershipByCode(final String membershipCode);
-
 	/**
 	 * @param userId the user owning the memberships
 	 * @return the is of memberships belonging to the user with the corresponding id

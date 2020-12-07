@@ -41,7 +41,7 @@ public class ParkingLevelRest {
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<ParkingLevel> getParkingLevel(@PathVariable final String code) {
 		LOGGER.info(String.format("REST request to GET parkingLevel by code: %s", code));
-		final ParkingLevel parkingLevel = parkingLevelService.getParkingLevelByCode(code);
+		final ParkingLevel parkingLevel = parkingLevelService.getByCode(code);
 		if (parkingLevel == null) {
 			LOGGER.info(String.format("ParkingLevel with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
@@ -57,7 +57,7 @@ public class ParkingLevelRest {
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<ParkingLevel> getParkingLevel(@PathVariable final Long id) {
 		LOGGER.info(String.format("REST request to GET parkingLevel by id: %s", id));
-		final ParkingLevel parkingLevel = parkingLevelService.getParkingLevelById(id);
+		final ParkingLevel parkingLevel = parkingLevelService.getById(id);
 		if (parkingLevel == null) {
 			LOGGER.info(String.format("ParkingLevel with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
@@ -73,7 +73,7 @@ public class ParkingLevelRest {
 	@GetMapping
 	public ResponseEntity<List<ParkingLevel>> getParkingLevels() {
 		LOGGER.info(String.format("REST request to GET all parkingLevels"));
-		final List<ParkingLevel> parkingLevelList= parkingLevelService.getParkingLevelList();
+		final List<ParkingLevel> parkingLevelList= parkingLevelService.getList();
 		if (parkingLevelList == null) {
 			LOGGER.info(String.format("No parkingLevels found"));
 			return ResponseEntity.notFound().build();
@@ -109,7 +109,7 @@ public class ParkingLevelRest {
 		LOGGER.info(String.format("REST request to POST parkingLevel : %s", parkingLevel));
 		final ParkingLevel createdParkingLevel;
 		try {
-			createdParkingLevel = parkingLevelService.addParkingLevel(parkingLevel);
+			createdParkingLevel = parkingLevelService.add(parkingLevel);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong creating the parkingLevel : %s", parkingLevel));
 			return null;
@@ -129,7 +129,7 @@ public class ParkingLevelRest {
 		LOGGER.info(String.format("REST request to PUT parkingLevel : %s", parkingLevel));
 		final ParkingLevel updatedParkingLevel;
 		try {
-			updatedParkingLevel = parkingLevelService.updateParkingLevel(parkingLevel);
+			updatedParkingLevel = parkingLevelService.update(parkingLevel);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong updating the parkingLevel: %s", parkingLevel));
 			return null;
@@ -149,7 +149,7 @@ public class ParkingLevelRest {
 		LOGGER.info(String.format("REST request to DELETE parkingLevel with id : %s", id));
 		final ParkingLevel deletedParkingLevel;
 		try {
-			deletedParkingLevel = parkingLevelService.removeParkingLevelById(id);
+			deletedParkingLevel = parkingLevelService.removeById(id);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the parkingLevel with the id: %s", id));
 			return null;
@@ -168,7 +168,7 @@ public class ParkingLevelRest {
 		LOGGER.info(String.format("REST request to DELETE parkingLevel with code : %s", code));
 		final ParkingLevel deletedParkingLevel;
 		try {
-			deletedParkingLevel = parkingLevelService.removeParkingLevelByCode(code);
+			deletedParkingLevel = parkingLevelService.removeByCode(code);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the parkingLevel with the code: %s", code));
 			return null;

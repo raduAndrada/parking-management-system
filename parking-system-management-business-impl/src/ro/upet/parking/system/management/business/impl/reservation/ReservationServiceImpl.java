@@ -12,13 +12,17 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
+import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
-import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
 import ro.upet.parking.system.management.data.impl.reservation.ReservationRepository;
+import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 import ro.upet.parking.system.management.model.reservation.Reservation;
+import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 /**
  * @author Andrada
@@ -31,16 +35,16 @@ public class ReservationServiceImpl implements ReservationService{
 	private Integer RESERVATION_EXPIRATION_TIME; // 15 minutes
 	
 	@Inject
-	ReservationRepository reservationRepo;
+	private ReservationRepository reservationRepo;
 	
 	@Inject
-	ParkingSpotRepository parkingSpotRepo;
+	private VehicleRepository vehicleRepo;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Reservation getReservationById(final Long reservationId) {
+	public Reservation getById(final Long reservationId) {
 		return ReservationMapper.toReservation(reservationRepo.getOne(reservationId));
 	}
 
@@ -48,7 +52,7 @@ public class ReservationServiceImpl implements ReservationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Reservation getReservationByCode(final String reservationCode) {
+	public Reservation getByCode(final String reservationCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -58,7 +62,7 @@ public class ReservationServiceImpl implements ReservationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Reservation> getReservationList() {
+	public List<Reservation> getList() {
 		return ReservationMapper.toReservationList(reservationRepo.findAll());
 	}
 
@@ -67,9 +71,8 @@ public class ReservationServiceImpl implements ReservationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Reservation addReservation(final Reservation reservation) {
+	public Reservation add(final Reservation reservation) {
 		final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-		entity.setParkingSpot(parkingSpotRepo.getOne(reservation.getParkingSpotId()));
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
 		final ReservationEntity savedEntity = reservationRepo.save(entity);
@@ -81,9 +84,8 @@ public class ReservationServiceImpl implements ReservationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Reservation updateReservation(final Reservation reservation) {
+	public Reservation update(final Reservation reservation) {
 		final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-		entity.setParkingSpot(parkingSpotRepo.findById(reservation.getParkingSpotId()).get());
 		entity.setUpdatedAt(Instant.now());
 		final ReservationEntity savedEntity = reservationRepo.save(entity);
 		return ReservationMapper.toReservation(savedEntity);
@@ -94,7 +96,7 @@ public class ReservationServiceImpl implements ReservationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Reservation removeReservationById(final Long reservationId) throws BusinessException {
+	public Reservation removeById(final Long reservationId) throws BusinessException {
 		final ReservationEntity entity = reservationRepo.getOne(reservationId);
 		if (entity == null ) {
 			throw new BusinessException("Reservation does not exist");
@@ -108,7 +110,7 @@ public class ReservationServiceImpl implements ReservationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Reservation removeReservationByCode(final String reservationCode) {
+	public Reservation removeByCode(final String reservationCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -118,7 +120,7 @@ public class ReservationServiceImpl implements ReservationService{
 	 */
 	@Override
 	public Reservation reserveSpot(final Reservation reservation) {
-		final Reservation savedReservation = addReservation(reservation);
+		final Reservation savedReservation = add(reservation);
 		 TimerTask timerTask = new TimerTask() {
 
 	            @Override
@@ -127,7 +129,7 @@ public class ReservationServiceImpl implements ReservationService{
 	                	Optional<ReservationEntity> re = reservationRepo.findById(savedReservation.getId());
 	                	if (re.isPresent()) {
 	                		if (re.get().getReservationStatus().equals(ReservationStatus.UNCLAIMED)) {
-	                			removeReservationById(re.get().getId());
+	                			removeById(re.get().getId());
 	                		}
 	                	}
 						
@@ -140,6 +142,18 @@ public class ReservationServiceImpl implements ReservationService{
 	    Timer timer = new Timer("MyTimer");//create a new Timer
 	    timer.scheduleAtFixedRate(timerTask, 30, Duration.between(reservation.getStartTime().plusSeconds(RESERVATION_EXPIRATION_TIME), reservation.getStartTime()).toMillis());
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Reservation> findAllForUserByUsername(final String username) {
+		final List<Vehicle> vehicles = VehicleMapper.toVehicleList(vehicleRepo.findAllByUserUsename(username));
+		final List <Reservation> resevations = Lists.newArrayList(); 
+		vehicles.stream().forEach(v -> resevations.addAll(ReservationMapper
+												.toReservationList(reservationRepo.findAllByVehicleId(v.getId()))));
+		return	resevations;
 	}
 	
 	

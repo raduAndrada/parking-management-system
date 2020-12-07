@@ -32,7 +32,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle getVehicleById(final Long vehicleId) {
+	public Vehicle getById(final Long vehicleId) {
 		return VehicleMapper.toVehicle(vehicleRepo.getOne(vehicleId));
 	}
 
@@ -40,7 +40,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle getVehicleByCode(final String vehicleCode) {
+	public Vehicle getByCode(final String vehicleCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -49,7 +49,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Vehicle> getVehicleList() {
+	public List<Vehicle> getList() {
 		return VehicleMapper.toVehicleList(vehicleRepo.findAll());
 	}
 
@@ -57,7 +57,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle addVehicle(final Vehicle vehicle) throws BusinessException {
+	public Vehicle add(final Vehicle vehicle) throws BusinessException {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
@@ -72,7 +72,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle updateVehicle(final Vehicle vehicle) {
+	public Vehicle update(final Vehicle vehicle) {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
 		entity.setUpdatedAt(Instant.now());
 		final VehicleEntity savedEntity = vehicleRepo.save(entity);
@@ -83,7 +83,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle removeVehicleById(final Long vehicleId) throws BusinessException {
+	public Vehicle removeById(final Long vehicleId) throws BusinessException {
 		final VehicleEntity entity = vehicleRepo.getOne(vehicleId);
 		if (entity == null) {
 			throw new BusinessException("The vehicle does not exist");
@@ -96,9 +96,18 @@ public class VehicleServiceImpl implements VehicleService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vehicle removeVehicleByCode(final String vehicleCode) {
+	public Vehicle removeByCode(final String vehicleCode) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Vehicle> findByUserUsername(String username) {
+		return VehicleMapper.toVehicleList(vehicleRepo.findAllByUserUsename(username));
 	}
 
 }

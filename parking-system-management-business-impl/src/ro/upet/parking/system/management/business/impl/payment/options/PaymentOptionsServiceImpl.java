@@ -31,7 +31,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaymentOptions getPaymentOptionsById(final Long paymentOptionsId) {
+	public PaymentOptions getById(final Long paymentOptionsId) {
 		return PaymentOptionsMapper.toPaymentOptions(paymentOptionsRepo.getOne(paymentOptionsId));
 	}
 
@@ -39,7 +39,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaymentOptions getPaymentOptionsByCode(final String paymentOptionsCode) {
+	public PaymentOptions getByCode(final String paymentOptionsCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -49,7 +49,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PaymentOptions> getPaymentOptionsList() {
+	public List<PaymentOptions> getList() {
 		return PaymentOptionsMapper.toPaymentOptionsList(paymentOptionsRepo.findAll());
 	}
 
@@ -58,7 +58,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaymentOptions addPaymentOptions(final PaymentOptions paymentOptions) {
+	public PaymentOptions add(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = PaymentOptionsMapper.toPaymentOptionsEntity(paymentOptions);
 		entity.setUser(userRepo.getOne(paymentOptions.getUserId()));
 		entity.setCreatedAt(Instant.now());
@@ -72,7 +72,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaymentOptions updatePaymentOptions(final PaymentOptions paymentOptions) {
+	public PaymentOptions update(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = PaymentOptionsMapper.toPaymentOptionsEntity(paymentOptions);
 		entity.setUser(userRepo.getOne(paymentOptions.getUserId()));
 		entity.setUpdatedAt(Instant.now());
@@ -85,7 +85,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaymentOptions removePaymentOptionsById(final Long paymentOptionsId) throws BusinessException {
+	public PaymentOptions removeById(final Long paymentOptionsId) throws BusinessException {
 		final PaymentOptionsEntity entity = paymentOptionsRepo.getOne(paymentOptionsId);
 		if (entity == null ) {
 			throw new BusinessException("Payment Options does not exist");
@@ -99,7 +99,7 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaymentOptions removePaymentOptionsByCode(final String paymentOptionsCode) {
+	public PaymentOptions removeByCode(final String paymentOptionsCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -41,7 +41,7 @@ public class ParkingZoneRest {
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<ParkingZone> getParkingZone(@PathVariable final String code) {
 		LOGGER.info(String.format("REST request to GET parkingZone by code: %s", code));
-		final ParkingZone parkingZone = parkingZoneService.getParkingZoneByCode(code);
+		final ParkingZone parkingZone = parkingZoneService.getByCode(code);
 		if (parkingZone == null) {
 			LOGGER.info(String.format("ParkingZone with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
@@ -57,7 +57,7 @@ public class ParkingZoneRest {
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<ParkingZone> getParkingZone(@PathVariable final Long id) {
 		LOGGER.info(String.format("REST request to GET parkingZone by id: %s", id));
-		final ParkingZone parkingZone = parkingZoneService.getParkingZoneById(id);
+		final ParkingZone parkingZone = parkingZoneService.getById(id);
 		if (parkingZone == null) {
 			LOGGER.info(String.format("ParkingZone with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
@@ -73,7 +73,7 @@ public class ParkingZoneRest {
 	@GetMapping
 	public ResponseEntity<List<ParkingZone>> getParkingZones() {
 		LOGGER.info(String.format("REST request to GET all parkingZones"));
-		final List<ParkingZone> parkingZoneList= parkingZoneService.getParkingZoneList();
+		final List<ParkingZone> parkingZoneList= parkingZoneService.getList();
 		if (parkingZoneList == null) {
 			LOGGER.info(String.format("No parkingZones found"));
 			return ResponseEntity.notFound().build();
@@ -94,7 +94,7 @@ public class ParkingZoneRest {
 		LOGGER.info(String.format("REST request to POST parkingZone : %s", parkingZone));
 		final ParkingZone createdParkingZone;
 		try {
-			createdParkingZone = parkingZoneService.addParkingZone(parkingZone);
+			createdParkingZone = parkingZoneService.add(parkingZone);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong creating the parkingZone : %s", parkingZone));
 			return null;
@@ -114,7 +114,7 @@ public class ParkingZoneRest {
 		LOGGER.info(String.format("REST request to PUT parkingZone : %s", parkingZone));
 		final ParkingZone updatedParkingZone;
 		try {
-			updatedParkingZone = parkingZoneService.updateParkingZone(parkingZone);
+			updatedParkingZone = parkingZoneService.update(parkingZone);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong updating the parkingZone: %s", parkingZone));
 			return null;
@@ -134,7 +134,7 @@ public class ParkingZoneRest {
 		LOGGER.info(String.format("REST request to DELETE parkingZone with id : %s", id));
 		final ParkingZone deletedParkingZone;
 		try {
-			deletedParkingZone = parkingZoneService.removeParkingZoneById(id);
+			deletedParkingZone = parkingZoneService.removeById(id);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the parkingZone with the id: %s", id));
 			return null;
@@ -153,7 +153,7 @@ public class ParkingZoneRest {
 		LOGGER.info(String.format("REST request to DELETE parkingZone with code : %s", code));
 		final ParkingZone deletedParkingZone;
 		try {
-			deletedParkingZone = parkingZoneService.removeParkingZoneByCode(code);
+			deletedParkingZone = parkingZoneService.removeByCode(code);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the parkingZone with the code: %s", code));
 			return null;

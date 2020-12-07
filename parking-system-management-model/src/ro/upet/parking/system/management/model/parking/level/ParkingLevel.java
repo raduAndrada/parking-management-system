@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.model.parking.level;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -10,6 +9,7 @@ import org.immutables.value.Value;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.parking.Parking;
 import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 
@@ -21,27 +21,7 @@ import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 @Value.Immutable
 @JsonSerialize(as = ImtParkingLevel.class)
 @JsonDeserialize(builder = ImtParkingLevel.Builder.class)
-public interface ParkingLevel {
-
-	/**
-	 * @return identifier for the entity
-	 */
-	Long getId();
-	
-	/**
-	 * @return unique code for the entity
-	 */
-	String getCode();	
-
-	/**
-	 * @return creation time
-	 */
-	Instant getCreatedAt();
-
-	/**
-	 * @return last update time
-	 */
-	Instant getUpdatedAt();
+public interface ParkingLevel  extends BaseModel{
 
 	/**
 	 * @return number of the level

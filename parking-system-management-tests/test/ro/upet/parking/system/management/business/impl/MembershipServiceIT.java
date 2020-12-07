@@ -64,7 +64,7 @@ public class MembershipServiceIT extends BusinessTests {
      	ParkingSpot ps = ParkingSpotMapper.toParkingSpot(pse);
      	User u = UserMapper.toUser(ue);
     	
-        final Membership actualResult = membershipsService.addMembership(ImtMembership.copyOf(MEMBERSHIP_1)
+        final Membership actualResult = membershipsService.add(ImtMembership.copyOf(MEMBERSHIP_1)
         																					.withParkingSpot(ps)
         																					.withUser(u));
         final Membership expectedResult = ImtMembership.copyOf(MEMBERSHIP_1)
@@ -93,9 +93,9 @@ public class MembershipServiceIT extends BusinessTests {
      	
     	me = membershipsRepo.save(me);
     	
-    	final List<Membership> actualResult = membershipsService.getMembershipList();	
-        membershipsService.removeMembershipById(me.getId());
-        final List<Membership> expectedResult = membershipsService.getMembershipList();
+    	final List<Membership> actualResult = membershipsService.getList();	
+        membershipsService.removeById(me.getId());
+        final List<Membership> expectedResult = membershipsService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
     }
@@ -114,7 +114,7 @@ public class MembershipServiceIT extends BusinessTests {
      	pse = parkingSpotRepo.save(pse);
      	me.setParkingSpot(pse);
     	me = membershipsRepo.save(me);
-        final Membership actualResult = membershipsService.getMembershipById(me.getId());
+        final Membership actualResult = membershipsService.getById(me.getId());
         final Membership expectedResult = ImtMembership.builder()
     											.id(actualResult.getId())
     											.createdAt(actualResult.getCreatedAt())
@@ -148,7 +148,7 @@ public class MembershipServiceIT extends BusinessTests {
      	me.setParkingSpot(pse);
     	membershipsRepo.save(me);
     	
-        final List<Membership> actualResult = membershipsService.getMembershipList();	
+        final List<Membership> actualResult = membershipsService.getList();	
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size()).isEqualTo(2);
     }
@@ -172,7 +172,7 @@ public class MembershipServiceIT extends BusinessTests {
      	ParkingSpot ps = ParkingSpotMapper.toParkingSpot(pse);
      	User u = UserMapper.toUser(ue);
     	
-        final Membership actualResult = membershipsService.updateMembership(ImtMembership.copyOf(MEMBERSHIP_1)
+        final Membership actualResult = membershipsService.update(ImtMembership.copyOf(MEMBERSHIP_1)
         																							.withId(me.getId())
         																							.withUser(u)
         																							.withParkingSpot(ps));

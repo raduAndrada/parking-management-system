@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
 import ro.upet.parking.system.management.model.reservation.ImtReservation;
@@ -31,6 +32,7 @@ public class ReservationMapper {
 		entity.setStartTime(reservation.getStartTime());
 		entity.setVehicle(Objects.nonNull(entity.getVehicle()) ? VehicleMapper.toVehicleEntity(reservation.getVehicle()) : null);
 		entity.setReservationStatus(reservation.getReservationStatus());
+		entity.setParkingSpot(Objects.nonNull(entity.getParkingSpot()) ? ParkingSpotMapper.toParkingSpotEntity(reservation.getParkingSpot()) : null);
 		return entity;
 	}
 	
@@ -43,8 +45,7 @@ public class ReservationMapper {
 				.code(entity.getCode())
 				.createdAt(entity.getCreatedAt())
 				.id(entity.getId())
-				.parkingSpotCode(entity.getParkingSpot().getCode())
-				.parkingSpotId(entity.getParkingSpot().getId())
+				.parkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
 				.updatedAt(entity.getUpdatedAt())
 				.endTime(entity.getEndTime())
 				.startTime(entity.getStartTime())

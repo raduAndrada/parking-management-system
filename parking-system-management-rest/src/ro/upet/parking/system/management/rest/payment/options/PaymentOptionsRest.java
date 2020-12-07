@@ -41,7 +41,7 @@ public class PaymentOptionsRest {
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<PaymentOptions> getPaymentOptions(@PathVariable final String code) {
 		LOGGER.info(String.format("REST request to GET paymentOptions by code: %s", code));
-		final PaymentOptions paymentOptions = paymentOptionsService.getPaymentOptionsByCode(code);
+		final PaymentOptions paymentOptions = paymentOptionsService.getByCode(code);
 		if (paymentOptions == null) {
 			LOGGER.info(String.format("PaymentOptions with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
@@ -57,7 +57,7 @@ public class PaymentOptionsRest {
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<PaymentOptions> getPaymentOptions(@PathVariable final Long id) {
 		LOGGER.info(String.format("REST request to GET paymentOptions by id: %s", id));
-		final PaymentOptions paymentOptions = paymentOptionsService.getPaymentOptionsById(id);
+		final PaymentOptions paymentOptions = paymentOptionsService.getById(id);
 		if (paymentOptions == null) {
 			LOGGER.info(String.format("PaymentOptions with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
@@ -73,7 +73,7 @@ public class PaymentOptionsRest {
 	@GetMapping
 	public ResponseEntity<List<PaymentOptions>> getPaymentOptionss() {
 		LOGGER.info(String.format("REST request to GET all paymentOptionss"));
-		final List<PaymentOptions> paymentOptionsList= paymentOptionsService.getPaymentOptionsList();
+		final List<PaymentOptions> paymentOptionsList= paymentOptionsService.getList();
 		if (paymentOptionsList == null) {
 			LOGGER.info(String.format("No paymentOptionss found"));
 			return ResponseEntity.notFound().build();
@@ -93,7 +93,7 @@ public class PaymentOptionsRest {
 		LOGGER.info(String.format("REST request to POST paymentOptions : %s", paymentOptions));
 		final PaymentOptions createdPaymentOptions;
 		try {
-			createdPaymentOptions = paymentOptionsService.addPaymentOptions(paymentOptions);
+			createdPaymentOptions = paymentOptionsService.add(paymentOptions);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong creating the paymentOptions : %s", paymentOptions));
 			return null;
@@ -113,7 +113,7 @@ public class PaymentOptionsRest {
 		LOGGER.info(String.format("REST request to PUT paymentOptions : %s", paymentOptions));
 		final PaymentOptions updatedPaymentOptions;
 		try {
-			updatedPaymentOptions = paymentOptionsService.updatePaymentOptions(paymentOptions);
+			updatedPaymentOptions = paymentOptionsService.update(paymentOptions);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong updating the paymentOptions: %s", paymentOptions));
 			return null;
@@ -133,7 +133,7 @@ public class PaymentOptionsRest {
 		LOGGER.info(String.format("REST request to DELETE paymentOptions with id : %s", id));
 		final PaymentOptions deletedPaymentOptions;
 		try {
-			deletedPaymentOptions = paymentOptionsService.removePaymentOptionsById(id);
+			deletedPaymentOptions = paymentOptionsService.removeById(id);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the paymentOptions with the id: %s", id));
 			return null;
@@ -152,7 +152,7 @@ public class PaymentOptionsRest {
 		LOGGER.info(String.format("REST request to DELETE paymentOptions with code : %s", code));
 		final PaymentOptions deletedPaymentOptions;
 		try {
-			deletedPaymentOptions = paymentOptionsService.removePaymentOptionsByCode(code);
+			deletedPaymentOptions = paymentOptionsService.removeByCode(code);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the paymentOptions with the code: %s", code));
 			return null;

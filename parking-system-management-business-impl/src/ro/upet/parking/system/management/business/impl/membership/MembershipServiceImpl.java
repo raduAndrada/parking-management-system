@@ -44,7 +44,7 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Membership getMembershipById(final Long membershipId) {
+	public Membership getById(final Long membershipId) {
 		return MembershipMapper.toMembership(membershipRepo.getOne(membershipId));
 	}
 
@@ -52,7 +52,7 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Membership getMembershipByCode(final String membershipCode) {
+	public Membership getByCode(final String membershipCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -62,7 +62,7 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Membership> getMembershipList() {
+	public List<Membership> getList() {
 		return MembershipMapper.toMembershipList(membershipRepo.findAll());
 	}
 
@@ -71,7 +71,7 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Membership addMembership(final Membership membership) {
+	public Membership add(final Membership membership) {
 		final MembershipEntity entity = MembershipMapper.toMembershipEntity(membership);
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
@@ -84,7 +84,7 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Membership updateMembership(final Membership membership) {
+	public Membership update(final Membership membership) {
 		final MembershipEntity entity = MembershipMapper.toMembershipEntity(membership);
 		entity.setUpdatedAt(Instant.now());
 		final MembershipEntity savedEntity = membershipRepo.save(entity);
@@ -96,7 +96,7 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Membership removeMembershipById(final Long membershipId) throws BusinessException {
+	public Membership removeById(final Long membershipId) throws BusinessException {
 		final MembershipEntity entity = membershipRepo.getOne(membershipId);
 		if (entity == null ) {
 			throw new BusinessException("Membership does not exist");
@@ -110,7 +110,7 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Membership removeMembershipByCode(final String membershipCode) {
+	public Membership removeByCode(final String membershipCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -119,8 +119,8 @@ public class MembershipServiceImpl implements MembershipService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Membership> getMembershipListByUserId(Long userId) {
-		return getMembershipList().stream().filter(m -> m.getUser().getId().equals(userId)).collect(Collectors.toList());
+	public List<Membership> getMembershipListByUserId(final Long userId) {
+		return getList().stream().filter(m -> m.getUser().getId().equals(userId)).collect(Collectors.toList());
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class MembershipServiceImpl implements MembershipService{
 		final ParkingLevel pl = ParkingLevelMapper.toParkingLevel(parkingLevelRepo.findById(membershipCreate.getParkingLevelId()).orElse(null));
 		final ParkingSpot ps = ParkingSpotFinder.findParkingSpotForMembership(pl.getParkingZones());
 		final User u = UserMapper.toUser(userRepo.findById(membershipCreate.getUserId()).orElse(null));
-		return addMembership(ImtMembership.builder()
+		return add(ImtMembership.builder()
 									.parkingSpot(ps)
 									.user(u)
 									.membershipType(membershipCreate.getMembershipType())

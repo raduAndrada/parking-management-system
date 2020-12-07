@@ -68,7 +68,7 @@ public class UserServiceIT extends BusinessTests {
     @Test
     @Transactional
     public void addUser_test_success() {
-        final User actualResult = userService.addUser(USER_1);
+        final User actualResult = userService.add(USER_1);
         final User expectedResult = ImtUser.copyOf(USER_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())
@@ -80,8 +80,8 @@ public class UserServiceIT extends BusinessTests {
     @Test(expected = BusinessException.class)
     @Transactional
     public void addUser_test_fail_usernameTaken() {
-        userService.addUser(USER_1);
-        userService.addUser(USER_1);
+        userService.add(USER_1);
+        userService.add(USER_1);
     }
     
     @Test
@@ -90,9 +90,9 @@ public class UserServiceIT extends BusinessTests {
     	UserEntity ue = new UserEntity();
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
-    	final List<User> actualResult = userService.getUserList();	
-        userService.removeUserById(ue.getId());
-        final List<User> expectedResult = userService.getUserList();
+    	final List<User> actualResult = userService.getList();	
+        userService.removeById(ue.getId());
+        final List<User> expectedResult = userService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
     }
@@ -103,7 +103,7 @@ public class UserServiceIT extends BusinessTests {
     	UserEntity ue = new UserEntity();
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
-        final User actualResult = userService.getUserById(ue.getId());
+        final User actualResult = userService.getById(ue.getId());
         final User expectedResult = ImtUser.builder()
     											.id(actualResult.getId())
     											.username(USER_USERNAME1)
@@ -126,7 +126,7 @@ public class UserServiceIT extends BusinessTests {
     	ue.setUsername(USER_USERNAME2);
     	userRepo.save(ue);
     	
-        final List<User> actualResult = userService.getUserList();	
+        final List<User> actualResult = userService.getList();	
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size()).isEqualTo(2);
     }
@@ -137,7 +137,7 @@ public class UserServiceIT extends BusinessTests {
        	UserEntity ue = new UserEntity();
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
-        final User actualResult = userService.updateUser(ImtUser.copyOf(USER_1).withId(ue.getId()));
+        final User actualResult = userService.update(ImtUser.copyOf(USER_1).withId(ue.getId()));
         final User expectedResult = ImtUser.copyOf(USER_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())

@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User getUserById(final Long userId) {
+	public User getById(final Long userId) {
 		return UserMapper.toUser(userRepo.getOne(userId));
 	}
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User getUserByCode(final String userCode) {
+	public User getByCode(final String userCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<User> getUserList() {
+	public List<User> getList() {
 		return UserMapper.toUserList(userRepo.findAll());
 	}
 
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User addUser(final User user) {
+	public User add(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User updateUser(final User user) {
+	public User update(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
 		entity.setUpdatedAt(Instant.now());
 		final UserEntity savedEntity = userRepo.save(entity);
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User removeUserById(final Long userId) throws BusinessException {
+	public User removeById(final Long userId) throws BusinessException {
 		final UserEntity entity = userRepo.getOne(userId);
 		if (entity == null ) {
 			throw new BusinessException("The user does not exist");
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User removeUserByCode(final String userCode) {
+	public User removeByCode(final String userCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}

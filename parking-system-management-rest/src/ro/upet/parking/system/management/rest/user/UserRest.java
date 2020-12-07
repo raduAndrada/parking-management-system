@@ -41,7 +41,7 @@ public class UserRest {
 	@GetMapping(path = "/code/{code}")
 	public ResponseEntity<User> getUser(@PathVariable final String code) {
 		LOGGER.info(String.format("REST request to GET user by code: %s", code));
-		final User user = userService.getUserByCode(code);
+		final User user = userService.getByCode(code);
 		if (user == null) {
 			LOGGER.info(String.format("User with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
@@ -57,7 +57,7 @@ public class UserRest {
 	@GetMapping(path = "/id/{id}")
 	public ResponseEntity<User> getUser(@PathVariable final Long id) {
 		LOGGER.info(String.format("REST request to GET user by id: %s", id));
-		final User user = userService.getUserById(id);
+		final User user = userService.getById(id);
 		if (user == null) {
 			LOGGER.info(String.format("User with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
@@ -73,7 +73,7 @@ public class UserRest {
 	@GetMapping
 	public ResponseEntity<List<User>> getUsers() {
 		LOGGER.info(String.format("REST request to GET all users"));
-		final List<User> userList= userService.getUserList();
+		final List<User> userList= userService.getList();
 		if (userList == null) {
 			LOGGER.info(String.format("No users found"));
 			return ResponseEntity.notFound().build();
@@ -93,7 +93,7 @@ public class UserRest {
 		LOGGER.info(String.format("REST request to POST user : %s", user));
 		final User createdUser;
 		try {
-			createdUser = userService.addUser(user);
+			createdUser = userService.add(user);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong creating the user : %s", user));
 			return null;
@@ -113,7 +113,7 @@ public class UserRest {
 		LOGGER.info(String.format("REST request to PUT user : %s", user));
 		final User updatedUser;
 		try {
-			updatedUser = userService.updateUser(user);
+			updatedUser = userService.update(user);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong updating the user: %s", user));
 			return null;
@@ -133,7 +133,7 @@ public class UserRest {
 		LOGGER.info(String.format("REST request to DELETE user with id : %s", id));
 		final User deletedUser;
 		try {
-			deletedUser = userService.removeUserById(id);
+			deletedUser = userService.removeById(id);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the user with the id: %s", id));
 			return null;
@@ -152,7 +152,7 @@ public class UserRest {
 		LOGGER.info(String.format("REST request to DELETE user with code : %s", code));
 		final User deletedUser;
 		try {
-			deletedUser = userService.removeUserByCode(code);
+			deletedUser = userService.removeByCode(code);
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong deleting the user with the code: %s", code));
 			return null;

@@ -46,7 +46,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Parking getParkingById(final Long parkingId) {
+	public Parking getById(final Long parkingId) {
 		return ParkingMapper.toParking(parkingRepo.getOne(parkingId));
 	}
 
@@ -54,7 +54,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Parking getParkingByCode(final String parkingCode) {
+	public Parking getByCode(final String parkingCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -64,7 +64,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Parking> getParkingList() {
+	public List<Parking> getList() {
 		return ParkingMapper.toParkingList(parkingRepo.findAll());
 	}
 
@@ -73,7 +73,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Parking addParking(final Parking parking) {
+	public Parking add(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
@@ -86,7 +86,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Parking updateParking(final Parking parking) {
+	public Parking update(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
 		entity.setUpdatedAt(Instant.now());
 		final ParkingEntity savedEntity = parkingRepo.save(entity);
@@ -98,7 +98,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Parking removeParkingById(final Long parkingId) throws BusinessException {
+	public Parking removeById(final Long parkingId) throws BusinessException {
 		final ParkingEntity entity = parkingRepo.getOne(parkingId);
 		if (entity == null ) {
 			throw new BusinessException("Parking does not exist");
@@ -112,7 +112,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Parking removeParkingByCode(final String parkingCode) {
+	public Parking removeByCode(final String parkingCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -123,7 +123,7 @@ public class ParkingServiceImpl implements ParkingService{
 	@Override
 	@Transactional
 	public ParkingCreate configureParking(final ParkingCreate parkingCreate) {
-		final ParkingEntity parking = ParkingMapper.toParkingEntity(addParking(parkingCreate.getParking()));
+		final ParkingEntity parking = ParkingMapper.toParkingEntity(add(parkingCreate.getParking()));
 		final Instant now = Instant.now();
 		for (int level = 0; level < parkingCreate.getNumberOfLevels(); level ++) {
 		   final ParkingLevelEntity ple = new ParkingLevelEntity();

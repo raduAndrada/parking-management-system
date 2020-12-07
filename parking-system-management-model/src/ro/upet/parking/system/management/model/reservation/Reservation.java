@@ -9,7 +9,9 @@ import org.immutables.value.Value;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
+import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 /**
@@ -19,27 +21,8 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 @Value.Immutable
 @JsonSerialize(as = ImtReservation.class)
 @JsonDeserialize(builder = ImtReservation.Builder.class)
-public interface Reservation {
+public interface Reservation extends BaseModel{
 
-	/**
-	 * @return identifier for the entity
-	 */
-	Long getId();
-	
-	/**
-	 * @return unique code for the entity
-	 */
-	String getCode();	
-
-	/**
-	 * @return creation time
-	 */
-	Instant getCreatedAt();
-	/**
-	 * @return last update time
-	 */
-	Instant getUpdatedAt();
-	
 	/**
 	 * @return start time 
 	 */
@@ -71,10 +54,12 @@ public interface Reservation {
 	/**
 	 * @return parking spot id
 	 */
-	Long getParkingSpotId();
+	ParkingSpot getParkingSpot();
 	
 	/**
-	 * @return parking spot code 
+	 * @return the price of the reservation
 	 */
-	String getParkingSpotCode();	
+	String getCost();
+	
+
 }

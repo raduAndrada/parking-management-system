@@ -37,7 +37,7 @@ public class ParkingSpotServiceIT extends BusinessTests {
     @Test
     @Transactional
     public void addParkingSpot_test_success() {
-        final ParkingSpot actualResult = parkingSpotService.addParkingSpot(PARKING_SPOT_1);
+        final ParkingSpot actualResult = parkingSpotService.add(PARKING_SPOT_1);
         final ParkingSpot expectedResult = ImtParkingSpot.copyOf(PARKING_SPOT_1)
         											.withId(actualResult.getId())
         											.withIsAvailable(true)
@@ -55,9 +55,9 @@ public class ParkingSpotServiceIT extends BusinessTests {
     	pse.setNumber("A1");
     	pse = parkingSpotRepo.save(pse);
     	
-    	final List<ParkingSpot> actualResult = parkingSpotService.getParkingSpotList();	
-        parkingSpotService.removeParkingSpotById(pse.getId());
-        final List<ParkingSpot> expectedResult = parkingSpotService.getParkingSpotList();
+    	final List<ParkingSpot> actualResult = parkingSpotService.getList();	
+        parkingSpotService.removeById(pse.getId());
+        final List<ParkingSpot> expectedResult = parkingSpotService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
     }
@@ -68,7 +68,7 @@ public class ParkingSpotServiceIT extends BusinessTests {
     	ParkingSpotEntity pse = new ParkingSpotEntity();
     	pse.setNumber("A1");
     	pse = parkingSpotRepo.save(pse);
-        final ParkingSpot actualResult = parkingSpotService.getParkingSpotById(pse.getId());
+        final ParkingSpot actualResult = parkingSpotService.getById(pse.getId());
         final ParkingSpot expectedResult = ImtParkingSpot.builder()
     											.id(actualResult.getId())
     											.createdAt(actualResult.getCreatedAt())
@@ -89,7 +89,7 @@ public class ParkingSpotServiceIT extends BusinessTests {
     	pse = new ParkingSpotEntity();
     	parkingSpotRepo.save(pse);
     	
-        final List<ParkingSpot> actualResult = parkingSpotService.getParkingSpotList();	
+        final List<ParkingSpot> actualResult = parkingSpotService.getList();	
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size()).isEqualTo(2);
     }
@@ -99,7 +99,7 @@ public class ParkingSpotServiceIT extends BusinessTests {
     public void updateParkingSpot_test_success() {
        	ParkingSpotEntity pse = new ParkingSpotEntity();
     	pse = parkingSpotRepo.save(pse);
-        final ParkingSpot actualResult = parkingSpotService.updateParkingSpot(ImtParkingSpot.copyOf(PARKING_SPOT_1).withId(pse.getId()));
+        final ParkingSpot actualResult = parkingSpotService.update(ImtParkingSpot.copyOf(PARKING_SPOT_1).withId(pse.getId()));
         final ParkingSpot expectedResult = ImtParkingSpot.copyOf(PARKING_SPOT_1)
         											.withId(actualResult.getId())
         											.withIsAvailable(true)

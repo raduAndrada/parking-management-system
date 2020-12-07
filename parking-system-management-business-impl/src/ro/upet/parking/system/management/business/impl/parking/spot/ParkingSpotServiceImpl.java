@@ -27,7 +27,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ParkingSpot getParkingSpotById(final Long parkingSpotId) {
+	public ParkingSpot getById(final Long parkingSpotId) {
 		return ParkingSpotMapper.toParkingSpot(parkingSpotRepo.getOne(parkingSpotId));
 	}
 
@@ -35,7 +35,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ParkingSpot getParkingSpotByCode(final String parkingSpotCode) {
+	public ParkingSpot getByCode(final String parkingSpotCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -45,7 +45,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<ParkingSpot> getParkingSpotList() {
+	public List<ParkingSpot> getList() {
 		return ParkingSpotMapper.toParkingSpotList(parkingSpotRepo.findAll());
 	}
 
@@ -54,7 +54,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ParkingSpot addParkingSpot(final ParkingSpot parkingSpot) {
+	public ParkingSpot add(final ParkingSpot parkingSpot) {
 		final ParkingSpotEntity entity = ParkingSpotMapper.toParkingSpotEntity(parkingSpot);
 		entity.setCreatedAt(Instant.now());
 		entity.setUpdatedAt(Instant.now());
@@ -67,7 +67,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ParkingSpot updateParkingSpot(final ParkingSpot parkingSpot) {
+	public ParkingSpot update(final ParkingSpot parkingSpot) {
 		final ParkingSpotEntity entity = ParkingSpotMapper.toParkingSpotEntity(parkingSpot);
 		entity.setUpdatedAt(Instant.now());
 		final ParkingSpotEntity savedEntity = parkingSpotRepo.save(entity);
@@ -79,7 +79,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ParkingSpot removeParkingSpotById(final Long parkingSpotId) throws BusinessException {
+	public ParkingSpot removeById(final Long parkingSpotId) throws BusinessException {
 		final ParkingSpotEntity entity = parkingSpotRepo.getOne(parkingSpotId);
 		if (entity == null ) {
 			throw new BusinessException("Parking spot does not exist");
@@ -93,7 +93,7 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ParkingSpot removeParkingSpotByCode(final String parkingSpotCode) {
+	public ParkingSpot removeByCode(final String parkingSpotCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
