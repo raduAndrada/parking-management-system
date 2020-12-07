@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/reservation_item_parking_name_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parking name"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="52dp"
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="90dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/reservation_item_parking_level_number_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parking level"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_constraintTop_toBottomOf="@+id/reservation_item_parking_name_id"
+        tools:layout_constraintRight_toLeftOf="@+id/reservation_item_parking_zone_letter_id"
+        />
+
+    <TextView
+        android:id="@+id/reservation_item_parking_zone_letter_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parking Zone"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="52dp"
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_constraintLeft_toRightOf="@+id/reservation_item_parking_level_number_id"
+        tools:layout_constraintTop_toBottomOf="@+id/reservation_item_parking_name_id"
+    />
+
+    <TextView
+        android:id="@+id/reservation_item_parking_spot_number_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parking Spot"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="52dp"
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_constraintLeft_toRightOf="@+id/reservation_item_parking_zone_letter_id"
+        tools:layout_constraintTop_toBottomOf="@+id/reservation_item_parking_name_id"
+        />
+
+    <TextView
+        android:id="@+id/reservation_item_start_time_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start time"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="52dp"
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_constraintTop_toBottomOf="@+id/reservation_item_parking_level_number_id"
+        tools:layout_constraintRight_toLeftOf="@+id/reservation_item_end_time_id"
+        />
+
+    <TextView
+        android:id="@+id/reservation_item_end_time_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End time"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="70dp"
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_constraintTop_toBottomOf="@+id/reservation_item_parking_level_number_id"
+        tools:layout_constraintLeft_toRightOf="@+id/reservation_item_start_time_id"
+        />
+
+    <TextView
+        android:id="@+id/reservation_item_cost_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cost"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="85dp"
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_constraintTop_toBottomOf="@+id/reservation_item_parking_level_number_id"
+        tools:layout_constraintLeft_toRightOf="@+id/reservation_item_end_time_id"
+        />
+
+    <TextView
+        android:id="@+id/reservation_item_notes_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notes"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_constraintTop_toBottomOf="@+id/reservation_item_start_time_id"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
