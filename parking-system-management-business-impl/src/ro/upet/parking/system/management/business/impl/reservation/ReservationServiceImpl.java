@@ -17,11 +17,15 @@ import com.google.common.collect.Lists;
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
+import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
+import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
+import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
 import ro.upet.parking.system.management.data.impl.reservation.ReservationRepository;
 import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 import ro.upet.parking.system.management.model.reservation.Reservation;
+import ro.upet.parking.system.management.model.reservation.ReservationCreate;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 /**
@@ -39,6 +43,9 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Inject
 	private VehicleRepository vehicleRepo;
+	
+	@Inject
+	private ParkingSpotRepository parkingSpotRepo;
 
 	/**
 	 * {@inheritDoc}
@@ -154,6 +161,21 @@ public class ReservationServiceImpl implements ReservationService{
 		vehicles.stream().forEach(v -> resevations.addAll(ReservationMapper
 												.toReservationList(reservationRepo.findAllByVehicleId(v.getId()))));
 		return	resevations;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Reservation createReservation(ReservationCreate reservationCreate) {
+		final VehicleEntity ve = vehicleRepo.findAllByUserUsename(reservationCreate.getUsername()).stream().findFirst().orElse(null);
+		final List<ParkingSpotEntity> parkingSpots = parkingSpotRepo.findAllAlailableByParkingName(reservationCreate.getParkingName());
+		final ReservationEntity re = new ReservationEntity();
+		re.setVehicle(ve);
+		re.setParkingSpot(parkingSpots.stream().findFirst().orElseThrow(BusinessException :: new));
+		re.setStartTime(Instant.parse(reservationCreate.getStartTime()));
+		re.setEndTime(Instant.parse(reservationCreate.getEndTime()));		
+		return add(ReservationMapper.toReservation(re));
 	}
 	
 	

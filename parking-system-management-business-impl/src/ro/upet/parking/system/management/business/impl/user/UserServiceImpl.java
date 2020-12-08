@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.business.api.user.UserValidator;
+import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.data.impl.user.UserRepository;
 import ro.upet.parking.system.management.model.user.User;
+import ro.upet.parking.system.management.model.user.UserCreate;
+import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 /**
  * @author Andrada
@@ -27,6 +30,8 @@ public class UserServiceImpl implements UserService{
 	
 	@Inject
 	private UserValidator userValidator;
+	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -122,6 +127,6 @@ public class UserServiceImpl implements UserService{
 		final Optional<UserEntity> ue = userRepo.findByEmailAndPassword(email, password);
 		return ue.isPresent() ? UserMapper.toUser(ue.get()) : null;
 	}
-	
+
 	
 }

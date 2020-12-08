@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.business.api.user.UserService;
+import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
 import ro.upet.parking.system.management.model.user.User;
+import ro.upet.parking.system.management.model.user.UserCreate;
 import ro.upet.parking.system.management.rest.base.BaseRest;
 
 /**
@@ -24,12 +26,17 @@ import ro.upet.parking.system.management.rest.base.BaseRest;
 public class UserRest extends BaseRest<User> {
 
 	@Inject
-	private UserService service;
+	private UserService userService;
+	
+
+	@Inject
+	private VehicleService vehicleService;
+
 
 	@Override
 	@Inject
 	public void setService(BaseService<User> service) {
-		super.setService(this.service);
+		super.setService(this.userService);
 	}
 	
 	/**
@@ -40,18 +47,38 @@ public class UserRest extends BaseRest<User> {
 	@PostMapping("/login")
 	@Transactional
 	public ResponseEntity<User> post(@RequestBody final User user) {
-		LOGGER.info(String.format("REST request to login : %s", user));
+		LOGGER.info(String.format("REST request to login : %s", user.toString()));
 		User validUser;
 		try {
-			validUser = service.loginWithUsernameAndPassword(user.getUsername(), user.getPassword());
+			validUser = userService.loginWithUsernameAndPassword(user.getUsername(), user.getPassword());
 			if (validUser == null) {
-				validUser = service.loginWithEmailAndPassword(user.getUsername(), user.getPassword());
+				validUser = userService.loginWithEmailAndPassword(user.getUsername(), user.getPassword());
 			}
 		} catch (final Exception e) {
 			LOGGER.info(String.format("Something went wrong loggin in the user : %s", user));
 			return null;
 		}
 		return ResponseEntity.ok(validUser);
+	}
+	
+	/**
+	 * 
+	 * @param entity the entity to be added
+	 * @return the created entity
+	 */
+	@PostMapping("/customer-create")
+	@Transactional
+	public ResponseEntity<User> createReservation(@RequestBody final UserCreate userCreate) {
+		LOGGER.info(String.format("REST request to CREATE User : %s", userCreate.toString()));
+		final User created;
+		try {
+			created = vehicleService.add(userCreate.getVehicle()).getUser();
+			//TODO stripe for credit card
+		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong creating the entity : %s", userCreate));
+			return null;
+		}
+		return ResponseEntity.ok(created);
 	}
 
 }

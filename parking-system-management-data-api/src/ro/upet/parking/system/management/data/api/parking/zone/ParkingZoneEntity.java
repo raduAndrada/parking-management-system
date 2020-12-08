@@ -8,9 +8,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 
 @Entity
@@ -55,6 +59,10 @@ public class ParkingZoneEntity implements Serializable {
 	 */
 	@OneToMany(cascade= CascadeType.MERGE)
 	List<ParkingSpotEntity> parkingSpots;
+	
+	@ManyToOne
+	@JsonIgnore
+	ParkingLevelEntity parkingLevel;
 
 	public Long getId() {
 		return id;
@@ -102,6 +110,14 @@ public class ParkingZoneEntity implements Serializable {
 
 	public void setParkingSpots(List<ParkingSpotEntity> parkingSpots) {
 		this.parkingSpots = parkingSpots;
+	}
+
+	public ParkingLevelEntity getParkingLevel() {
+		return parkingLevel;
+	}
+
+	public void setParkingLevel(ParkingLevelEntity parkingLevel) {
+		this.parkingLevel = parkingLevel;
 	}
 
 

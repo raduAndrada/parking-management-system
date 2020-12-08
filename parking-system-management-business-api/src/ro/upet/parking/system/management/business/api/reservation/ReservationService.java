@@ -4,6 +4,7 @@ import java.util.List;
 
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.model.reservation.Reservation;
+import ro.upet.parking.system.management.model.reservation.ReservationCreate;
 
 public interface ReservationService extends BaseService<Reservation> {
 	
@@ -19,4 +20,10 @@ public interface ReservationService extends BaseService<Reservation> {
 	 * @return the created reservation
 	 */
 	public Reservation reserveSpot(final Reservation reservation);
+	
+	/**
+	 * @param reservationCreate the details for the reservation to be created
+	 * @return the created reservation
+	 */
+	public Reservation createReservation(final ReservationCreate reservationCreate);
 }

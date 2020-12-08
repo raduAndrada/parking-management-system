@@ -27,7 +27,12 @@ public class UserMapper {
 		entity.setCreatedAt(user.getCreatedAt());
 		entity.setUpdatedAt(user.getUpdatedAt());
 		entity.setAddress(user.getAddress());
+		try {
 		entity.setBirthday(!Objects.isNull(user.getBirthday()) ? LocalDate.parse(user.getBirthday()): null);
+		} catch (Exception e) {
+		entity.setBirthday(null);
+		}
+		
 		entity.setEmail(user.getEmail());
 		entity.setName(user.getName());
 		entity.setPassword(user.getPassword());

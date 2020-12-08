@@ -21,6 +21,7 @@ public class BaseRest<T> {
 
 	private static final String CODE_PATH = "/code/{code}";
 	private static final String ID_PATH = "/id/{id}";
+	private static final String LIST_PATH = "/list";
 	
 	protected BaseService<T> service;
 	
@@ -69,14 +70,15 @@ public class BaseRest<T> {
 	/**
 	 * @return the list with all the entities
 	 */
-	@GetMapping
+	@GetMapping(LIST_PATH)
 	public ResponseEntity<List<T>> gets() {
-		LOGGER.info(String.format("REST request to GET all entitys"));
+		LOGGER.info(String.format("REST request to GET all entities"));
 		final List<T> entityList= service.getList();
 		if (entityList == null) {
 			LOGGER.info(String.format("No entitys found"));
 			return ResponseEntity.notFound().build();
 		} else {
+			LOGGER.info(String.format("Entities found : %s", entityList.toString()));
 			return ResponseEntity.ok(entityList);
 		}
 	}

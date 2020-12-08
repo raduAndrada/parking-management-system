@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.api.user;
 
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.model.user.User;
+import ro.upet.parking.system.management.model.user.UserCreate;
 
 public interface UserService extends BaseService<User> {	
 
@@ -18,4 +19,5 @@ public interface UserService extends BaseService<User> {
 	 * @return the user if it exists, empty if not
 	 */
 	public User loginWithEmailAndPassword(final String email,final String password);
+
 }

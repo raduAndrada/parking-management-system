@@ -6,9 +6,14 @@ import java.time.Instant;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 
 @Entity
 @Table(name = "parking_spots")
@@ -64,6 +69,10 @@ public class ParkingSpotEntity implements Serializable {
 	 */
 	@ColumnDefault("false")
 	Boolean rented;
+	
+	@ManyToOne
+	@JsonIgnore
+	ParkingZoneEntity parkingZone;
 
 
 	public Long getId() {
@@ -130,6 +139,16 @@ public class ParkingSpotEntity implements Serializable {
 	public void setRented(Boolean rented) {
 		this.rented = rented;
 	}
+
+	public ParkingZoneEntity getParkingZone() {
+		return parkingZone;
+	}
+
+	public void setParkingZone(ParkingZoneEntity parkingZone) {
+		this.parkingZone = parkingZone;
+	}
+	
+	
 	
 	
 }

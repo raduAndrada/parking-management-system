@@ -14,8 +14,28 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonDeserialize(builder = ImtReservationCreate.Builder.class)
 public interface ReservationCreate {
 	
-	Reservation getReservation();
+	/**
+	 * @return the username for the reservation
+	 */
+	String getUsername();
+	
+
+	/**
+	 * @return the name of the parking
+	 */
+	String getParkingName();
 	
 	
+	/**
+	 * @return the start time for the reservation
+	 */
+	String getStartTime();
+	
+	
+
+	/**
+	 * @return the end time for the reservation
+	 */
+	String getEndTime();
 
 }
