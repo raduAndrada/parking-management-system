@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import ro.upet.parking.system.management.model.ImtParking;
 import ro.upet.parking.system.management.model.ImtReservation;
 import ro.upet.parking.system.management.model.ImtReservationCreate;
@@ -19,11 +20,12 @@ public interface ReservationService extends BaseService{
 
     static final String RESERVATION_CREATE_PATH = "create";
 
+
     @POST(RESERVATION_CREATE_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
     Call<ImtReservation> createReservation(@Body final ImtReservationCreate reservationCreate);
 
-    @GET(LIST_PATH)
+    @GET(USER_USERNAME_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
-    Call<List<ImtReservation>> getAll();
+    Call<List<ImtReservation>> getAll(@Path("username") final String username);
 }

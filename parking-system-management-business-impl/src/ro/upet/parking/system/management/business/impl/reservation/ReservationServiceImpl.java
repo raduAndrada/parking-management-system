@@ -17,9 +17,11 @@ import com.google.common.collect.Lists;
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
+import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
 import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
+import ro.upet.parking.system.management.data.impl.parking.level.ParkingLevelRepository;
 import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
 import ro.upet.parking.system.management.data.impl.reservation.ReservationRepository;
 import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
@@ -46,6 +48,9 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Inject
 	private ParkingSpotRepository parkingSpotRepo;
+	
+	@Inject
+	private ParkingLevelRepository parkingLevelRepo;
 
 	/**
 	 * {@inheritDoc}
@@ -169,13 +174,25 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public Reservation createReservation(ReservationCreate reservationCreate) {
 		final VehicleEntity ve = vehicleRepo.findAllByUserUsename(reservationCreate.getUsername()).stream().findFirst().orElse(null);
-		final List<ParkingSpotEntity> parkingSpots = parkingSpotRepo.findAllAlailableByParkingName(reservationCreate.getParkingName());
+		final List<ParkingSpotEntity> parkingSpots = Lists.newArrayList();//parkingSpotRepo.findAllAvailableByParkingName(reservationCreate.getParkingName());
+		final List<ParkingLevelEntity> parkingLevels = parkingLevelRepo.findAllByParkingName(reservationCreate.getParkingName());
+		parkingLevels.stream().forEach(pl -> {
+			pl.getParkingZones().forEach(pz -> {
+				pz.setParkingLevel(pl);
+				pz.getParkingSpots().stream().forEach(ps -> ps.setParkingZone(pz));
+				parkingSpots.addAll(pz.getParkingSpots());
+			});
+		});
+		
 		final ReservationEntity re = new ReservationEntity();
 		re.setVehicle(ve);
-		re.setParkingSpot(parkingSpots.stream().findFirst().orElseThrow(BusinessException :: new));
+		re.setParkingSpot(parkingSpots.stream().filter(x -> x.getAvailable()).findFirst().orElseThrow(BusinessException :: new));
 		re.setStartTime(Instant.parse(reservationCreate.getStartTime()));
-		re.setEndTime(Instant.parse(reservationCreate.getEndTime()));		
-		return add(ReservationMapper.toReservation(re));
+		re.setEndTime(Instant.parse(reservationCreate.getEndTime()));	
+		re.setCreatedAt(Instant.now());
+		re.setUpdatedAt(Instant.now());
+		final ReservationEntity savedEntity = reservationRepo.save(re);
+		return ReservationMapper.toReservation(savedEntity);
 	}
 	
 	

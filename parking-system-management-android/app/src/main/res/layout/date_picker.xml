@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <DatePicker
+        android:id="@+id/reservation_start_date_id"
+        android:calendarViewShown="true"
+        android:spinnersShown="false"
+        android:layout_weight="4"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        />
+
+</RelativeLayout>

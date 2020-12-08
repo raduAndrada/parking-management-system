@@ -62,6 +62,7 @@
     <string name="ccv_example">000</string>
     <string name="reserve">Reserve</string>
     <string name="starting_at">starting at</string>
-    <string name="starting_at_example">12/12/12 12:00</string>
+    <string name="starting_at_example">2018-11-30T18:35:24.00Z</string>
     <string name="ending_at">ending at</string>
+    <string name="date">pick date</string>
 </resources>

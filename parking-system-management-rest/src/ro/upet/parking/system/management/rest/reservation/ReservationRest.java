@@ -44,7 +44,7 @@ public class ReservationRest extends BaseRest<Reservation>{
 	 */
 	@GetMapping("/user/{username}")
 	public ResponseEntity<List<Reservation>> getReservationsForUser(@PathVariable final String username) {
-		LOGGER.info(String.format("RESRT request to GET reservations by userId : %s", username));
+		LOGGER.info(String.format("RESRT request to GET reservations by username : %s", username));
 		final List<Reservation> reservationList= service.findAllForUserByUsername(username);
 		if (reservationList == null) {
 			LOGGER.info(String.format("No memberships found for the user with id: %s", username));

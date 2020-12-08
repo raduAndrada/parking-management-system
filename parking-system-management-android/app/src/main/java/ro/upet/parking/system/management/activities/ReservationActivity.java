@@ -1,5 +1,10 @@
 package ro.upet.parking.system.management.activities;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -11,13 +16,17 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import androidx.fragment.app.DialogFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +45,8 @@ import ro.upet.parking.system.management.services.ReservationService;
 
 import static ro.upet.parking.system.management.activities.common.StringConstants.PARKINGS_URL;
 import static ro.upet.parking.system.management.activities.common.StringConstants.RESERVATIONS_URL;
+import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
+import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
 
 public class ReservationActivity extends MenuHelper implements
         AdapterView.OnItemSelectedListener  {
@@ -55,7 +66,10 @@ public class ReservationActivity extends MenuHelper implements
     private static final ReservationService reservationService = retrofit2.create(ReservationService.class);
 
     final MdfReservationCreate reservationCreate = MdfReservationCreate.create();
-    List<String> parkingList = Lists.newArrayList("abc");
+    List<String> parkingList = Lists.newArrayList();
+
+    static TextView selectedDateTV;
+    static String date;
 
 
     @Override
@@ -65,26 +79,33 @@ public class ReservationActivity extends MenuHelper implements
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final SharedPreferences sharedPref = ReservationActivity.this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        final String username = sharedPref.getString(USERNAME, "none");
+
+
         final EditText startTimeET = (EditText) findViewById(R.id.reservation_start_time_id);
         final EditText endTimeET = (EditText) findViewById(R.id.reservation_end_time_id);
 
+        selectedDateTV  = (TextView) findViewById(R.id.reservation_selected_date_id);
+
+        final BootstrapButton dateBtn = (BootstrapButton) findViewById(R.id.reservation_date_btn_id);
         final BootstrapButton reserveBtn = (BootstrapButton) findViewById(R.id.reservation_reserve_btn_id);
 
         final Spinner parkingNamesSpinner = (Spinner) findViewById(R.id.reservation_parking_names_id);
-        ArrayAdapter parkingNamesAdaptor = new ArrayAdapter(ReservationActivity.this,
-                android.R.layout.simple_spinner_item,
-                parkingList
-                );
-        parkingNamesAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        parkingNamesSpinner.setAdapter(parkingNamesAdaptor);
+
 
         parkingService.getAll().enqueue(new Callback<List<ImtParking>>() {
 
             @Override
             public void onResponse(Call<List<ImtParking>> call, Response<List<ImtParking>> response) {
                 parkingList = response.body().stream().map(Parking::getName).collect(Collectors.toList());
-                parkingNamesAdaptor.notifyDataSetChanged();
-
+                ArrayAdapter parkingNamesAdaptor = new ArrayAdapter(ReservationActivity.this,
+                        android.R.layout.simple_spinner_item,
+                        parkingList
+                );
+                parkingNamesAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                parkingNamesSpinner.setAdapter(parkingNamesAdaptor);
+                parkingNamesSpinner.setOnItemSelectedListener(ReservationActivity.this);
             }
 
             @Override
@@ -97,13 +118,17 @@ public class ReservationActivity extends MenuHelper implements
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reservationCreate.setStartTime(startTimeET.getText().toString())
-                                 .setEndTime(endTimeET.getText().toString());
+                final String startTime =   date + startTimeET.getText().toString() + ":00.00Z";
+                final String endTime =   date + endTimeET.getText().toString() + ":00.00Z";
+                reservationCreate.setStartTime(startTime)
+                                 .setEndTime(endTime)
+                                 .setUsername(username);
                 reservationService.createReservation(ImtReservationCreate.builder().from(reservationCreate).build()).enqueue(new Callback<ImtReservation>() {
                     @Override
                     public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
-                        //TODO
-                        Toast.makeText(getApplicationContext(), reservationCreate.toString() , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Created reservation: " + response.body().toString() , Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ReservationActivity.this, ReservationHistoryActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
@@ -114,7 +139,13 @@ public class ReservationActivity extends MenuHelper implements
                 });
             }
         });
-        parkingNamesAdaptor.notifyDataSetChanged();
+
+        dateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog(view);
+            }
+        });
     }
 
     @Override
@@ -124,6 +155,37 @@ public class ReservationActivity extends MenuHelper implements
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        //TODO throw error
+        if (adapterView.getChildCount() > 0) {
+            reservationCreate.setParkingName((String) adapterView.getItemAtPosition(0));
+        }
     }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            date = year + "-" + month + "-" + day + "T";
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            selectedDateTV.setText("Date: " + day + "-" + (++month));
+            date = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day) + "T";
+        }
+    }
+
 }

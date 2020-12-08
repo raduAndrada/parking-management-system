@@ -49,7 +49,7 @@ public class ReservationHistoryActivity extends MenuHelper {
         ListView listView = (ListView) findViewById(R.id.reservation_list_id);
         listView.setAdapter(adapter);
 
-        service.getAll().enqueue(new Callback<List<ImtReservation>>() {
+        service.getAll(adapter.getUsername()).enqueue(new Callback<List<ImtReservation>>() {
             @Override
             public void onResponse(Call<List<ImtReservation>> call, Response<List<ImtReservation>> response) {
                 reservationList.addAll(response.body());

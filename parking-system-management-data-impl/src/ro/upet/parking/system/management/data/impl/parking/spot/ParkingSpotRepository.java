@@ -13,5 +13,7 @@ public interface ParkingSpotRepository extends JpaRepository<ParkingSpotEntity, 
 	
 	
 	@Query("SELECT ps FROM ParkingSpotEntity ps WHERE ps.parkingZone.parkingLevel.parking.name = ?1 and ps.available = true")
-	public List<ParkingSpotEntity> findAllAlailableByParkingName(final String parkingName);
+	public List<ParkingSpotEntity> findAllAvailableByParkingName(final String parkingName);
+	
+	public List<ParkingSpotEntity> findAllByAvailable(final boolean available);
 }

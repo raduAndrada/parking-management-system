@@ -14,16 +14,38 @@
         android:spinnerMode="dropdown"
         android:layout_centerHorizontal="true" />
 
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        app:bootstrapBrand="info"
+        android:id="@+id/reservation_date_btn_id"
+        android:layout_below="@+id/reservation_parking_names_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        />
+
+
+    <TextView
+        android:id="@+id/reservation_selected_date_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/reservation_date_btn_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        />
+
     <EditText
         android:id="@+id/reservation_start_time_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/reservation_parking_names_id"
+        android:layout_below="@+id/reservation_selected_date_id"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/starting_at"
-        android:inputType="datetime"
+        android:inputType="text"
         android:autofillHints="@string/starting_at_example" />
 
     <EditText
@@ -35,7 +57,7 @@
         android:layout_marginTop="29dp"
         android:ems="10"
         android:hint="@string/ending_at"
-        android:inputType="datetime"
+        android:inputType="text"
         android:autofillHints="@string/starting_at_example" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
