@@ -8,7 +8,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import ro.upet.parking.system.management.model.ParkingLevel;
 
-public interface ParkingLevelService extends BaseService<ParkingLevel> {
+public interface ParkingLevelService extends BaseService {
 
     static final String PARKING_PATH = "/parking/{parkingId}";
 

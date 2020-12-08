@@ -10,14 +10,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Parking">
         <activity
-            android:name=".activities.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:name=".activities.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.Parking.NoActionBar"></activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.Parking.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:label="@string/title_activity_user_profile"
+            android:theme="@style/Theme.Parking.NoActionBar"></activity>
         <activity
             android:name=".activities.ReservationActivity"
             android:label="@string/title_activity_reservation"
             android:theme="@style/Theme.Parking.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.ReservationHistoryActivity"
+            android:label="@string/title_activity_reservation"
+            android:theme="@style/Theme.Parking.NoActionBar" />
+        <activity
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Parking.NoActionBar">
             <intent-filter>
@@ -27,5 +46,8 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

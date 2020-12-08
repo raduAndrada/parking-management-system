@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import ro.upet.parking.system.management.R;
 import ro.upet.parking.system.management.model.Reservation;
 
+import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
+import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
+
 
 public class ReservationAdapter extends BaseAdaptor<Reservation> {
 

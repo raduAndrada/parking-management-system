@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/user_username"
+        android:ems="10"
+        android:id="@+id/register_user_username_id"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:autofillHints="@string/user_username_example" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/prompt_password"
+        android:ems="10"
+        android:id="@+id/register_user_password_id"
+        android:layout_below="@+id/register_user_username_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:autofillHints="@string/user_password" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/register_user_email_id"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/register_user_password_id"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/user_email"
+        android:autofillHints="@string/user_email_example" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/user_name"
+        android:ems="10"
+        android:id="@+id/register_user_name_id"
+        android:layout_below="@+id/register_user_email_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:autofillHints="@string/user_name_example" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:hint="@string/user_birthday"
+        android:ems="10"
+        android:id="@+id/register_user_birthday_id"
+        android:layout_below="@+id/register_user_name_id"
+        android:layout_marginTop="23dp"
+        android:layout_centerHorizontal="true"
+        android:autofillHints="@string/user_birthday_example" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/licence_plate"
+        android:ems="10"
+        android:id="@+id/register_user_vehicle_licence_plate_id"
+        android:layout_below="@+id/register_user_birthday_id"
+        android:layout_marginTop="23dp"
+        android:layout_centerHorizontal="true"
+        android:autofillHints="@string/licence_plate_example" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/credit_card_number"
+        android:ems="10"
+        android:id="@+id/register_credit_card_number_id"
+        android:layout_below="@+id/register_user_vehicle_licence_plate_id"
+        android:layout_marginTop="23dp"
+        android:layout_centerHorizontal="true"
+        android:autofillHints="@string/credit_card_number_example"
+        tools:ignore="TextFields" />
+
+    <Spinner
+        android:id="@+id/register_credit_card_exp_month_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_credit_card_number_id"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:layout_marginLeft="120dp"
+        android:hint="@string/credit_card_exp_month"
+        android:spinnerMode="dropdown"
+        android:dropDownHeight="100dp"
+        android:layout_marginStart="120dp" />
+
+    <Spinner
+        android:id="@+id/register_credit_card_exp_year_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_credit_card_number_id"
+        android:layout_toEndOf="@+id/register_credit_card_exp_month_id"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:layout_marginLeft="200dp"
+        android:hint="@string/credit_card_exp_year"
+        android:layout_marginStart="120dp"
+        android:spinnerMode="dropdown"
+        android:dropDownHeight="100dp"
+        android:layout_toRightOf="@+id/register_credit_card_exp_month_id" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/ccv"
+        android:ems="10"
+        android:id="@+id/register_credit_card_ccv_id"
+        android:layout_below="@+id/register_credit_card_exp_year_id"
+        android:layout_marginTop="23dp"
+        android:layout_centerHorizontal="true"
+        android:autofillHints="@string/ccv_example" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_account"
+        app:bootstrapBrand="success"
+        android:id="@+id/register_user_create_btn_id"
+        android:layout_below="@+id/register_credit_card_ccv_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp" />
+
+
+</RelativeLayout>

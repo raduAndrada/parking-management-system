@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ReservationActivity">
+    tools:context=".activities.ReservationHistoryActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_reservation" />
+    <include layout="@layout/content_reservation_history" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

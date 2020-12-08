@@ -18,5 +18,50 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="parking_name">"Parking name"</string>
+    <string name="parking_level">"Parking level"</string>
+    <string name="parking_zone">"Parking zone"</string>
+    <string name="parking_spot">"Parking spot"</string>
+    <string name="start_time">"Started"</string>
+    <string name="end_time">"Ended"</string>
+    <string name="cost">"Cost"</string>
+    <string name="notes">"Notes"</string>
+    <string name="home">Home</string>
+    <string name="reservation_new">New Reservation</string>
+    <string name="my_reservations">My Reservations</string>
+    <string name="my_profile">My Profile</string>
+    <string name="logout">Log Out</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="invalid_login">Invalid Login Attempt</string>
+    <string name="login_username">Username/Email</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="user_username">Username</string>
+    <string name="user_email">Email</string>
+    <string name="user_name">Name</string>
+    <string name="user_birthday">Birthday</string>
+    <string name="create_account">Create Account</string>
+    <string name="user_birthday_example">01/01/2001</string>
+    <string name="user_name_example">John Doe</string>
+    <string name="user_email_example">john_doe@email.com</string>
+    <string name="user_username_example">johnDoe123</string>
+    <string name="user_password">pass123</string>
+    <string name="licence_plate">Licence Plate</string>
+    <string name="licence_plate_example">HD10JON</string>
+    <string name="credit_card_number">Credit Card Number</string>
+    <string name="credit_card_number_example">0000 0000 0000 0000</string>
+    <string name="credit_card_exp_month">MM</string>
+    <string name="credit_card_exp_year">YY</string>
+    <string name="ccv">CCV</string>
+    <string name="ccv_example">000</string>
+    <string name="reserve">Reserve</string>
+    <string name="starting_at">starting at</string>
+    <string name="starting_at_example">12/12/12 12:00</string>
+    <string name="ending_at">ending at</string>
 </resources>

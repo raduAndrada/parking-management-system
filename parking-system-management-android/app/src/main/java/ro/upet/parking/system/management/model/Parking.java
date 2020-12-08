@@ -9,7 +9,7 @@ import org.immutables.value.Value;
  * Model for representing a parking
  */
 @Value.Immutable
-public interface Parking extends BaseModel{
+public interface Parking {
 	
 	/**
 	 * @return the name of the parking

@@ -8,10 +8,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import ro.upet.parking.system.management.model.ImtMembershipCreate;
 import ro.upet.parking.system.management.model.Membership;
 import ro.upet.parking.system.management.model.MembershipCreate;
 
-public interface MembershipService extends BaseService<Membership> {
+public interface MembershipService extends BaseService {
 
     final static String  USER_PATH = "/user/{userId}";
     final static String  CREATE_PATH = "/create";
@@ -22,6 +23,6 @@ public interface MembershipService extends BaseService<Membership> {
 
     @POST(CREATE_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
-    Call<Membership> create(@Body final MembershipCreate body);
+    Call<Membership> create(@Body final ImtMembershipCreate body);
 
 }

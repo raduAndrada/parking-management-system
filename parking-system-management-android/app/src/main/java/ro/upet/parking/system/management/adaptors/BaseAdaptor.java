@@ -15,11 +15,7 @@ import ro.upet.parking.system.management.services.BaseService;
 
 public class BaseAdaptor<T> extends ArrayAdapter {
 
-    protected static final String SHARED_PREFERENCES = "sharedPreferences";
 
-    protected static final String USERNAME = "username";
-
-    public static final String SERVER_BASE_ADDRESS = "http://localhost:8000/";
 
     protected String username;
 

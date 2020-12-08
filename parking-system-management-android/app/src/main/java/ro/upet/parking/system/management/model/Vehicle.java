@@ -1,6 +1,9 @@
 package ro.upet.parking.system.management.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.time.Instant;
 
 import org.immutables.value.Value;
@@ -15,6 +18,8 @@ import ro.upet.parking.system.management.model.User;
  * Model for the vehicle
  */
 @Value.Immutable
+@JsonSerialize(as = ImtVehicle.class)
+@JsonDeserialize(builder = ImtVehicle.Builder.class)
 public interface Vehicle extends BaseModel{
 
 
