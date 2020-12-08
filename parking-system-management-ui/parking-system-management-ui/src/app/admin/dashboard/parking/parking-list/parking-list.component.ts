@@ -22,7 +22,7 @@ export class ParkingListComponent implements OnInit {
     private library: FaIconLibrary
     ) {
     library.addIcons(faPlus, faArrowRight);
-    const parkingUrl = '/v1/parkings';
+    const parkingUrl = '/v1/parkings/list';
     this.parkingService.getList(parkingUrl).subscribe((parkingList: Parking[]) => {
       this.parkingList = parkingList;
     });

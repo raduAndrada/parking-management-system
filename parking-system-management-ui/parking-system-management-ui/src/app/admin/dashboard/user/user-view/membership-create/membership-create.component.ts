@@ -44,7 +44,7 @@ export class MembershipCreateComponent implements OnInit {
       library.addIcons(faSave, faArrowRight); 
       const href = this.router.url;
       this.userId = href.replace( /^\D+/g, '');
-      const parkingUrl = '/v1/parkings';
+      const parkingUrl = '/v1/parkings/list';
       this.parkingService.getList(parkingUrl).subscribe((parkings: Parking[]) => {
         this.parkings = parkings;
       });

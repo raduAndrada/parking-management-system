@@ -22,7 +22,7 @@ export class UserListComponent implements OnInit {
     private library: FaIconLibrary
     ) {
     library.addIcons(faPlus, faTrash);
-    const userUrl = '/v1/users';
+    const userUrl = '/v1/users/list';
     this.userService.getList(userUrl).subscribe((userList: User[]) => {
       this.userList = userList;
     });
