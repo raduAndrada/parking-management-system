@@ -1,19 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ListView
-        android:id="@+id/reservation_list_id"
+
+    <TextView
+        android:id="@+id/main_time_indicator_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/time_left"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="129dp" />
+        android:ems="10"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/main_days_indicator_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/days_left"
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/main_time_indicator_id"
+        android:ems="10"
+        android:textSize="40dp"
+        />
+    <TextView
+        android:id="@+id/main_days_indicator_counter_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/days_left"
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/main_days_indicator_id"
+        android:ems="10"
+        android:textSize="40dp"
+        />
+
+    <TextView
+        android:id="@+id/main_hours_indicator_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hours_left"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="120dp"
+        android:layout_below="@id/main_time_indicator_id"
+        android:ems="10"
+        android:textSize="40dp"
+        android:textColor="@color/bootstrap_brand_warning"
+        />
+    <TextView
+        android:id="@+id/main_hours_indicator_counter_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hours_left"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="120dp"
+        android:layout_below="@id/main_hours_indicator_id"
+        android:ems="10"
+        android:textSize="40dp"
+        android:textColor="@color/bootstrap_brand_warning"
+        />
+
+    <TextView
+        android:id="@+id/main_minutes_indicator_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/minutes_left"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="240dp"
+        android:layout_below="@id/main_time_indicator_id"
+        android:ems="10"
+        android:textSize="40dp"
+        android:textColor="@color/bootstrap_brand_danger"
+        />
+
+    <TextView
+        android:id="@+id/main_minutes_indicator_counter_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/minutes_left"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="240dp"
+        android:layout_below="@id/main_minutes_indicator_id"
+        android:ems="10"
+        android:textSize="40dp"
+        android:textColor="@color/bootstrap_brand_danger"
+        />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove"
+        app:bootstrapBrand="danger"
+        android:id="@+id/main_remove_btn_id"
+        android:layout_below="@+id/main_minutes_indicator_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp" />
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/claim"
+        app:bootstrapBrand="info"
+        android:id="@+id/main_claim_btn_id"
+        android:layout_below="@+id/main_remove_btn_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp" />
+
+</RelativeLayout>

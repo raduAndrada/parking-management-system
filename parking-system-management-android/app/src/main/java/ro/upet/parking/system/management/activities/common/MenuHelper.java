@@ -1,16 +1,25 @@
 package ro.upet.parking.system.management.activities.common;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import ro.upet.parking.system.management.R;
+import ro.upet.parking.system.management.activities.MainActivity;
 import ro.upet.parking.system.management.activities.ReservationActivity;
 import ro.upet.parking.system.management.activities.ReservationHistoryActivity;
 import ro.upet.parking.system.management.activities.UserProfileActivity;
 
+import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
+import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
+
 public class MenuHelper extends AppCompatActivity {
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -23,7 +32,7 @@ public class MenuHelper extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == R.id.menu_home_id) {
-            Intent intent = new Intent(this, ReservationHistoryActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
         if (id == R.id.menu_my_reservations_id) {

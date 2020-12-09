@@ -65,4 +65,14 @@
     <string name="starting_at_example">2018-11-30T18:35:24.00Z</string>
     <string name="ending_at">ending at</string>
     <string name="date">pick date</string>
+    <string name="password_confirm">Re-type Password</string>
+    <string name="save">Save</string>
+    <string name="phone">Phone Number</string>
+    <string name="phone_example">1234567890</string>
+    <string name="time_left">Time Left</string>
+    <string name="days_left">Days</string>
+    <string name="remove">Remove</string>
+    <string name="claim">Claim</string>
+    <string name="minutes_left">Min</string>
+    <string name="hours_left">Hours</string>
 </resources>

@@ -33,6 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.upet.parking.system.management.R;
+import ro.upet.parking.system.management.activities.common.BaseUtils;
 import ro.upet.parking.system.management.activities.common.MenuHelper;
 import ro.upet.parking.system.management.model.ImtParking;
 import ro.upet.parking.system.management.model.ImtReservation;
@@ -78,9 +79,9 @@ public class ReservationActivity extends MenuHelper implements
         setContentView(R.layout.activity_reservation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final SharedPreferences sharedPref = this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        final String username= sharedPref.getString(USERNAME, "none");
 
-        final SharedPreferences sharedPref = ReservationActivity.this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        final String username = sharedPref.getString(USERNAME, "none");
 
 
         final EditText startTimeET = (EditText) findViewById(R.id.reservation_start_time_id);
@@ -118,8 +119,8 @@ public class ReservationActivity extends MenuHelper implements
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String startTime =   date + startTimeET.getText().toString() + ":00.00Z";
-                final String endTime =   date + endTimeET.getText().toString() + ":00.00Z";
+                final String startTime =  BaseUtils.convertTimeToParsingInstantFormat(date, startTimeET.getText().toString());
+                final String endTime =   BaseUtils.convertTimeToParsingInstantFormat(date, endTimeET.getText().toString());
                 reservationCreate.setStartTime(startTime)
                                  .setEndTime(endTime)
                                  .setUsername(username);
@@ -171,20 +172,20 @@ public class ReservationActivity extends MenuHelper implements
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-            date = year + "-" + month + "-" + day + "T";
 
-            // Create a new instance of DatePickerDialog and return it
+            date = BaseUtils.convertDateToParsingInstantFormat(year, month, day);
+
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
+
             selectedDateTV.setText("Date: " + day + "-" + (++month));
-            date = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day) + "T";
+            date = BaseUtils.convertDateToParsingInstantFormat(year, month, day);
         }
     }
 

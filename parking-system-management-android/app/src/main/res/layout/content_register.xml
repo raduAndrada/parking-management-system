@@ -55,14 +55,14 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:hint="@string/user_birthday"
+        android:inputType="phone"
+        android:hint="@string/phone"
         android:ems="10"
-        android:id="@+id/register_user_birthday_id"
+        android:id="@+id/register_user_phone_id"
         android:layout_below="@+id/register_user_name_id"
         android:layout_marginTop="23dp"
         android:layout_centerHorizontal="true"
-        android:autofillHints="@string/user_birthday_example" />
+        android:autofillHints="@string/phone_example" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
         android:hint="@string/licence_plate"
         android:ems="10"
         android:id="@+id/register_user_vehicle_licence_plate_id"
-        android:layout_below="@+id/register_user_birthday_id"
+        android:layout_below="@+id/register_user_phone_id"
         android:layout_marginTop="23dp"
         android:layout_centerHorizontal="true"
         android:autofillHints="@string/licence_plate_example" />

@@ -21,13 +21,13 @@ public interface Reservation extends BaseModel{
 	/**
 	 * @return start time 
 	 */
-	Instant getStartTime();
+	String getStartTime();
 	
 
 	/**
 	 * @return end time 
 	 */
-	Instant getEndTime();
+	String getEndTime();
 
 	/**
 	 * @return additional info for the reservation
@@ -39,12 +39,11 @@ public interface Reservation extends BaseModel{
 	 * @return status for the reservation 
 	 */
 	ReservationStatus getReservationStatus();
-	
 
 	/**
-	 * @return vehicle code
+	 * @return user for the reservation
 	 */
-	Vehicle getVehicle();
+	User getUser();
 
 	/**
 	 * @return parking spot id

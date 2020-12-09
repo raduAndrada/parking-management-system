@@ -55,6 +55,9 @@ public class ReservationAdapter extends BaseAdaptor<Reservation> {
         final TextView endTimeTextView = (TextView) convertView.findViewById(R.id.reservation_item_end_time_id);
         endTimeTextView.setText(reservation.getEndTime().toString());
 
+        final TextView notesTextView = (TextView)  convertView.findViewById(R.id.reservation_item_notes_id);
+        notesTextView.setText(reservation.getNotes());
+
         return convertView;
     }
 

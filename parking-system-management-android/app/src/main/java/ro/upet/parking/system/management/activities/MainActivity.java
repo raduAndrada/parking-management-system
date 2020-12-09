@@ -1,25 +1,47 @@
 package ro.upet.parking.system.management.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import ro.upet.parking.system.management.R;
-import ro.upet.parking.system.management.activities.ReservationActivity;
-import ro.upet.parking.system.management.activities.ReservationHistoryActivity;
-import ro.upet.parking.system.management.activities.UserProfileActivity;
 import ro.upet.parking.system.management.activities.common.MenuHelper;
+import ro.upet.parking.system.management.model.ImtReservation;
+import ro.upet.parking.system.management.model.ImtReservationNext;
+import ro.upet.parking.system.management.model.ReservationNext;
+import ro.upet.parking.system.management.model.ReservationStatus;
+import ro.upet.parking.system.management.services.ReservationService;
+
+import android.os.CountDownTimer;
 
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import java.util.Objects;
+
+import static ro.upet.parking.system.management.activities.common.StringConstants.RESERVATIONS_URL;
+import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
+import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
 
 public class MainActivity extends MenuHelper {
+
+
+    private static final Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(RESERVATIONS_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    private static final ReservationService service = retrofit.create(ReservationService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +50,133 @@ public class MainActivity extends MenuHelper {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TypefaceProvider.registerDefaultIconSets();
+
+        final SharedPreferences sharedPref = this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        final String username= sharedPref.getString(USERNAME, "none");
+
+        final TextView timeTextView = (TextView) findViewById(R.id.main_time_indicator_id);
+        final TextView daysTextView = (TextView) findViewById(R.id.main_days_indicator_counter_id);
+        final TextView hoursTextView = (TextView) findViewById(R.id.main_hours_indicator_counter_id);
+        final TextView minutesTextView = (TextView) findViewById(R.id.main_minutes_indicator_counter_id);
+
+        final BootstrapButton claimBtn = (BootstrapButton) findViewById(R.id.main_claim_btn_id);
+        final BootstrapButton removeBtn = (BootstrapButton) findViewById(R.id.main_remove_btn_id);
+
+        service.getReservationNext(username).enqueue(new Callback<ImtReservationNext>() {
+            @Override
+            public void onResponse(Call<ImtReservationNext> call, Response<ImtReservationNext> response) {
+                final ReservationNext rn = response.body();
+                if (Objects.nonNull(rn)) {
+
+                    daysTextView.setText(rn.getDays().toString());
+                    hoursTextView.setText(rn.getHours().toString());
+                    minutesTextView.setText(rn.getMinutes().toString());
+
+                    if (rn.getReservationStatus().equals(ReservationStatus.PENDING)) {
+                        claimBtn.setEnabled(false);
+                        removeBtn.setEnabled(true);
+                    }
+                    if (rn.getReservationStatus().equals(ReservationStatus.UNCLAIMED)) {
+                        claimBtn.setEnabled(true);
+                        removeBtn.setEnabled(false);
+                    }
+                    claimBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            service.claimReservation(rn.getReservationId()).enqueue(new Callback<ImtReservation>() {
+                                @Override
+                                public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
+                                    Toast.makeText(getApplicationContext(), "Successfully claimed Reservation", Toast.LENGTH_LONG).show();
+                                    claimBtn.setEnabled(false);
+                                    claimBtn.setText(ReservationStatus.CLAIMED.toString());
+                                    removeBtn.setEnabled(false);
+                                }
+
+                                @Override
+                                public void onFailure(Call<ImtReservation> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    });
+
+                    removeBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            service.deleteReservationById(rn.getReservationId()).enqueue(new Callback<ImtReservation>() {
+                                @Override
+                                public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
+                                    Toast.makeText(getApplicationContext(), "Successfully removed Reservation", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onFailure(Call<ImtReservation> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    });
+                    int timerTaskDuration = computeTimerTask(rn.getDays(), rn.getMinutes(), rn.getMinutes());
+
+                    new CountDownTimer(timerTaskDuration, 1000) {
+
+                        Integer tempMinutes = rn.getMinutes();
+                        Integer tempHours = rn.getHours();
+                        Integer tempDays = rn.getDays();
+                        Integer tempSeconds = 60;
+
+                        public void onTick(long millisUntilFinished) {
+                            tempSeconds--;
+
+                            if (tempSeconds == 0) {
+                                tempMinutes--;
+                                tempSeconds = 60;
+                            }
+                            if (tempMinutes == 0) {
+                                tempHours--;
+                                tempMinutes = 60;
+                            }
+                            if (tempHours == 0) {
+                                tempDays--;
+                                tempHours = 24;
+                            }
+                            daysTextView.setText(tempDays.toString());
+                            hoursTextView.setText(tempHours.toString());
+                            minutesTextView.setText(tempMinutes.toString());
+                            if (tempDays == 0 && tempHours == 0 && tempMinutes == 15) {
+                                claimBtn.setEnabled(true);
+                                removeBtn.setEnabled(false);
+                            }
+                        }
+
+                        public void onFinish() {
+                        }
+                    }.start();
+                } else {
+                    timeTextView.setText("NO UPCOMING RESERVATIONS");
+                    daysTextView.setVisibility(View.INVISIBLE);
+                    hoursTextView.setVisibility(View.INVISIBLE);
+                    minutesTextView.setVisibility(View.INVISIBLE);
+                    claimBtn.setVisibility(View.INVISIBLE);
+                    removeBtn.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImtReservationNext> call, Throwable t) {
+
+            }
+        });
+
+
+
+    }
+
+    private int computeTimerTask(int days, int minutes, int hours) {
+        return 24 * 60 * 1000 * days +  60 * 1000 * hours +  minutes * 1000;
     }
 
 }

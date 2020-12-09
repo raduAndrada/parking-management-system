@@ -17,13 +17,4 @@ public interface BaseModel {
 	 */
 	String getCode();	
 
-	/**
-	 * @return creation time
-	 */
-	Instant getCreatedAt();
-
-	/**
-	 * @return last update time
-	 */
-	Instant getUpdatedAt();
 }

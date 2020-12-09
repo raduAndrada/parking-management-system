@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.activities;
 
 import android.os.Bundle;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
@@ -18,6 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.upet.parking.system.management.R;
+import ro.upet.parking.system.management.activities.common.BaseUtils;
 import ro.upet.parking.system.management.activities.common.MenuHelper;
 import ro.upet.parking.system.management.adaptors.ReservationAdapter;
 import ro.upet.parking.system.management.model.ImtReservation;
@@ -52,7 +54,13 @@ public class ReservationHistoryActivity extends MenuHelper {
         service.getAll(adapter.getUsername()).enqueue(new Callback<List<ImtReservation>>() {
             @Override
             public void onResponse(Call<List<ImtReservation>> call, Response<List<ImtReservation>> response) {
-                reservationList.addAll(response.body());
+                response.body()
+                        .stream()
+                        .forEach(r -> reservationList.add(ImtReservation.builder()
+                                                                .from(r)
+                                                                .startTime(BaseUtils.displayDateTime(BaseUtils.extractDateFromInstantFormat(r.getStartTime())))
+                                                                .endTime(BaseUtils.displayDateTime(BaseUtils.extractDateFromInstantFormat(r.getEndTime())))
+                                                                .build()));
                 adapter.notifyDataSetChanged();
             }
 

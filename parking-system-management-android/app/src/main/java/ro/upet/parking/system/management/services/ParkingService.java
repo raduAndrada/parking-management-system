@@ -9,10 +9,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import ro.upet.parking.system.management.model.ImtParking;
 import ro.upet.parking.system.management.model.ImtParkingCreate;
-import ro.upet.parking.system.management.model.Membership;
-import ro.upet.parking.system.management.model.MembershipCreate;
 import ro.upet.parking.system.management.model.Parking;
-import ro.upet.parking.system.management.model.ParkingCreate;
 
 public interface ParkingService extends BaseService {
 

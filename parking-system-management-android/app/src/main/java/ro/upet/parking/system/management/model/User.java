@@ -24,22 +24,17 @@ public interface User extends BaseModel{
 	 * @return first name and last name of the user
 	 */
 	String getName();
-	
-	/**
-	 * @return birthday of the user
-	 */
-	String getBirthday();
-	
+
 	/**
 	 * @return unique username
-	 */	
+	 */
 	String getUsername();
-	
+
 	/**
 	 * @return password
 	 */
 	String getPassword();
-	
+
 	/**
 	 * @return the email of the user (must be unique)
 	 */
@@ -50,14 +45,5 @@ public interface User extends BaseModel{
 	 */
 	String getPhoneNumber();
 
-	/**
-	 * @return the address of the user
-	 */
-	String getAddress();
-	
-	/**
-	 * @return get the type of the user
-	 */
-	UserType getUserType();
-	
+
 }
