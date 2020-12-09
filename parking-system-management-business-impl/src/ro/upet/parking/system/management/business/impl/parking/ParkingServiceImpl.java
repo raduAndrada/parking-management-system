@@ -126,7 +126,7 @@ public class ParkingServiceImpl implements ParkingService{
 		final ParkingEntity parking = ParkingMapper.toParkingEntity(add(parkingCreate.getParking()));
 		final Instant now = Instant.now();
 		for (int level = 0; level < parkingCreate.getNumberOfLevels(); level ++) {
-		   final ParkingLevelEntity ple = new ParkingLevelEntity();
+		   ParkingLevelEntity ple = new ParkingLevelEntity();
 		        ple.setCreatedAt(now);
 		        ple.setUpdatedAt(now);
 		        ple.setNumber("" + level);
@@ -135,7 +135,7 @@ public class ParkingServiceImpl implements ParkingService{
 		        final List<ParkingZoneEntity> parkingZones = Lists.newArrayList();
 			for(char zone = Character.toUpperCase(parkingCreate.getParkingZoneStartingLetter()); zone <= Character.toUpperCase(parkingCreate.getParkingZoneEndingLetter()); zone++ )
 		    {
-				final ParkingZoneEntity pze = new ParkingZoneEntity();
+				ParkingZoneEntity pze = new ParkingZoneEntity();
 				pze.setLetter("" + zone);
 				pze.setCreatedAt(now);
 				pze.setUpdatedAt(now);
@@ -152,11 +152,19 @@ public class ParkingServiceImpl implements ParkingService{
 					parkingSpots.add(savedPse);
 				}
 				pze.setParkingSpots(parkingSpots);
-				final ParkingZoneEntity savedPze = parkingZoneRepo.save(pze);
+				ParkingZoneEntity savedPze = parkingZoneRepo.save(pze);
 				parkingZones.add(savedPze);
 		    }
 			ple.setParkingZones(parkingZones);
-			parkingLevelRepo.save(ple);
+			final ParkingLevelEntity pl = parkingLevelRepo.save(ple);
+			pl.getParkingZones().forEach(pz -> {
+				pz.setParkingLevel(pl);
+				ParkingZoneEntity pze = parkingZoneRepo.save(pz);
+				pze.getParkingSpots().forEach(ps -> {
+					ps.setParkingZone(pze);
+					parkingSpotRepo.save(ps);
+				});
+			});
 		}
 		
 		return parkingCreate;

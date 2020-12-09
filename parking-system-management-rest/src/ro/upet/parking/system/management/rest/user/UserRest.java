@@ -5,7 +5,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +18,7 @@ import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
 import ro.upet.parking.system.management.model.user.User;
 import ro.upet.parking.system.management.model.user.UserCreate;
+import ro.upet.parking.system.management.model.user.UserUpdate;
 import ro.upet.parking.system.management.rest.base.BaseRest;
 
 /**
@@ -37,6 +41,22 @@ public class UserRest extends BaseRest<User> {
 	@Inject
 	public void setService(BaseService<User> service) {
 		super.setService(this.userService);
+	}
+	
+	/**
+	 * @param id of the entity
+	 * @return the entity with the corresponding id
+	 */
+	@GetMapping(path = USER_USERNAME_PATH)
+	public ResponseEntity<User> get(@PathVariable final String username) {
+		LOGGER.info(String.format("REST request to GET entity by username: %s", username));
+		final User entity = userService.getByUsername(username);
+		if (entity == null) {
+			LOGGER.info(String.format(" with id: %s does not exist", username));
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(entity);
+		}
 	}
 	
 	/**
@@ -68,7 +88,7 @@ public class UserRest extends BaseRest<User> {
 	 */
 	@PostMapping("/customer-create")
 	@Transactional
-	public ResponseEntity<User> createReservation(@RequestBody final UserCreate userCreate) {
+	public ResponseEntity<User> createUser(@RequestBody final UserCreate userCreate) {
 		LOGGER.info(String.format("REST request to CREATE User : %s", userCreate.toString()));
 		final User created;
 		try {
@@ -79,6 +99,27 @@ public class UserRest extends BaseRest<User> {
 			return null;
 		}
 		return ResponseEntity.ok(created);
+	}
+	
+	
+	/**
+	 * 
+	 * @param entity the entity to be added
+	 * @return the created entity
+	 */
+	@PutMapping("/customer-update")
+	@Transactional
+	public ResponseEntity<User> updateUser(@RequestBody final UserUpdate userUpdate) {
+		LOGGER.info(String.format("REST request to UPDATE User : %s", userUpdate.toString()));
+		final User updated;
+		try {
+			updated = userService.update(userUpdate);
+			//TODO stripe for credit card
+		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong UPDATING the entity : %s", userUpdate));
+			return null;
+		}
+		return ResponseEntity.ok(updated);
 	}
 
 }

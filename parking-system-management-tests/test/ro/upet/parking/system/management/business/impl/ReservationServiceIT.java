@@ -58,7 +58,7 @@ public class ReservationServiceIT extends BusinessTests {
     
     private static final Reservation RESERVATION_1 = ImtReservation.builder()
 			.notes(RESERVATION_NOTES_1)
-			.reservationStatus(ReservationStatus.EXPIRED)
+			.reservationStatus(ReservationStatus.COMPLETED)
 			.startTime(RESERVATION_START_TIME_1)
 			.endTime(RESERVATION_END_TIME_1)
 			.build();

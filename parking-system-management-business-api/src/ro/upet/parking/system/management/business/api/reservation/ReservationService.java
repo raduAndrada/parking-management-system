@@ -5,6 +5,7 @@ import java.util.List;
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.model.reservation.Reservation;
 import ro.upet.parking.system.management.model.reservation.ReservationCreate;
+import ro.upet.parking.system.management.model.reservation.ReservationNext;
 
 public interface ReservationService extends BaseService<Reservation> {
 	
@@ -15,15 +16,22 @@ public interface ReservationService extends BaseService<Reservation> {
 	 */
 	public List<Reservation> findAllForUserByUsername(final String username);
 	
-	/**
-	 * @param reservation the details for the reservation
-	 * @return the created reservation
-	 */
-	public Reservation reserveSpot(final Reservation reservation);
 	
 	/**
 	 * @param reservationCreate the details for the reservation to be created
 	 * @return the created reservation
 	 */
 	public Reservation createReservation(final ReservationCreate reservationCreate);
+	
+	/**
+	 * @param username the user for which we search for the next reservation
+	 * @return the next reservation of the user with the requested username
+	 */
+	public ReservationNext getReservationNext(final String username);
+	
+	/**
+	 * @param reservationId the reservation that needs to be claimed
+	 * @return the updated value
+	 */
+	public Reservation claim(final Long reservationId);
 }

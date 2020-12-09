@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
-import ro.upet.parking.system.management.model.vehicle.Vehicle;
+import ro.upet.parking.system.management.model.user.User;
 
 /**
  * @author Andrada
@@ -47,9 +47,9 @@ public interface Reservation extends BaseModel{
 	
 
 	/**
-	 * @return vehicle code
+	 * @return user for the reservation
 	 */
-	Vehicle getVehicle();	
+	User getUser();	
 	
 	/**
 	 * @return parking spot id

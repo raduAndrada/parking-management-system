@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import javax.annotation.Nullable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
+import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 
@@ -75,10 +78,10 @@ public class ReservationEntity implements Serializable {
 	String vehicleLicencePlate;
 	
 	/**
-	 * the vehicle
+	 * the user
 	 */
-	@OneToOne
-	VehicleEntity vehicle;
+	@ManyToOne
+	UserEntity user;
 
 	
 	/**
@@ -177,17 +180,6 @@ public class ReservationEntity implements Serializable {
 		this.vehicleLicencePlate = vehicleLicencePlate;
 	}
 
-
-	public VehicleEntity getVehicle() {
-		return vehicle;
-	}
-
-
-	public void setVehicle(VehicleEntity vehicle) {
-		this.vehicle = vehicle;
-	}
-
-
 	public ParkingSpotEntity getParkingSpot() {
 		return parkingSpot;
 	}
@@ -196,6 +188,17 @@ public class ReservationEntity implements Serializable {
 	public void setParkingSpot(ParkingSpotEntity parkingSpot) {
 		this.parkingSpot = parkingSpot;
 	}
+
+
+	public UserEntity getUser() {
+		return user;
+	}
+
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+	
 	
 	
 }

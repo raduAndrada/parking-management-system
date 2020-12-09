@@ -10,6 +10,7 @@ import ro.upet.parking.system.management.business.api.parking.spot.ParkingSpotSe
 import ro.upet.parking.system.management.business.api.parking.zone.ParkingZoneService;
 import ro.upet.parking.system.management.business.api.payment.options.PaymentOptionsService;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
+import ro.upet.parking.system.management.business.api.reservation.ReservationValidator;
 import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.business.api.user.UserValidator;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
@@ -21,6 +22,7 @@ import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotS
 import ro.upet.parking.system.management.business.impl.parking.zone.ParkingZoneServiceImpl;
 import ro.upet.parking.system.management.business.impl.payment.options.PaymentOptionsServiceImpl;
 import ro.upet.parking.system.management.business.impl.reservation.ReservationServiceImpl;
+import ro.upet.parking.system.management.business.impl.reservation.ReservationValidatorImpl;
 import ro.upet.parking.system.management.business.impl.user.UserServiceImpl;
 import ro.upet.parking.system.management.business.impl.user.UserValidatorImpl;
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleServiceImpl;
@@ -81,6 +83,11 @@ public class ApplicationConfig {
 	@Bean
 	public UserValidator userValidator() {
 		return new UserValidatorImpl();
+	}
+	
+	@Bean
+	public ReservationValidator reservationValidator() {
+		return new ReservationValidatorImpl();
 	}
 
 

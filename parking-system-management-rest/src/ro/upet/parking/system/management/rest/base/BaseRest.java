@@ -24,6 +24,7 @@ public class BaseRest<T> {
 	private static final String LIST_PATH = "/list";
 	
 	protected BaseService<T> service;
+	protected static final String USER_USERNAME_PATH = "/user/{username}";
 	
 	
 	public BaseService<T> getService() {

@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
-import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
+import ro.upet.parking.system.management.business.impl.user.UserMapper;
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
 import ro.upet.parking.system.management.model.reservation.ImtReservation;
 import ro.upet.parking.system.management.model.reservation.Reservation;
@@ -30,7 +30,7 @@ public class ReservationMapper {
 		entity.setEndTime(reservation.getEndTime());
 		entity.setNotes(reservation.getNotes());
 		entity.setStartTime(reservation.getStartTime());
-		entity.setVehicle(Objects.nonNull(entity.getVehicle()) ? VehicleMapper.toVehicleEntity(reservation.getVehicle()) : null);
+		entity.setUser(Objects.nonNull(entity.getUser()) ? UserMapper.toUserEntity(reservation.getUser()) : null);
 		entity.setReservationStatus(reservation.getReservationStatus());
 		entity.setParkingSpot(Objects.nonNull(entity.getParkingSpot()) ? ParkingSpotMapper.toParkingSpotEntity(reservation.getParkingSpot()) : null);
 		return entity;
@@ -50,7 +50,7 @@ public class ReservationMapper {
 				.endTime(entity.getEndTime())
 				.startTime(entity.getStartTime())
 				.reservationStatus(entity.getReservationStatus())
-				.vehicle(Objects.nonNull(entity.getVehicle()) ? VehicleMapper.toVehicle(entity.getVehicle()) : null)
+				.user(Objects.nonNull(entity.getUser()) ? UserMapper.toUser(entity.getUser()) : null)
 				.notes(entity.getNotes())
 				.reservationStatus(entity.getReservationStatus())
 				.build();

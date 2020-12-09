@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.business.api.user.UserValidator;
-import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
+import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 import ro.upet.parking.system.management.data.impl.user.UserRepository;
+import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
 import ro.upet.parking.system.management.model.user.User;
-import ro.upet.parking.system.management.model.user.UserCreate;
-import ro.upet.parking.system.management.model.vehicle.Vehicle;
+import ro.upet.parking.system.management.model.user.UserUpdate;
 
 /**
  * @author Andrada
@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Inject
 	private UserValidator userValidator;
+	
+	@Inject
+	private VehicleRepository vehicleRepo;
 	
 
 	/**
@@ -126,6 +129,34 @@ public class UserServiceImpl implements UserService{
 	public User loginWithEmailAndPassword(String email, String password) {
 		final Optional<UserEntity> ue = userRepo.findByEmailAndPassword(email, password);
 		return ue.isPresent() ? UserMapper.toUser(ue.get()) : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User update(UserUpdate userUpdate) {
+		// TODO stripe update if needed
+		VehicleEntity ve =vehicleRepo.findAllByUserUsename(userUpdate.getUsername())
+							.stream().findFirst().orElseThrow(BusinessException :: new);
+		UserEntity ue = ve.getUser();
+		ue.setUpdatedAt(Instant.now());
+		ue.setEmail(userUpdate.getEmail());
+		ue.setPhoneNumber(userUpdate.getPhoneNumber());
+		ue.setPassword(userUpdate.getPassword().equals(userUpdate.getPasswordConfirm()) ? 
+												userUpdate.getPassword() : ue.getPassword());	
+		
+		ve.setLicencePlate(userUpdate.getLicencePlate());
+		ve.setUser(ue);
+		if (userValidator.validate(UserMapper.toUser(ue))) {
+		vehicleRepo.save(ve);
+		}
+		return UserMapper.toUser(ue);
+	}
+
+	@Override
+	public User getByUsername(String username) {
+		return UserMapper.toUser(userRepo.findByUsername(username).orElseThrow(BusinessException::new));
 	}
 
 	
