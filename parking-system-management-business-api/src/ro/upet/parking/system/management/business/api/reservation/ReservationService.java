@@ -7,6 +7,10 @@ import ro.upet.parking.system.management.model.reservation.Reservation;
 import ro.upet.parking.system.management.model.reservation.ReservationCreate;
 import ro.upet.parking.system.management.model.reservation.ReservationNext;
 
+/**
+ * @author Andrada
+ * Service to handle reservation entities
+ */
 public interface ReservationService extends BaseService<Reservation> {
 	
 	/**
@@ -34,4 +38,11 @@ public interface ReservationService extends BaseService<Reservation> {
 	 * @return the updated value
 	 */
 	public Reservation claim(final Long reservationId);
+
+
+	/**
+	 * @param reservationId the id of the reservation
+	 * @return the completed reservation
+	 */
+	public Reservation complete(final Long reservationId);
 }

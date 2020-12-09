@@ -5,6 +5,10 @@ import java.util.List;
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.model.parking.level.ParkingLevel;
 
+/**
+ * @author Andrada
+ * Service operating with parking level 
+ */
 public interface ParkingLevelService extends BaseService<ParkingLevel> {
 	
 	/**

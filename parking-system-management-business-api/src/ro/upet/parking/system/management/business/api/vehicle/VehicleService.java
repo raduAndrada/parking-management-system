@@ -5,6 +5,11 @@ import java.util.List;
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
+/**
+ * 
+ * @author Andrada
+ * Vehicle actions
+ */
 public interface VehicleService extends BaseService<Vehicle> {
 
 	/**

@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
@@ -160,7 +161,8 @@ public class ReservationServiceImpl implements ReservationService{
 		final ReservationEntity re = new ReservationEntity();
 		re.setUser(ue);
 		re.setStartTime(Instant.parse(reservationCreate.getStartTime()));
-		re.setEndTime(Instant.parse(reservationCreate.getEndTime()));	
+		re.setEndTime(Instant.parse(reservationCreate.getEndTime()));
+		re.setCost(ChronoUnit.HOURS.between(re.getEndTime(), re.getStartTime()) * parkingLevels.stream().findFirst().get().getParking().getPricePerHour());
 		re.setParkingSpot(parkingSpots.stream()
 									.filter(x ->  {
 										re.setParkingSpot(x);
@@ -211,9 +213,22 @@ public class ReservationServiceImpl implements ReservationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Reservation claim(Long reservationId) {
+	public Reservation claim(final Long reservationId) {
 		ReservationEntity re = reservationRepo.findById(reservationId).orElseThrow(BusinessException::new);
 		re.setReservationStatus(ReservationStatus.CLAIMED);
+		re.setUpdatedAt(Instant.now());
+		reservationRepo.save(re);
+		return ReservationMapper.toReservation(re);
+	}
+	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Reservation complete(final Long reservationId) {
+		ReservationEntity re = reservationRepo.findById(reservationId).orElseThrow(BusinessException::new);
+		re.setReservationStatus(ReservationStatus.COMPLETED);
 		re.setUpdatedAt(Instant.now());
 		reservationRepo.save(re);
 		return ReservationMapper.toReservation(re);
@@ -240,9 +255,9 @@ public class ReservationServiceImpl implements ReservationService{
 				}
             }
         };
-
+        
+    // schedule the status to change to unclaimed when the reservation is starting
     Timer timer = new Timer();
-    // the timer is scheduled to start in the future
     long duration = Math.abs(Duration.between(re.getStartTime(),
     		Instant.now()).toMillis());
     timer.scheduleAtFixedRate(timerTask, 30, duration);
@@ -267,7 +282,8 @@ public class ReservationServiceImpl implements ReservationService{
 	            }
 	        };
 
-	    Timer timer = new Timer();//create a new Timer
+	    // schedule a timer to check if the status is changed to claimed if not just remove the reservation
+	    Timer timer = new Timer();
 	    timer.scheduleAtFixedRate(timerTask, 30,
 	    		 Math.abs(Duration.between(reservationEntity.getStartTime().plusSeconds(RESERVATION_EXPIRATION_TIME), 
 	    				 reservationEntity.getStartTime()).toMillis()));

@@ -32,6 +32,7 @@ public class ReservationMapper {
 		entity.setStartTime(reservation.getStartTime());
 		entity.setUser(Objects.nonNull(entity.getUser()) ? UserMapper.toUserEntity(reservation.getUser()) : null);
 		entity.setReservationStatus(reservation.getReservationStatus());
+		entity.setCost(Double.parseDouble(reservation.getCost()));
 		entity.setParkingSpot(Objects.nonNull(entity.getParkingSpot()) ? ParkingSpotMapper.toParkingSpotEntity(reservation.getParkingSpot()) : null);
 		return entity;
 	}
@@ -45,6 +46,7 @@ public class ReservationMapper {
 				.code(entity.getCode())
 				.createdAt(entity.getCreatedAt())
 				.id(entity.getId())
+				.cost(entity.getCost().toString())
 				.parkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
 				.updatedAt(entity.getUpdatedAt())
 				.endTime(entity.getEndTime())

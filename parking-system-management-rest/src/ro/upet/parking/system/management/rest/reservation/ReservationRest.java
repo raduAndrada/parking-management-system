@@ -20,8 +20,6 @@ import ro.upet.parking.system.management.business.api.reservation.ReservationSer
 import ro.upet.parking.system.management.model.reservation.Reservation;
 import ro.upet.parking.system.management.model.reservation.ReservationCreate;
 import ro.upet.parking.system.management.model.reservation.ReservationNext;
-import ro.upet.parking.system.management.model.user.User;
-import ro.upet.parking.system.management.model.user.UserUpdate;
 import ro.upet.parking.system.management.rest.base.BaseRest;
 
 /**

@@ -2,6 +2,10 @@ package ro.upet.parking.system.management.business.api.reservation;
 
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
 
+/**
+ * @author Andrada
+ * Validate a reservation before storing a new one
+ */
 public interface ReservationValidator {
 
 	/**

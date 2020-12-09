@@ -4,6 +4,10 @@ import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.model.user.User;
 import ro.upet.parking.system.management.model.user.UserUpdate;
 
+/**
+ * @author Andrada
+ * Functionality for a user
+ */
 public interface UserService extends BaseService<User> {	
 
 	/**

@@ -73,6 +73,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public Parking add(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
 		entity.setCreatedAt(Instant.now());
@@ -86,6 +87,7 @@ public class ParkingServiceImpl implements ParkingService{
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public Parking update(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
 		entity.setUpdatedAt(Instant.now());
@@ -169,6 +171,7 @@ public class ParkingServiceImpl implements ParkingService{
 		
 		return parkingCreate;
 	}
+	
 	
 	
 }

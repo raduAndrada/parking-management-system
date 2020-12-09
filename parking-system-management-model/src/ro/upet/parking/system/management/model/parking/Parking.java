@@ -39,4 +39,9 @@ public interface Parking extends BaseModel {
 	String getClosesAt();
 
 	
+	/**
+	 * @return price per hour
+	 */
+	Double getPricePerHour();
+	
 }

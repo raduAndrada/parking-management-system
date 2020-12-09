@@ -2,7 +2,12 @@ package ro.upet.parking.system.management.business.api.core;
 
 import java.util.List;
 
-
+/**
+ * Basic functionality for all the services in the server
+ * @author Andrada
+ *
+ * @param <T> class of the model 
+ */
 public interface BaseService<T> {
 	
 	/**

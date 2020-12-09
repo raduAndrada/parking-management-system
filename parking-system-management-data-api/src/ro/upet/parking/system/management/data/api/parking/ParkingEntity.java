@@ -58,6 +58,11 @@ public class ParkingEntity implements Serializable {
 	 *  closing time
 	 */
 	String closesAt;
+	
+	/**
+	 * price per 1 hour
+	 */
+	Double pricePerHour;
 
 	public Long getId() {
 		return id;
@@ -122,6 +127,16 @@ public class ParkingEntity implements Serializable {
 	public void setClosesAt(String closesAt) {
 		this.closesAt = closesAt;
 	}
+
+	public Double getPricePerHour() {
+		return pricePerHour;
+	}
+
+	public void setPricePerHour(Double pricePerHour) {
+		this.pricePerHour = pricePerHour;
+	}
+	
+	
 	
 	
 }

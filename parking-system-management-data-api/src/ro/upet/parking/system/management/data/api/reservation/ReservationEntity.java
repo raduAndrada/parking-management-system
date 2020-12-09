@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import javax.annotation.Nullable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +13,6 @@ import javax.persistence.Table;
 
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
-import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 
 @Entity
@@ -78,6 +76,11 @@ public class ReservationEntity implements Serializable {
 	String vehicleLicencePlate;
 	
 	/**
+	 * Cost of staying
+	 */
+	Double cost;
+	
+	/**
 	 * the user
 	 */
 	@ManyToOne
@@ -89,6 +92,8 @@ public class ReservationEntity implements Serializable {
 	 */
 	@OneToOne
 	ParkingSpotEntity parkingSpot;
+	
+	
 
 
 	public Long getId() {
@@ -197,6 +202,16 @@ public class ReservationEntity implements Serializable {
 
 	public void setUser(UserEntity user) {
 		this.user = user;
+	}
+
+
+	public Double getCost() {
+		return cost;
+	}
+
+
+	public void setCost(Double cost) {
+		this.cost = cost;
 	}
 	
 	
