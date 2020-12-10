@@ -16,6 +16,19 @@
         [(ngModel)]="toAdd.parking.name"
       />
     </div>
+
+    <div class="form-group float-label-control">
+      <label><span>Price per hour*</span></label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="1"
+        title="Price"
+        name="cost"
+        [(ngModel)]="toAdd.parking.pricePerHour"
+        min="1"
+      />
+    </div>
     <div class="form-group float-label-control">
       <label><span>Location</span></label>
       <input

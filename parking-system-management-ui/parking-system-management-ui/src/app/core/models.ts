@@ -73,6 +73,8 @@ export interface Parking extends ActionAudit {
 
     closesAt: string;
 
+    pricePerHour?: number;
+
 }
 
 
