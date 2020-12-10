@@ -78,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                         editor.commit();
 
                         loginFailureTV.setVisibility(View.INVISIBLE);
+                        usernameOrEmailET.setText("username");
+                        passwordET.setText("password");
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);

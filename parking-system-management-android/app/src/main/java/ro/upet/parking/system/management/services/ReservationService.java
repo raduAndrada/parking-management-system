@@ -19,6 +19,8 @@ public interface ReservationService extends BaseService{
 
     static final String RESERVATION_CREATE_PATH = "create";
     static final String RESERVATION_CLAIM_PATH = "claim/{reservationId}";
+    static final String RESERVATION_START_PATH = "start/{reservationId}";
+    static final String RESERVATION_COMPLETE_PATH = "complete/{reservationId}";
     static final String RESERVATION_NEXT_PATH = "reservation-next/{username}";
 
 
@@ -41,4 +43,12 @@ public interface ReservationService extends BaseService{
     @PUT(RESERVATION_CLAIM_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
     Call<ImtReservation> claimReservation(@Path ("reservationId") final Long reservationId);
+
+    @PUT(RESERVATION_START_PATH)
+    @Headers({CONTENT_TYPE, AUTHORIZATION})
+    Call<ImtReservation> startReservation(@Path ("reservationId") final Long reservationId);
+
+    @PUT(RESERVATION_COMPLETE_PATH)
+    @Headers({CONTENT_TYPE, AUTHORIZATION})
+    Call<ImtReservation> completeReservation(@Path ("reservationId") final Long reservationId);
 }

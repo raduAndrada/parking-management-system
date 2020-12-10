@@ -75,4 +75,5 @@
     <string name="claim">Claim</string>
     <string name="minutes_left">Min</string>
     <string name="hours_left">Hours</string>
+    <string name="release">Release</string>
 </resources>

@@ -8,19 +8,21 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import ro.upet.parking.system.management.R;
+import ro.upet.parking.system.management.activities.LoginActivity;
 import ro.upet.parking.system.management.activities.MainActivity;
 import ro.upet.parking.system.management.activities.ReservationActivity;
 import ro.upet.parking.system.management.activities.ReservationHistoryActivity;
 import ro.upet.parking.system.management.activities.UserProfileActivity;
 
+import static ro.upet.parking.system.management.activities.common.StringConstants.PASSWORD;
 import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
 import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
 
+/**
+ * @author Andrada
+ * Main menu of the application
+ */
 public class MenuHelper extends AppCompatActivity {
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -47,6 +49,17 @@ public class MenuHelper extends AppCompatActivity {
             Intent intent = new Intent(this, UserProfileActivity.class);
             startActivity(intent);
         }
+        if (id == R.id.menu_logout) {
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.remove(USERNAME);
+            editor.remove(PASSWORD);
+            editor.commit();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

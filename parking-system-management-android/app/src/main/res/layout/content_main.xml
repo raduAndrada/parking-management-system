@@ -110,4 +110,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp" />
 
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/release"
+        app:bootstrapBrand="warning"
+        android:id="@+id/main_release_btn_id"
+        android:layout_below="@+id/main_claim_btn_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp" />
+
 </RelativeLayout>

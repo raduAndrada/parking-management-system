@@ -62,6 +62,9 @@ public class MainActivity extends MenuHelper {
 
         final BootstrapButton claimBtn = (BootstrapButton) findViewById(R.id.main_claim_btn_id);
         final BootstrapButton removeBtn = (BootstrapButton) findViewById(R.id.main_remove_btn_id);
+        final BootstrapButton releaseBtn = (BootstrapButton) findViewById(R.id.main_release_btn_id);
+
+        releaseBtn.setVisibility(View.INVISIBLE);
 
         service.getReservationNext(username).enqueue(new Callback<ImtReservationNext>() {
             @Override
@@ -119,9 +122,29 @@ public class MainActivity extends MenuHelper {
                             });
                         }
                     });
-                    int timerTaskDuration = computeTimerTask(rn.getDays(), rn.getMinutes(), rn.getMinutes());
+                    releaseBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            service.completeReservation(rn.getReservationId()).enqueue(new Callback<ImtReservation>() {
+                                @Override
+                                public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
+                                    Toast.makeText(getApplicationContext(), "Successfully claimed Reservation", Toast.LENGTH_LONG).show();
+                                    releaseBtn.setEnabled(false);
+                                    releaseBtn.setText(ReservationStatus.COMPLETED.toString());
+                                    removeBtn.setEnabled(false);
+                                    Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
+                                    startActivity(intent);
+                                }
 
-                    new CountDownTimer(timerTaskDuration, 1000) {
+                                @Override
+                                public void onFailure(Call<ImtReservation> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    });
+
+                    new CountDownTimer(computeTimerTask(rn.getDays(), rn.getHours(), rn.getMinutes()), 1000) {
 
                         Integer tempMinutes = rn.getMinutes();
                         Integer tempHours = rn.getHours();
@@ -136,12 +159,16 @@ public class MainActivity extends MenuHelper {
                                 tempSeconds = 60;
                             }
                             if (tempMinutes == 0) {
-                                tempHours--;
-                                tempMinutes = 60;
+                                if (tempHours > 0) {
+                                    tempHours--;
+                                    tempMinutes = 60;
+                                }
                             }
                             if (tempHours == 0) {
-                                tempDays--;
-                                tempHours = 24;
+                                if (tempDays > 0) {
+                                    tempDays--;
+                                    tempHours = 24;
+                                }
                             }
                             daysTextView.setText(tempDays.toString());
                             hoursTextView.setText(tempHours.toString());
@@ -153,6 +180,47 @@ public class MainActivity extends MenuHelper {
                         }
 
                         public void onFinish() {
+                            timeTextView.setText("ONGOING RESERVATION EXPIRES IN: ");
+                            daysTextView.setText("0");
+                            new CountDownTimer(computeTimerTask(0, rn.getDurationHours(), rn.getDurationMinutes() + 15), 1000) {
+
+                                Integer tempDurationMinutes = rn.getDurationMinutes();
+                                Integer tempDurationHours = rn.getDurationHours();
+                                Integer tempDurationSeconds = 60;
+
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+                                    tempDurationSeconds--;
+
+                                    if (tempDurationSeconds == 0) {
+                                        tempDurationMinutes--;
+                                        tempDurationSeconds = 60;
+                                    }
+                                    if (tempDurationMinutes == 0) {
+                                        if (tempDurationHours > 0) {
+                                            tempDurationHours--;
+                                            tempDurationMinutes = 60;
+                                        }
+                                    }
+                                    hoursTextView.setText(tempHours.toString());
+                                    minutesTextView.setText(tempMinutes.toString());
+                                    if ( tempDurationHours == 0 && tempDurationMinutes == 15) {
+                                        claimBtn.setEnabled(false);
+                                        removeBtn.setEnabled(false);
+                                        releaseBtn.setVisibility(View.VISIBLE);
+                                        removeBtn.setEnabled(true);
+                                    }
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
+                                    startActivity(intent);
+                                }
+
+                            }.start();
+
+
                         }
                     }.start();
                 } else {
@@ -171,11 +239,9 @@ public class MainActivity extends MenuHelper {
             }
         });
 
-
-
     }
 
-    private int computeTimerTask(int days, int minutes, int hours) {
+    private int computeTimerTask(int days, int hours, int minutes) {
         return 24 * 60 * 1000 * days +  60 * 1000 * hours +  minutes * 1000;
     }
 

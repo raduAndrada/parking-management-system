@@ -135,7 +135,7 @@ public class ReservationActivity extends MenuHelper implements
                     @Override
                     public void onFailure(Call<ImtReservation> call, Throwable t) {
                         //TODO
-                        Toast.makeText(getApplicationContext(), reservationCreate.toString() , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Failed to create reservation" , Toast.LENGTH_LONG).show();
                     }
                 });
             }
