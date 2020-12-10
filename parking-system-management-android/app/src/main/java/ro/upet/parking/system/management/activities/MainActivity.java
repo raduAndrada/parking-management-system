@@ -242,7 +242,7 @@ public class MainActivity extends MenuHelper {
     }
 
     private int computeTimerTask(int days, int hours, int minutes) {
-        return 24 * 60 * 1000 * days +  60 * 1000 * hours +  minutes * 1000;
+        return 24 * 3600 * 1000 * days +  3600 * 1000 * hours +  60 * minutes * 1000;
     }
 
 }
