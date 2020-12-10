@@ -31,10 +31,15 @@ import ro.upet.parking.system.management.rest.base.BaseRest;
 @CrossOrigin(maxAge = 3600)
 public class ReservationRest extends BaseRest<Reservation>{
 
+	 static final String RESERVATION_CLAIM_PATH = "claim/{reservationId}";
+	 static final String RESERVATION_START_PATH = "start/{reservationId}";
+	 static final String RESERVATION_COMPLETE_PATH = "complete/{reservationId}";
+	
+	
 	@Inject
 	private ReservationService service;
 	
-    static final String RESERVATION_CLAIM_PATH = "claim/{reservationId}";
+   
 	
 	@Override
 	@Inject
@@ -115,6 +120,45 @@ public class ReservationRest extends BaseRest<Reservation>{
 		}
 		return ResponseEntity.ok(updated);
 	}
+	
+	/**
+	 * 
+	 * @param entity the entity to be added
+	 * @return the created entity
+	 */
+	@PutMapping(RESERVATION_START_PATH)
+	@Transactional
+	public ResponseEntity<Reservation> start(@PathVariable final Long reservationId) {
+		LOGGER.info(String.format("REST request to CLAIM RESERVATION : %s",reservationId));
+		final Reservation updated;
+		try {
+			updated = service.start(reservationId);
+		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong UPDATING the entity : %s", reservationId));
+			return null;
+		}
+		return ResponseEntity.ok(updated);
+	}
 
+	
+	
+	/**
+	 * 
+	 * @param entity the entity to be added
+	 * @return the created entity
+	 */
+	@PutMapping(RESERVATION_COMPLETE_PATH)
+	@Transactional
+	public ResponseEntity<Reservation> complete(@PathVariable final Long reservationId) {
+		LOGGER.info(String.format("REST request to CLAIM RESERVATION : %s",reservationId));
+		final Reservation updated;
+		try {
+			updated = service.complete(reservationId);
+		} catch (final Exception e) {
+			LOGGER.info(String.format("Something went wrong UPDATING the entity : %s", reservationId));
+			return null;
+		}
+		return ResponseEntity.ok(updated);
+	}
 
 }

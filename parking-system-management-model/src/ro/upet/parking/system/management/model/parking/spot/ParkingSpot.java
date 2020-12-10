@@ -56,6 +56,9 @@ public interface ParkingSpot extends BaseModel{
 	 */
 	@Nullable
 	String getParkingName();
+	
+	
+
 
 	
 }

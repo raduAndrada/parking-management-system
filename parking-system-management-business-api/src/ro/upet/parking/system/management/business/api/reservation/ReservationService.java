@@ -45,4 +45,11 @@ public interface ReservationService extends BaseService<Reservation> {
 	 * @return the completed reservation
 	 */
 	public Reservation complete(final Long reservationId);
+
+
+	/**
+	 * @param reservationId the id of the reservation
+	 * @return the started reservation
+	 */
+	public Reservation start(Long reservationId);
 }

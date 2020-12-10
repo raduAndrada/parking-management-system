@@ -44,7 +44,7 @@ public class BaseRest<T> {
 		LOGGER.info(String.format("REST request to GET entity by code: %s", code));
 		final T entity = service.getByCode(code);
 		if (entity == null) {
-			LOGGER.info(String.format(" with code: %s does not exist", code));
+			LOGGER.info(String.format("entity with code: %s does not exist", code));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(entity);
@@ -60,7 +60,7 @@ public class BaseRest<T> {
 		LOGGER.info(String.format("REST request to GET entity by id: %s", id));
 		final T entity = service.getById(id);
 		if (entity == null) {
-			LOGGER.info(String.format(" with id: %s does not exist", id));
+			LOGGER.info(String.format("entity with id: %s does not exist", id));
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(entity);
@@ -76,7 +76,7 @@ public class BaseRest<T> {
 		LOGGER.info(String.format("REST request to GET all entities"));
 		final List<T> entityList= service.getList();
 		if (entityList == null) {
-			LOGGER.info(String.format("No entitys found"));
+			LOGGER.info(String.format("No entities found"));
 			return ResponseEntity.notFound().build();
 		} else {
 			LOGGER.info(String.format("Entities found : %s", entityList.toString()));

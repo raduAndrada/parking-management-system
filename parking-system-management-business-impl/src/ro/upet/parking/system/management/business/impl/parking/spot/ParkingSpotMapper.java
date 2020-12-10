@@ -16,7 +16,7 @@ import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 public class ParkingSpotMapper {
 
 	/**
-	 * @param parkingSpot model for the parkingSpot
+	 * @param parkingSpot model for the parkingSpots
 	 * @return the corresponding entity
 	 */
 	public static ParkingSpotEntity toParkingSpotEntity(final ParkingSpot parkingSpot) {
@@ -47,6 +47,14 @@ public class ParkingSpotMapper {
 				.isRentable(entity.getRentable())
 				.isAvailable(entity.getAvailable())
 				.isRented(entity.getRented())
+				.parkingZoneLetter(Objects.nonNull(entity.getParkingZone()) ? entity.getParkingZone().getLetter() : "")
+				.parkingLevelNumber(Objects.nonNull(entity.getParkingZone()) 
+						&& Objects.nonNull(entity.getParkingZone().getParkingLevel()) ?
+						entity.getParkingZone().getParkingLevel().getNumber() : "")
+				.parkingName(Objects.nonNull(entity.getParkingZone()) 
+											&& Objects.nonNull(entity.getParkingZone().getParkingLevel())
+											&& Objects.nonNull(entity.getParkingZone().getParkingLevel().getParking())
+						? entity.getParkingZone().getParkingLevel().getParking().getName() : "")
 				.build();
 	}
 	

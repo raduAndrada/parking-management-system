@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
+import ro.upet.parking.system.management.model.parking.level.ImtParkingLevel;
 import ro.upet.parking.system.management.model.parking.zone.ImtParkingZone;
 import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 
@@ -41,6 +42,9 @@ public class ParkingZoneMapper {
 				.id(entity.getId())
 				.updatedAt(entity.getUpdatedAt())
 				.letter(entity.getLetter())
+				.parkingLevel(ImtParkingLevel.builder()
+						.number(entity.getParkingLevel().getNumber())
+						.build())
 				.parkingSpots((Objects.nonNull(entity.getParkingSpots()) && !entity.getParkingSpots().isEmpty()) ? ParkingSpotMapper.toParkingSpotList(entity.getParkingSpots()) : null)
 				.build();
 	}

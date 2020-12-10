@@ -34,6 +34,17 @@ public interface ReservationNext {
 	 */
 	Long getReservationId();
 	
+	/**
+	 * @return duration in hours
+	 */
+	Integer getDurationHours();
+	
+
+	/**
+	 * @return duration in minutes
+	 */
+	Integer getDurationMinutes();
+	
 	
 	/**
 	 * @return get the status of the reservation

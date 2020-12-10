@@ -78,6 +78,7 @@ public class UserRest extends BaseRest<User> {
 			LOGGER.info(String.format("Something went wrong loggin in the user : %s", user));
 			return null;
 		}
+	//	SecurityContextHolder.getContext().setAuthentication(new AuthenticationImpl(validUser));
 		return ResponseEntity.ok(validUser);
 	}
 	
