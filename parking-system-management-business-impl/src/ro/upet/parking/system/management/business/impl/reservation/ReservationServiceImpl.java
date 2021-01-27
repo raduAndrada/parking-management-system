@@ -86,8 +86,6 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public Reservation add(final Reservation reservation) {
 		final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		final ReservationEntity savedEntity = reservationRepo.save(entity);
 		return ReservationMapper.toReservation(savedEntity);
 	}
@@ -99,7 +97,6 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public Reservation update(final Reservation reservation) {
 		final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-		entity.setUpdatedAt(Instant.now());
 		final ReservationEntity savedEntity = reservationRepo.save(entity);
 		return ReservationMapper.toReservation(savedEntity);
 	}

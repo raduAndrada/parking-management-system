@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.user;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +67,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User add(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		if (userValidator.validate(user)) {
 		final UserEntity savedEntity = userRepo.save(entity);
 		return UserMapper.toUser(savedEntity);
@@ -84,7 +81,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User update(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
-		entity.setUpdatedAt(Instant.now());
 		final UserEntity savedEntity = userRepo.save(entity);
 		return UserMapper.toUser(savedEntity);
 	}
@@ -117,7 +113,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User loginWithUsernameAndPassword(String username, String password) {
+	public User loginWithUsernameAndPassword(final String username, final String password) {
 		final Optional<UserEntity> ue = userRepo.findByUsernameAndPassword(username, password);
 		return ue.isPresent() ? UserMapper.toUser(ue.get()) : null;
 	}
@@ -140,7 +136,6 @@ public class UserServiceImpl implements UserService{
 		VehicleEntity ve =vehicleRepo.findAllByUserUsename(userUpdate.getUsername())
 							.stream().findFirst().orElseThrow(BusinessException :: new);
 		UserEntity ue = ve.getUser();
-		ue.setUpdatedAt(Instant.now());
 		ue.setEmail(userUpdate.getEmail());
 		ue.setPhoneNumber(userUpdate.getPhoneNumber());
 		ue.setPassword(userUpdate.getPassword().equals(userUpdate.getPasswordConfirm()) ? 

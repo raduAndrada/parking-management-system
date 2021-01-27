@@ -1,126 +1,66 @@
 package ro.upet.parking.system.management.data.api.user;
 
-import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.model.base.UserType;
 
-@Entity
-@Table(name = "users")
-public class UserEntity implements Serializable {
-	
+@Entity(name = "users")
+public class UserEntity extends BaseEntity {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 
 	/**
-	 * identifier for the entity
+	 * first name and last name of the user
 	 */
-	@Id
-	@GeneratedValue
-	Long id;
-	
-	/**
-	 * unique code for the entity
-	 */	
-	@GeneratedValue
-	String code;	
+	private String name;
 
 	/**
-	 *  creation time
+	 * birthday of the user
 	 */
-	Instant createdAt;
+	private LocalDate birthday;
 
 	/**
-	 *  last update time
+	 * unique username
 	 */
-	Instant updatedAt;
-	
+	private String username;
+
 	/**
-	 *  first name and last name of the user
+	 * password
 	 */
-	String name;
-	
+	@Convert(converter = PasswordEncryptionConverter.class)
+	private String password;
+
 	/**
-	 *  birthday of the user
+	 * the email of the user (must be unique)
 	 */
-	LocalDate birthday;
-	
+	private String email;
+
 	/**
-	 *  unique username
-	 */	
-	String username;
-	
-	/**
-	 *  password
+	 * phone number for the user
 	 */
-	String password;
-	
-	/**
-	 *  the email of the user (must be unique)
-	 */
-	String email;
+	private String phoneNumber;
 
 	/**
-	 *  phone number for the user
+	 * the address of the user
 	 */
-	String phoneNumber;
+	private String address;
 
 	/**
-	 *  the address of the user
+	 * the type of the user
 	 */
-	String address;
-	
+	private UserType userType;
+
 	/**
-	 * the type of the user 
+	 * unique identifier for stripe
 	 */
-	UserType userType;
-	
-	/**
-	 *  unique identifier for stripe
-	 */
-	String stripeId;
-	
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
-	}
+	private String stripeId;
 
 	public String getName() {
 		return name;
@@ -194,6 +134,4 @@ public class UserEntity implements Serializable {
 		this.stripeId = stripeId;
 	}
 
-	
-	
 }

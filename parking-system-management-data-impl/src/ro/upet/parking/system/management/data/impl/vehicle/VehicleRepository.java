@@ -14,7 +14,7 @@ public interface VehicleRepository extends JpaRepository<VehicleEntity, Long>{
 	
 	public Optional<VehicleEntity> findOptionalByLicencePlate(final String licencePlate);
 	
-	@Query("SELECT v FROM VehicleEntity v WHERE v.user.username = ?1")
+	@Query("SELECT v FROM vehicles v WHERE v.user.username = ?1")
 	public List<VehicleEntity> findAllByUserUsename(final String username);
 
 }

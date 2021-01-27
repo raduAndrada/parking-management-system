@@ -26,9 +26,9 @@ public class UserMapper {
 		entity.setUpdatedAt(user.getUpdatedAt());
 		entity.setEmail(user.getEmail());
 		entity.setName(user.getName());
-		entity.setPassword(user.getPassword());
 		entity.setPhoneNumber(user.getPhoneNumber());
 		entity.setUsername(user.getUsername());
+		entity.setPassword(user.getPassword());
 		return entity;
 	}
 	
@@ -44,9 +44,9 @@ public class UserMapper {
 				.updatedAt(entity.getUpdatedAt())
 				.email(entity.getEmail())
 				.name(entity.getName())
-				.password(entity.getPassword())
 				.phoneNumber(entity.getPhoneNumber())
 				.username(entity.getUsername())
+				.password(entity.getPassword())
 				.build();
 	}
 	

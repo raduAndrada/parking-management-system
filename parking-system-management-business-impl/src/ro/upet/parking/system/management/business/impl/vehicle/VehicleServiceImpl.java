@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.vehicle;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,8 +58,6 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle add(final Vehicle vehicle) throws BusinessException {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		if (vehicleValidator.validate(vehicle)) {
 			final VehicleEntity savedEntity = vehicleRepo.save(entity);
 			return VehicleMapper.toVehicle(savedEntity);
@@ -74,7 +71,6 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle update(final Vehicle vehicle) {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
-		entity.setUpdatedAt(Instant.now());
 		final VehicleEntity savedEntity = vehicleRepo.save(entity);
 		return VehicleMapper.toVehicle(savedEntity);
 	}

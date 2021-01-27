@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.parking;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -76,8 +75,6 @@ public class ParkingServiceImpl implements ParkingService{
 	@Transactional
 	public Parking add(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		final ParkingEntity savedEntity = parkingRepo.save(entity);
 		return ParkingMapper.toParking(savedEntity);
 	}
@@ -90,7 +87,6 @@ public class ParkingServiceImpl implements ParkingService{
 	@Transactional
 	public Parking update(final Parking parking) {
 		final ParkingEntity entity = ParkingMapper.toParkingEntity(parking);
-		entity.setUpdatedAt(Instant.now());
 		final ParkingEntity savedEntity = parkingRepo.save(entity);
 		return ParkingMapper.toParking(savedEntity);
 	}
@@ -126,11 +122,8 @@ public class ParkingServiceImpl implements ParkingService{
 	@Transactional
 	public ParkingCreate configureParking(final ParkingCreate parkingCreate) {
 		final ParkingEntity parking = ParkingMapper.toParkingEntity(add(parkingCreate.getParking()));
-		final Instant now = Instant.now();
 		for (int level = 0; level < parkingCreate.getNumberOfLevels(); level ++) {
 		   ParkingLevelEntity ple = new ParkingLevelEntity();
-		        ple.setCreatedAt(now);
-		        ple.setUpdatedAt(now);
 		        ple.setNumber("" + level);
 		        ple.setParking(parking);
 		        
@@ -139,8 +132,6 @@ public class ParkingServiceImpl implements ParkingService{
 		    {
 				ParkingZoneEntity pze = new ParkingZoneEntity();
 				pze.setLetter("" + zone);
-				pze.setCreatedAt(now);
-				pze.setUpdatedAt(now);
 				final List<ParkingSpotEntity> parkingSpots = Lists.newArrayList();
 				for (int spot= 0; spot < parkingCreate.getParkingZoneSpotNumber(); spot++) {
 					final ParkingSpotEntity pse = new ParkingSpotEntity();
@@ -148,8 +139,6 @@ public class ParkingServiceImpl implements ParkingService{
 					pse.setAvailable(Boolean.TRUE);
 					pse.setRentable(Boolean.FALSE);
 					pse.setRented(Boolean.FALSE);
-					pse.setCreatedAt(now);
-					pse.setUpdatedAt(now);
 					final ParkingSpotEntity savedPse = parkingSpotRepo.save(pse);
 					parkingSpots.add(savedPse);
 				}

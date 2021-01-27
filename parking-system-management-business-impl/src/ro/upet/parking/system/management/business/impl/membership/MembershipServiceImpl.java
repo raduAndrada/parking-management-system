@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.membership;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,8 +72,6 @@ public class MembershipServiceImpl implements MembershipService{
 	@Override
 	public Membership add(final Membership membership) {
 		final MembershipEntity entity = MembershipMapper.toMembershipEntity(membership);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		final MembershipEntity savedEntity = membershipRepo.save(entity);
 		return MembershipMapper.toMembership(savedEntity);
 	}
@@ -86,7 +83,6 @@ public class MembershipServiceImpl implements MembershipService{
 	@Override
 	public Membership update(final Membership membership) {
 		final MembershipEntity entity = MembershipMapper.toMembershipEntity(membership);
-		entity.setUpdatedAt(Instant.now());
 		final MembershipEntity savedEntity = membershipRepo.save(entity);
 		return MembershipMapper.toMembership(savedEntity);
 	}

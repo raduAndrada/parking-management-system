@@ -1,49 +1,25 @@
 package ro.upet.parking.system.management.data.api.payment.options;
 
-import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.PaymentStatus;
 
-@Entity
-@Table(name = "payment_options")
-public class PaymentOptionsEntity implements Serializable {
+
+@Entity(name = "payment_options")
+public class PaymentOptionsEntity extends BaseEntity {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 *  identifier for the entity
-	 */
-	@Id
-	@GeneratedValue
-	Long id;
 	
-	/**
-	 *  unique code for the entity
-	 */
-	@GeneratedValue
-	String code;	
-
-	/**
-	 *  creation time
-	 */
-	Instant createdAt;
-
-	/**
-	 *  last update time
-	 */
-	Instant updatedAt;
 	
 	/**
 	 *  status of the payment
@@ -71,37 +47,6 @@ public class PaymentOptionsEntity implements Serializable {
 	@OneToOne
 	UserEntity user;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 
 	public PaymentStatus getPaymentStatus() {
 		return paymentStatus;
