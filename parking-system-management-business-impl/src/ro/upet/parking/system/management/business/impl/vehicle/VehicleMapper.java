@@ -21,10 +21,10 @@ public class VehicleMapper {
 	 */
 	public static VehicleEntity toVehicleEntity(final Vehicle vehicle) {
 		final VehicleEntity entity = new VehicleEntity();
-		entity.setCode(vehicle.getCode());
-		entity.setId(vehicle.getId());
-		entity.setCreatedAt(vehicle.getCreatedAt());
-		entity.setUpdatedAt(vehicle.getUpdatedAt());
+		entity.getBase().setCode(vehicle.getCode());
+		entity.getBase().setId(vehicle.getId());
+		entity.getBase().setCreatedAt(vehicle.getCreatedAt());
+		entity.getBase().setUpdatedAt(vehicle.getUpdatedAt());
 		entity.setLicencePlate(vehicle.getLicencePlate());
 		entity.setName(vehicle.getName());
 		entity.setSize(vehicle.getSize());
@@ -38,10 +38,10 @@ public class VehicleMapper {
 	 */
 	public static Vehicle toVehicle(final VehicleEntity entity) {
 		return ImtVehicle.builder()
-				.code(entity.getCode())
-				.createdAt(entity.getCreatedAt())
-				.id(entity.getId())
-				.updatedAt(entity.getUpdatedAt())
+				.code(entity.getBase().getCode())
+				.createdAt(entity.getBase().getCreatedAt())
+				.id(entity.getBase().getId())
+				.updatedAt(entity.getBase().getUpdatedAt())
 				.user(UserMapper.toUser(entity.getUser()))
 				.licencePlate(entity.getLicencePlate())
 				.name(entity.getName())

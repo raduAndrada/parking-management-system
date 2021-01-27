@@ -163,11 +163,9 @@ public class ReservationServiceImpl implements ReservationService{
 									.findFirst().orElseThrow(BusinessException :: new));
 
 		//save reservation
-		re.setCreatedAt(Instant.now());
-		re.setUpdatedAt(Instant.now());
 		re.setReservationStatus(ReservationStatus.PENDING);
 		final ReservationEntity savedEntity = reservationRepo.save(re);
-		startCountdownTimer(savedEntity.getId());
+		startCountdownTimer(savedEntity.getBase().getId());
 		return ReservationMapper.toReservation(savedEntity);
 	}
 	
@@ -207,7 +205,7 @@ public class ReservationServiceImpl implements ReservationService{
 					.days(daysTillReservation)
 					.hours(hoursTillReservation)
 					.minutes(minutesTillReservation)
-					.reservationId(re.get().getId())
+					.reservationId(re.get().getBase().getId())
 					.durationHours(reservationDurationHours)
 					.durationMinutes(reservationDurationMinutes)
 					.reservationStatus(re.get().getReservationStatus())
@@ -225,11 +223,10 @@ public class ReservationServiceImpl implements ReservationService{
 	public Reservation claim(final Long reservationId) {
 		ReservationEntity re = reservationRepo.findById(reservationId).orElseThrow(BusinessException::new);
 		re.setReservationStatus(ReservationStatus.CLAIMED);
-		re.setUpdatedAt(Instant.now());
 		reservationRepo.save(re);
 		
 		//occupy spot
-		ParkingSpotEntity pse = parkingSpotRepo.findById(re.getParkingSpot().getId())
+		ParkingSpotEntity pse = parkingSpotRepo.findById(re.getParkingSpot().getBase().getId())
 				.orElseThrow(BusinessException::new);
 		pse.setAvailable(false);
 		parkingSpotRepo.save(pse);
@@ -243,11 +240,10 @@ public class ReservationServiceImpl implements ReservationService{
 	public Reservation start(final Long reservationId) {
 		ReservationEntity re = reservationRepo.findById(reservationId).orElseThrow(BusinessException::new);
 		re.setReservationStatus(ReservationStatus.ONGOING);
-		re.setUpdatedAt(Instant.now());
 		reservationRepo.save(re);
 		
 		//make spot occupied
-		ParkingSpotEntity pse = parkingSpotRepo.findById(re.getParkingSpot().getId())
+		ParkingSpotEntity pse = parkingSpotRepo.findById(re.getParkingSpot().getBase().getId())
 				.orElseThrow(BusinessException::new);
 		pse.setAvailable(false);
 		parkingSpotRepo.save(pse);
@@ -261,11 +257,10 @@ public class ReservationServiceImpl implements ReservationService{
 	public Reservation complete(final Long reservationId) {
 		ReservationEntity re = reservationRepo.findById(reservationId).orElseThrow(BusinessException::new);
 		re.setReservationStatus(ReservationStatus.COMPLETED);
-		re.setUpdatedAt(Instant.now());
 		reservationRepo.save(re);
 		
 		//make spot free
- 		ParkingSpotEntity pse = parkingSpotRepo.findById(re.getParkingSpot().getId())
+ 		ParkingSpotEntity pse = parkingSpotRepo.findById(re.getParkingSpot().getBase().getId())
 				.orElseThrow(BusinessException::new);
 		pse.setAvailable(true);
 		parkingSpotRepo.save(pse);

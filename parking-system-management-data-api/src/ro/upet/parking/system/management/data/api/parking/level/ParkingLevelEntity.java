@@ -1,27 +1,34 @@
 package ro.upet.parking.system.management.data.api.parking.level;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity(name = "parking_levels")
-public class ParkingLevelEntity extends BaseEntity {
-	
+public class ParkingLevelEntity implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-
+	/**
+	 *  common fields
+	 */
+	private BaseEntity base;
 	/**
 	 *  number of the level
 	 */
@@ -39,30 +46,6 @@ public class ParkingLevelEntity extends BaseEntity {
 	@OneToMany(cascade= CascadeType.MERGE)
 	List<ParkingZoneEntity> parkingZones;
 
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public ParkingEntity getParking() {
-		return parking;
-	}
-
-	public void setParking(ParkingEntity parking) {
-		this.parking = parking;
-	}
-
-	public List<ParkingZoneEntity> getParkingZones() {
-		return parkingZones;
-	}
-
-	public void setParkingZones(List<ParkingZoneEntity> parkingZones) {
-		this.parkingZones = parkingZones;
-	}
 
 	
 }

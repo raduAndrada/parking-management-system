@@ -50,7 +50,7 @@ public class ParkingSpotRepositoryIT extends DataTests {
 	    @Transactional
 	    public void addParkingSpot_test_success() {
 	        final ParkingSpotEntity testEntity = parkingSpotRepo.save(PARKING_SPOT_1);
-	        final Optional<ParkingSpotEntity> expectedEntity = parkingSpotRepo.findById(testEntity.getId());
+	        final Optional<ParkingSpotEntity> expectedEntity = parkingSpotRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getNumber()).isEqualTo(PARKING_SPOT_NUMBER1);
 	    }
@@ -60,7 +60,7 @@ public class ParkingSpotRepositoryIT extends DataTests {
 	    public void deleteParkingSpot_test_success() {
 	        final ParkingSpotEntity testEntity = parkingSpotRepo.save(PARKING_SPOT_1);
 	        parkingSpotRepo.delete(testEntity);
-	        final Optional<ParkingSpotEntity> expectedEntity = parkingSpotRepo.findById(testEntity.getId());
+	        final Optional<ParkingSpotEntity> expectedEntity = parkingSpotRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity.isEmpty());
 	    }
 	    
@@ -83,7 +83,7 @@ public class ParkingSpotRepositoryIT extends DataTests {
 	        final ParkingSpotEntity testEntity = parkingSpotRepo.save(PARKING_SPOT_1);
 	        testEntity.setAvailable(false);
 	        parkingSpotRepo.save(testEntity);
-	        final Optional<ParkingSpotEntity> expectedEntity = parkingSpotRepo.findById(testEntity.getId());
+	        final Optional<ParkingSpotEntity> expectedEntity = parkingSpotRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getAvailable()).isEqualTo(false);
 	    }

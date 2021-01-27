@@ -66,7 +66,7 @@ public class PaymentOptionsRepositoryIT extends DataTests {
 	    @Transactional
 	    public void addPaymentOptions_test_success() {
 	        final PaymentOptionsEntity testEntity = paymentOptionsRepo.save(PAYMENT_OPTIONS_1);
-	        final Optional<PaymentOptionsEntity> expectedEntity = paymentOptionsRepo.findById(testEntity.getId());
+	        final Optional<PaymentOptionsEntity> expectedEntity = paymentOptionsRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getPaymentStatus()).isEqualTo(PAYMENT_OPTIONS_STATUS1);
 	    }
@@ -76,7 +76,7 @@ public class PaymentOptionsRepositoryIT extends DataTests {
 	    public void deletePaymentOptions_test_success() {
 	        final PaymentOptionsEntity testEntity = paymentOptionsRepo.save(PAYMENT_OPTIONS_1);
 	        paymentOptionsRepo.delete(testEntity);
-	        final Optional<PaymentOptionsEntity> expectedEntity = paymentOptionsRepo.findById(testEntity.getId());
+	        final Optional<PaymentOptionsEntity> expectedEntity = paymentOptionsRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity.isEmpty());
 	    }
 	    
@@ -99,7 +99,7 @@ public class PaymentOptionsRepositoryIT extends DataTests {
 	        final PaymentOptionsEntity testEntity = paymentOptionsRepo.save(PAYMENT_OPTIONS_1);
 	        testEntity.setPaymentStatus(PAYMENT_OPTIONS_STATUS2);
 	        paymentOptionsRepo.save(testEntity);
-	        final Optional<PaymentOptionsEntity> expectedEntity = paymentOptionsRepo.findById(testEntity.getId());
+	        final Optional<PaymentOptionsEntity> expectedEntity = paymentOptionsRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getPaymentStatus()).isEqualTo(PAYMENT_OPTIONS_STATUS2);
 	    }

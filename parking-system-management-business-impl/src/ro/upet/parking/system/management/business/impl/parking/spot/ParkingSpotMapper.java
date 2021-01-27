@@ -21,10 +21,10 @@ public class ParkingSpotMapper {
 	 */
 	public static ParkingSpotEntity toParkingSpotEntity(final ParkingSpot parkingSpot) {
 		ParkingSpotEntity entity = new ParkingSpotEntity();
-		entity.setCode(parkingSpot.getCode());
-		entity.setId(parkingSpot.getId());
-		entity.setCreatedAt(parkingSpot.getCreatedAt());
-		entity.setUpdatedAt(parkingSpot.getUpdatedAt());
+		entity.getBase().setCode(parkingSpot.getCode());
+		entity.getBase().setId(parkingSpot.getId());
+		entity.getBase().setCreatedAt(parkingSpot.getCreatedAt());
+		entity.getBase().setUpdatedAt(parkingSpot.getUpdatedAt());
 		entity.setNumber(parkingSpot.getNumber());
 		entity.setAvailable(parkingSpot.isAvailable());
 		entity.setRentable(parkingSpot.isRentable());
@@ -39,10 +39,10 @@ public class ParkingSpotMapper {
 	 */
 	public static ParkingSpot toParkingSpot(final ParkingSpotEntity entity) {
 		return ImtParkingSpot.builder()
-				.code(entity.getCode())
-				.createdAt(entity.getCreatedAt())
-				.id(entity.getId())
-				.updatedAt(entity.getUpdatedAt())
+				.code(entity.getBase().getCode())
+				.createdAt(entity.getBase().getCreatedAt())
+				.id(entity.getBase().getId())
+				.updatedAt(entity.getBase().getUpdatedAt())
 				.number(entity.getNumber())
 				.isRentable(entity.getRentable())
 				.isAvailable(entity.getAvailable())

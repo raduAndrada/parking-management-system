@@ -1,4 +1,0 @@
-dependencies {
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	compile group: 'org.projectlombok', name: 'lombok', version: '0.11.0'
-}

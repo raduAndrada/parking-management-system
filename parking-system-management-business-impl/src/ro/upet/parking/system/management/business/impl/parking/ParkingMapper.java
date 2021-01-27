@@ -24,10 +24,10 @@ public class ParkingMapper {
 	public static ParkingEntity toParkingEntity(final Parking parking) {
 		final ParkingEntity entity = new ParkingEntity();
 		final String [] openingHours = validateOpenHours(parking.getOpensAt(), parking.getClosesAt());
-		entity.setCode(parking.getCode());
-		entity.setId(parking.getId());
-		entity.setCreatedAt(parking.getCreatedAt());
-		entity.setUpdatedAt(parking.getUpdatedAt());
+		entity.getBase().setCode(parking.getCode());
+		entity.getBase().setId(parking.getId());
+		entity.getBase().setCreatedAt(parking.getCreatedAt());
+		entity.getBase().setUpdatedAt(parking.getUpdatedAt());
 		entity.setLocation(parking.getLocation());
 		entity.setOpensAt(openingHours[0]);
 		entity.setClosesAt(openingHours[1]);
@@ -42,10 +42,10 @@ public class ParkingMapper {
 	 */
 	public static Parking toParking(final ParkingEntity entity) {
 		return ImtParking.builder()
-				.code(entity.getCode())
-				.createdAt(entity.getCreatedAt())
-				.id(entity.getId())
-				.updatedAt(entity.getUpdatedAt())
+				.code(entity.getBase().getCode())
+				.createdAt(entity.getBase().getCreatedAt())
+				.id(entity.getBase().getId())
+				.updatedAt(entity.getBase().getUpdatedAt())
 				.name(entity.getName())
 				.closesAt(entity.getClosesAt())
 				.opensAt(entity.getOpensAt())

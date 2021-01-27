@@ -23,10 +23,10 @@ public class ReservationMapper {
 	 */
 	public static ReservationEntity toReservationEntity(final Reservation reservation) {
 		final ReservationEntity entity = new ReservationEntity();
-		entity.setCode(reservation.getCode());
-		entity.setId(reservation.getId());
-		entity.setCreatedAt(reservation.getCreatedAt());
-		entity.setUpdatedAt(reservation.getUpdatedAt());
+		entity.getBase().setCode(reservation.getCode());
+		entity.getBase().setId(reservation.getId());
+		entity.getBase().setCreatedAt(reservation.getCreatedAt());
+		entity.getBase().setUpdatedAt(reservation.getUpdatedAt());
 		entity.setEndTime(reservation.getEndTime());
 		entity.setNotes(reservation.getNotes());
 		entity.setStartTime(reservation.getStartTime());
@@ -43,12 +43,12 @@ public class ReservationMapper {
 	 */
 	public static Reservation toReservation(final ReservationEntity entity) {
 		return ImtReservation.builder()
-				.code(entity.getCode())
-				.createdAt(entity.getCreatedAt())
-				.id(entity.getId())
+				.code(entity.getBase().getCode())
+				.createdAt(entity.getBase().getCreatedAt())
+				.id(entity.getBase().getId())
 				.cost(entity.getCost().toString())
 				.parkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
-				.updatedAt(entity.getUpdatedAt())
+				.updatedAt(entity.getBase().getUpdatedAt())
 				.endTime(entity.getEndTime())
 				.startTime(entity.getStartTime())
 				.reservationStatus(entity.getReservationStatus())

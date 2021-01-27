@@ -54,12 +54,12 @@ public class UserServiceIT extends BusinessTests {
     
     
     private static final User USER_1 = ImtUser.builder()
-    											.address(USER_ADDRESS1)
+    											//.address(USER_ADDRESS1)
     											.email(USER_EMAIL1)
     											.username(USER_USERNAME1)
     											.password(USER_PASSWORD1)
     											.phoneNumber(USER_PHONENUMBER1)
-    											.birthday(USER_BIRTHDAY1)
+    										//	.birthday(USER_BIRTHDAY1)
     											.name(USER_NAME1)
     											.build();
 
@@ -91,7 +91,7 @@ public class UserServiceIT extends BusinessTests {
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
     	final List<User> actualResult = userService.getList();	
-        userService.removeById(ue.getId());
+        userService.removeById(ue.getBase().getId());
         final List<User> expectedResult = userService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
@@ -103,7 +103,7 @@ public class UserServiceIT extends BusinessTests {
     	UserEntity ue = new UserEntity();
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
-        final User actualResult = userService.getById(ue.getId());
+        final User actualResult = userService.getById(ue.getBase().getId());
         final User expectedResult = ImtUser.builder()
     											.id(actualResult.getId())
     											.username(USER_USERNAME1)
@@ -137,7 +137,7 @@ public class UserServiceIT extends BusinessTests {
        	UserEntity ue = new UserEntity();
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
-        final User actualResult = userService.update(ImtUser.copyOf(USER_1).withId(ue.getId()));
+        final User actualResult = userService.update(ImtUser.copyOf(USER_1).withId(ue.getBase().getId()));
         final User expectedResult = ImtUser.copyOf(USER_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())

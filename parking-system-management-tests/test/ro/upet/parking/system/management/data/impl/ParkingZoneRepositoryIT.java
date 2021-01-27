@@ -44,7 +44,7 @@ public class ParkingZoneRepositoryIT extends DataTests {
 	    @Transactional
 	    public void addParkingZone_test_success() {
 	        final ParkingZoneEntity testEntity = parkingZoneRepo.save(PARKING_ZONE_1);
-	        final Optional<ParkingZoneEntity> expectedEntity = parkingZoneRepo.findById(testEntity.getId());
+	        final Optional<ParkingZoneEntity> expectedEntity = parkingZoneRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getLetter()).isEqualTo(PARKING_ZONE_LETTER1);
 	    }
@@ -54,7 +54,7 @@ public class ParkingZoneRepositoryIT extends DataTests {
 	    public void deleteParkingZone_test_success() {
 	        final ParkingZoneEntity testEntity = parkingZoneRepo.save(PARKING_ZONE_1);
 	        parkingZoneRepo.delete(testEntity);
-	        final Optional<ParkingZoneEntity> expectedEntity = parkingZoneRepo.findById(testEntity.getId());
+	        final Optional<ParkingZoneEntity> expectedEntity = parkingZoneRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity.isEmpty());
 	    }
 	    
@@ -77,7 +77,7 @@ public class ParkingZoneRepositoryIT extends DataTests {
 	        final ParkingZoneEntity testEntity = parkingZoneRepo.save(PARKING_ZONE_1);
 	        testEntity.setLetter(PARKING_ZONE_LETTER2);
 	        parkingZoneRepo.save(testEntity);
-	        final Optional<ParkingZoneEntity> expectedEntity = parkingZoneRepo.findById(testEntity.getId());
+	        final Optional<ParkingZoneEntity> expectedEntity = parkingZoneRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getLetter()).isEqualTo(PARKING_ZONE_LETTER2);
 	    }

@@ -1,26 +1,32 @@
 package ro.upet.parking.system.management.data.api.payment.options;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.PaymentStatus;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity(name = "payment_options")
-public class PaymentOptionsEntity extends BaseEntity {
-	
+public class PaymentOptionsEntity implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
-	
+	/**
+	 *  common fields
+	 */
+	private BaseEntity base;
 	/**
 	 *  status of the payment
 	 */
@@ -48,44 +54,5 @@ public class PaymentOptionsEntity extends BaseEntity {
 	UserEntity user;
 
 
-	public PaymentStatus getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(PaymentStatus paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
-
-	public LocalDate getStartPeriod() {
-		return startPeriod;
-	}
-
-	public void setStartPeriod(LocalDate startPeriod) {
-		this.startPeriod = startPeriod;
-	}
-
-	public LocalDate getEndPeriod() {
-		return endPeriod;
-	}
-
-	public void setEndPeriod(LocalDate endPeriod) {
-		this.endPeriod = endPeriod;
-	}
-	
-	public String getStripeId() {
-		return stripeId;
-	}
-
-	public void setStripeId(String stripeId) {
-		this.stripeId = stripeId;
-	}
-
-	public UserEntity getUser() {
-		return user;
-	}
-
-	public void setUser(UserEntity user) {
-		this.user = user;
-	}
 	
 }

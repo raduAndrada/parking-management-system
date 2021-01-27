@@ -1,86 +1,56 @@
 package ro.upet.parking.system.management.data.api.parking;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
 
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data	
 @Entity(name = "parkings")
-public class ParkingEntity extends BaseEntity {
+public class ParkingEntity implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-
+	
+	/**
+	 *  common fields
+	 */
+	private BaseEntity base;
 	
 	/**
 	 *  the name of the parking
 	 */
-	String name;
+	private String name;
 	
 	/**
 	 *  the location of the parking
 	 */
-	String location;
+	private String location;
 	
 	/**
 	 *  open time
 	 */
-	String opensAt;
+	private String opensAt;
 	
 	/**
 	 *  closing time
 	 */
-	String closesAt;
+	private String closesAt;
 	
 	/**
 	 * price per 1 hour
 	 */
-	Double pricePerHour;
+	private Double pricePerHour;
 
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getOpensAt() {
-		return opensAt;
-	}
-
-	public void setOpensAt(String opensAt) {
-		this.opensAt = opensAt;
-	}
-
-	public String getClosesAt() {
-		return closesAt;
-	}
-
-	public void setClosesAt(String closesAt) {
-		this.closesAt = closesAt;
-	}
-
-	public Double getPricePerHour() {
-		return pricePerHour;
-	}
-
-	public void setPricePerHour(Double pricePerHour) {
-		this.pricePerHour = pricePerHour;
-	}
-	
-	
 	
 	
 }

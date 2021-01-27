@@ -1,21 +1,32 @@
 package ro.upet.parking.system.management.data.api.vehicle;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.Size;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity(name = "vehicles")
-public class VehicleEntity extends BaseEntity {
-	
+public class VehicleEntity implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-		
+	
+	/**
+	 *  common fields
+	 */
+	private BaseEntity base;
 	/**
 	 *  the name of the vehicle
 	 */
@@ -36,39 +47,6 @@ public class VehicleEntity extends BaseEntity {
 	 */
 	@ManyToOne(cascade= CascadeType.PERSIST)
 	UserEntity user;
-
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLicencePlate() {
-		return licencePlate;
-	}
-
-	public void setLicencePlate(String licencePlate) {
-		this.licencePlate = licencePlate;
-	}
-
-	public Size getSize() {
-		return size;
-	}
-
-	public void setSize(Size size) {
-		this.size = size;
-	}
-
-	public UserEntity getUser() {
-		return user;
-	}
-
-	public void setUser(UserEntity user) {
-		this.user = user;
-	}
 
 	
 }

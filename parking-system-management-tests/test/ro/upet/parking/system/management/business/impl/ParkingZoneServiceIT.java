@@ -55,7 +55,7 @@ public class ParkingZoneServiceIT extends BusinessTests {
     	pze = parkingZoneRepo.save(pze);
     	
     	final List<ParkingZone> actualResult = parkingZoneService.getList();	
-        parkingZoneService.removeById(pze.getId());
+        parkingZoneService.removeById(pze.getBase().getId());
         final List<ParkingZone> expectedResult = parkingZoneService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
@@ -67,7 +67,7 @@ public class ParkingZoneServiceIT extends BusinessTests {
     	ParkingZoneEntity pze = new ParkingZoneEntity();
     	pze.setLetter("A");
     	pze = parkingZoneRepo.save(pze);
-        final ParkingZone actualResult = parkingZoneService.getById(pze.getId());
+        final ParkingZone actualResult = parkingZoneService.getById(pze.getBase().getId());
         final ParkingZone expectedResult = ImtParkingZone.builder()
     											.id(actualResult.getId())
     											.createdAt(actualResult.getCreatedAt())
@@ -98,7 +98,7 @@ public class ParkingZoneServiceIT extends BusinessTests {
     public void updateParkingZone_test_success() {
        	ParkingZoneEntity pze = new ParkingZoneEntity();
     	pze = parkingZoneRepo.save(pze);
-        final ParkingZone actualResult = parkingZoneService.update(ImtParkingZone.copyOf(PARKING_ZONE_1).withId(pze.getId()));
+        final ParkingZone actualResult = parkingZoneService.update(ImtParkingZone.copyOf(PARKING_ZONE_1).withId(pze.getBase().getId()));
         final ParkingZone expectedResult = ImtParkingZone.copyOf(PARKING_ZONE_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())

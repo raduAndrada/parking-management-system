@@ -22,11 +22,11 @@ public class MembershipMapper {
 	 */
 	public static MembershipEntity toMembershipEntity(final Membership membership) {
 		final MembershipEntity entity = new MembershipEntity();
-		entity.setCode(membership.getCode());
-		entity.setId(membership.getId());
-		entity.setCreatedAt(membership.getCreatedAt());
+		entity.getBase().setCode(membership.getCode());
+		entity.getBase().setId(membership.getId());
+		entity.getBase().setCreatedAt(membership.getCreatedAt());
 		entity.setMembershipType(membership.getMembershipType());
-		entity.setUpdatedAt(membership.getUpdatedAt());
+		entity.getBase().setUpdatedAt(membership.getUpdatedAt());
 		entity.setUser(UserMapper.toUserEntity(membership.getUser()));
 		entity.setParkingSpot(ParkingSpotMapper.toParkingSpotEntity(membership.getParkingSpot()));
 		return entity;
@@ -38,12 +38,12 @@ public class MembershipMapper {
 	 */
 	public static Membership toMembership(final MembershipEntity entity) {
 		return ImtMembership.builder()
-				.code(entity.getCode())
-				.createdAt(entity.getCreatedAt())
-				.id(entity.getId())
+				.code(entity.getBase().getCode())
+				.createdAt(entity.getBase().getCreatedAt())
+				.id(entity.getBase().getId())
 				.membershipType(entity.getMembershipType())
 				.parkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
-				.updatedAt(entity.getUpdatedAt())
+				.updatedAt(entity.getBase().getUpdatedAt())
 				.user(UserMapper.toUser(entity.getUser()))
 				.build();
 	}

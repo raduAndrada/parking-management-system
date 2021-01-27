@@ -53,7 +53,7 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	    @Transactional
 	    public void addParkingLevel_test_success() {
 	        final ParkingLevelEntity testEntity = parkingLevelRepo.save(PARKING_LEVEL_1);
-	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getId());
+	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getNumber()).isEqualTo(PARKING_LEVEL_NUMBER1);
 	    }
@@ -63,7 +63,7 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	    public void deleteParkingLevel_test_success() {
 	        final ParkingLevelEntity testEntity = parkingLevelRepo.save(PARKING_LEVEL_1);
 	        parkingLevelRepo.delete(testEntity);
-	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getId());
+	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity.isEmpty());
 	    }
 	    
@@ -86,7 +86,7 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	        final ParkingLevelEntity testEntity = parkingLevelRepo.save(PARKING_LEVEL_1);
 	        testEntity.setNumber(PARKING_LEVEL_NUMBER2);
 	        parkingLevelRepo.save(testEntity);
-	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getId());
+	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getBase().getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getNumber()).isEqualTo(PARKING_LEVEL_NUMBER2);
 	    }

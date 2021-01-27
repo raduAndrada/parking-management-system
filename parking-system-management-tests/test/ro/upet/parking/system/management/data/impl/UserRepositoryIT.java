@@ -60,7 +60,7 @@ public class UserRepositoryIT extends DataTests {
     @Transactional
     public void addUser_test_success() {
         final UserEntity testEntity = userRepo.save(USER_1);
-        final Optional<UserEntity> expectedEntity = userRepo.findById(testEntity.getId());
+        final Optional<UserEntity> expectedEntity = userRepo.findById(testEntity.getBase().getId());
         assertThat(expectedEntity).isNotNull();
         assertThat(expectedEntity.get().getUsername()).isEqualTo(USER_USERNAME1);
     }
@@ -70,7 +70,7 @@ public class UserRepositoryIT extends DataTests {
     public void deleteUser_test_success() {
         final UserEntity testEntity = userRepo.save(USER_1);
         userRepo.delete(testEntity);
-        final Optional<UserEntity> expectedEntity = userRepo.findById(testEntity.getId());
+        final Optional<UserEntity> expectedEntity = userRepo.findById(testEntity.getBase().getId());
         assertThat(expectedEntity.isEmpty());
     }
     
@@ -81,7 +81,7 @@ public class UserRepositoryIT extends DataTests {
         userRepo.save(USER_2);
         final Optional<UserEntity> expectedEntity1 = userRepo.findByUsername(USER_USERNAME1);
         assertThat(expectedEntity1.isPresent());
-        assertThat(expectedEntity1.get().getId()).isEqualTo(testEntity1.getId());
+        assertThat(expectedEntity1.get().getBase().getId()).isEqualTo(testEntity1.getBase().getId());
     }
     
     @Test
@@ -91,7 +91,7 @@ public class UserRepositoryIT extends DataTests {
         userRepo.save(USER_2);
         final Optional<UserEntity> expectedEntity1 = userRepo.findByEmail(USER_EMAIL1);
         assertThat(expectedEntity1.isPresent());
-        assertThat(expectedEntity1.get().getId()).isEqualTo(testEntity1.getId());
+        assertThat(expectedEntity1.get().getBase().getId()).isEqualTo(testEntity1.getBase().getId());
     }
     
     
@@ -103,7 +103,7 @@ public class UserRepositoryIT extends DataTests {
         final Optional<UserEntity> expectedEntity1 = userRepo.findByUsernameAndPassword(USER_USERNAME1, USER_PASSWORD1);
         assertThat(expectedEntity1.isPresent());
         assertThat(expectedEntity1.get().getAddress()).isEqualTo(testEntity1.getAddress());
-        assertThat(expectedEntity1.get().getId()).isEqualTo(testEntity1.getId());
+        assertThat(expectedEntity1.get().getBase().getId()).isEqualTo(testEntity1.getBase().getId());
     }
     
     @Test
@@ -114,7 +114,7 @@ public class UserRepositoryIT extends DataTests {
         final Optional<UserEntity> expectedEntity1 = userRepo.findByEmailAndPassword(USER_EMAIL1, USER_PASSWORD1);
         assertThat(expectedEntity1.isPresent());
         assertThat(expectedEntity1.get().getAddress()).isEqualTo(testEntity1.getAddress());
-        assertThat(expectedEntity1.get().getId()).isEqualTo(testEntity1.getId());
+        assertThat(expectedEntity1.get().getBase().getId()).isEqualTo(testEntity1.getBase().getId());
     }
     
     @Test
@@ -134,7 +134,7 @@ public class UserRepositoryIT extends DataTests {
         final UserEntity testEntity = userRepo.save(USER_1);
         testEntity.setPassword(USER_PASSWORD2);
         userRepo.save(testEntity);
-        final Optional<UserEntity> expectedEntity = userRepo.findById(testEntity.getId());
+        final Optional<UserEntity> expectedEntity = userRepo.findById(testEntity.getBase().getId());
         assertThat(expectedEntity).isNotNull();
         assertThat(expectedEntity.get().getPassword()).isEqualTo(USER_PASSWORD2);
     }
