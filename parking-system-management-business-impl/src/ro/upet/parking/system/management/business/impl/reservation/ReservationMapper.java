@@ -24,15 +24,13 @@ public class ReservationMapper {
 	public static ReservationEntity toReservationEntity(final Reservation reservation) {
 		final ReservationEntity entity = new ReservationEntity();
 		entity.getBase().setCode(reservation.getCode());
-		entity.getBase().setId(reservation.getId());
-		entity.getBase().setCreatedAt(reservation.getCreatedAt());
-		entity.getBase().setUpdatedAt(reservation.getUpdatedAt());
+		entity.setId(reservation.getId());
 		entity.setEndTime(reservation.getEndTime());
 		entity.setNotes(reservation.getNotes());
 		entity.setStartTime(reservation.getStartTime());
 		entity.setUser(Objects.nonNull(entity.getUser()) ? UserMapper.toUserEntity(reservation.getUser()) : null);
 		entity.setReservationStatus(reservation.getReservationStatus());
-		entity.setCost(Double.parseDouble(reservation.getCost()));
+		entity.setCost(reservation.getCost());
 		entity.setParkingSpot(Objects.nonNull(entity.getParkingSpot()) ? ParkingSpotMapper.toParkingSpotEntity(reservation.getParkingSpot()) : null);
 		return entity;
 	}
@@ -44,11 +42,9 @@ public class ReservationMapper {
 	public static Reservation toReservation(final ReservationEntity entity) {
 		return ImtReservation.builder()
 				.code(entity.getBase().getCode())
-				.createdAt(entity.getBase().getCreatedAt())
-				.id(entity.getBase().getId())
-				.cost(entity.getCost().toString())
+				.id(entity.getId())
+				.cost(entity.getCost())
 				.parkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
-				.updatedAt(entity.getBase().getUpdatedAt())
 				.endTime(entity.getEndTime())
 				.startTime(entity.getStartTime())
 				.reservationStatus(entity.getReservationStatus())

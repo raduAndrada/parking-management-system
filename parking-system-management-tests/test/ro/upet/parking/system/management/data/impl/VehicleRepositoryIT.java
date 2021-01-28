@@ -51,7 +51,7 @@ public class VehicleRepositoryIT extends DataTests {
 	    @Transactional
 	    public void addVehicle_test_success() {
 	        final VehicleEntity testEntity = vehicleRepo.save(VEHICLE_1);
-	        final Optional<VehicleEntity> expectedEntity = vehicleRepo.findById(testEntity.getBase().getId());
+	        final Optional<VehicleEntity> expectedEntity = vehicleRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getName()).isEqualTo(VEHICLE_NAME1);
 	    }
@@ -61,7 +61,7 @@ public class VehicleRepositoryIT extends DataTests {
 	    public void deleteVehicle_test_success() {
 	        final VehicleEntity testEntity = vehicleRepo.save(VEHICLE_1);
 	        vehicleRepo.delete(testEntity);
-	        final Optional<VehicleEntity> expectedEntity = vehicleRepo.findById(testEntity.getBase().getId());
+	        final Optional<VehicleEntity> expectedEntity = vehicleRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity.isEmpty());
 	    }
 	    
@@ -84,7 +84,7 @@ public class VehicleRepositoryIT extends DataTests {
 	        final VehicleEntity testEntity = vehicleRepo.save(VEHICLE_1);
 	        testEntity.setName(VEHICLE_NAME2);
 	        vehicleRepo.save(testEntity);
-	        final Optional<VehicleEntity> expectedEntity = vehicleRepo.findById(testEntity.getBase().getId());
+	        final Optional<VehicleEntity> expectedEntity = vehicleRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getName()).isEqualTo(VEHICLE_NAME2);
 	    }

@@ -3,7 +3,11 @@ package ro.upet.parking.system.management.data.api.vehicle;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
@@ -24,29 +28,38 @@ public class VehicleEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
+	
+	/**
 	 *  common fields
 	 */
 	private BaseEntity base;
 	/**
 	 *  the name of the vehicle
 	 */
-	String name;
+	private String name;
 	
 	/**
 	 *  the registration plate of the vehicle
 	 */
-	String licencePlate;
+	@Column(unique = true)
+	private String licencePlate;
 
 	/**
 	 *  the size of the vehicle
 	 */
-	Size size;
+	private Size size;
 
 	/**
 	 *  the id of the owner of the vehicle
 	 */
-	@ManyToOne(cascade= CascadeType.PERSIST)
-	UserEntity user;
+	@ManyToOne(cascade= CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private UserEntity user;
 
 	
 }

@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -25,27 +29,37 @@ public class ParkingLevelEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
+	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
 	/**
 	 *  common fields
 	 */
 	private BaseEntity base;
+	
 	/**
 	 *  number of the level
 	 */
-	String number;
+	@Column(nullable = false)
+	private String number;
 	
 	/**
 	 *  the parking
 	 */
 	@ManyToOne(cascade= CascadeType.MERGE)
-	ParkingEntity parking;
+	private ParkingEntity parking;
 	
 	/**
 	 *  parking zones
 	 */
-	@OneToMany(cascade= CascadeType.MERGE)
-	List<ParkingZoneEntity> parkingZones;
-
+	@OneToMany(cascade= CascadeType.MERGE, orphanRemoval = true)
+	// @JoinColumn(name = "parking_zone_id")
+	private List<ParkingZoneEntity> parkingZones;
 
 	
 }

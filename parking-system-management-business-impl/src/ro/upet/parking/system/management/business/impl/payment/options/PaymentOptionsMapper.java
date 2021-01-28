@@ -21,9 +21,7 @@ public class PaymentOptionsMapper {
 	public static PaymentOptionsEntity toPaymentOptionsEntity(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = new PaymentOptionsEntity();
 		entity.getBase().setCode(paymentOptions.getCode());
-		entity.getBase().setId(paymentOptions.getId());
-		entity.getBase().setCreatedAt(paymentOptions.getCreatedAt());
-		entity.getBase().setUpdatedAt(paymentOptions.getUpdatedAt());
+		entity.setId(paymentOptions.getId());
 		entity.setPaymentStatus(paymentOptions.getPaymentStatus());
 		entity.setStartPeriod(paymentOptions.getStartPeriod());
 		entity.setEndPeriod(paymentOptions.getEndPeriod());
@@ -37,11 +35,9 @@ public class PaymentOptionsMapper {
 	public static PaymentOptions toPaymentOptions(final PaymentOptionsEntity entity) {
 		return ImtPaymentOptions.builder()
 				.code(entity.getBase().getCode())
-				.createdAt(entity.getBase().getCreatedAt())
-				.id(entity.getBase().getId())
-				.updatedAt(entity.getBase().getUpdatedAt())
+				.id(entity.getId())
 				.userCode(entity.getUser().getBase().getCode())
-				.userId(entity.getUser().getBase().getId())
+				.userId(entity.getUser().getId())
 				.endPeriod(entity.getEndPeriod())
 				.startPeriod(entity.getStartPeriod())
 				.paymentStatus(entity.getPaymentStatus())

@@ -52,9 +52,9 @@ public class PaymentOptionsServiceIT extends BusinessTests {
     	
         final PaymentOptions actualResult = paymentOptionsService.add(ImtPaymentOptions
         																					.copyOf(PAYMENT_OPTIONS_1)
-        																					.withUserId(ue.getBase().getId()));
+        																					.withUserId(ue.getId()));
         final PaymentOptions expectedResult = ImtPaymentOptions.copyOf(PAYMENT_OPTIONS_1)
-        											.withUserId(ue.getBase().getId())
+        											.withUserId(ue.getId())
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());
@@ -75,7 +75,7 @@ public class PaymentOptionsServiceIT extends BusinessTests {
     	poe = paymentOptionsRepo.save(poe);
     	
     	final List<PaymentOptions> actualResult = paymentOptionsService.getList();	
-        paymentOptionsService.removeById(poe.getBase().getId());
+        paymentOptionsService.removeById(poe.getId());
         final List<PaymentOptions> expectedResult = paymentOptionsService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
@@ -90,12 +90,12 @@ public class PaymentOptionsServiceIT extends BusinessTests {
     	ue = userRepo.save(ue);
     	poe.setUser(ue);
     	poe = paymentOptionsRepo.save(poe);
-        final PaymentOptions actualResult = paymentOptionsService.getById(poe.getBase().getId());
+        final PaymentOptions actualResult = paymentOptionsService.getById(poe.getId());
         final PaymentOptions expectedResult = ImtPaymentOptions.builder()
     											.id(actualResult.getId())
     											.createdAt(actualResult.getCreatedAt())
     											.updatedAt(actualResult.getUpdatedAt())
-    											.userId(ue.getBase().getId())
+    											.userId(ue.getId())
     											.paymentStatus(PaymentStatus.PAID)
     											.build();
         assertThat(actualResult).isNotNull();
@@ -132,9 +132,9 @@ public class PaymentOptionsServiceIT extends BusinessTests {
     	poe.setUser(ue);
     	poe.setPaymentStatus(PaymentStatus.PREPAID);
     	poe = paymentOptionsRepo.save(poe);
-        final PaymentOptions actualResult = paymentOptionsService.update(ImtPaymentOptions.copyOf(PAYMENT_OPTIONS_1).withId(poe.getBase().getId()).withUserId(ue.getBase().getId()));
+        final PaymentOptions actualResult = paymentOptionsService.update(ImtPaymentOptions.copyOf(PAYMENT_OPTIONS_1).withId(poe.getId()).withUserId(ue.getId()));
         final PaymentOptions expectedResult = ImtPaymentOptions.copyOf(PAYMENT_OPTIONS_1)
-        											.withUserId(ue.getBase().getId())
+        											.withUserId(ue.getId())
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());

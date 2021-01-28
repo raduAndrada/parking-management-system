@@ -1,5 +1,7 @@
 package ro.upet.parking.system.management.model.parking;
 
+import java.math.BigDecimal;
+
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -42,6 +44,6 @@ public interface Parking extends BaseModel {
 	/**
 	 * @return price per hour
 	 */
-	Double getPricePerHour();
+	BigDecimal getPricePerHour();
 	
 }

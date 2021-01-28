@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +26,14 @@ public class PaymentOptionsEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
+	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
 	/**
 	 *  common fields
 	 */
@@ -30,28 +41,28 @@ public class PaymentOptionsEntity implements Serializable{
 	/**
 	 *  status of the payment
 	 */
-	PaymentStatus paymentStatus;
+	private PaymentStatus paymentStatus;
 	
 	/**
 	 *  start date of the  availability of the payment (for memberships)
 	 */
-	LocalDate startPeriod;
+	private LocalDate startPeriod;
 	
 	/**
 	 *  end date of the  availability of the payment (for memberships)
 	 */
-	LocalDate endPeriod;
+	private LocalDate endPeriod;
 	
 	/**
 	 * id for stripe
 	 */
-	String stripeId;
+	private String stripeId;
 	
 	/**
 	 * owner of this payment options
 	 */
-	@OneToOne
-	UserEntity user;
+	@OneToOne(fetch = FetchType.LAZY)
+	private UserEntity user;
 
 
 	

@@ -117,7 +117,7 @@ public class ReservationServiceIT extends BusinessTests {
     	
     	re = reservationRepo.save(re);
     	final List<Reservation> actualResult = reservationService.getList();	
-        reservationService.removeById(re.getBase().getId());
+        reservationService.removeById(re.getId());
         final List<Reservation> expectedResult = reservationService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
@@ -144,7 +144,7 @@ public class ReservationServiceIT extends BusinessTests {
     	re.setParkingSpot(pse);
     	
     	re = reservationRepo.save(re);
-        final Reservation actualResult = reservationService.getById(re.getBase().getId());
+        final Reservation actualResult = reservationService.getById(re.getId());
         final Reservation expectedResult = ImtReservation.builder()
     											.id(actualResult.getId())
     											.notes(RESERVATION_NOTES_1)
@@ -218,7 +218,7 @@ public class ReservationServiceIT extends BusinessTests {
     	re.setParkingSpot(pse);
     	re = reservationRepo.save(re);
         final Reservation actualResult = reservationService.update(ImtReservation.copyOf(RESERVATION_1)
-        					.withId(re.getBase().getId())
+        					.withId(re.getId())
         					.withParkingSpot(ParkingSpotMapper.toParkingSpot(pse)));
         final Reservation expectedResult = ImtReservation.copyOf(RESERVATION_1)
         											//.withVehicle(actualResult.getVehicle())

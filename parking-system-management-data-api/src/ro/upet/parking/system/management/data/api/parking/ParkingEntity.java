@@ -1,8 +1,12 @@
 package ro.upet.parking.system.management.data.api.parking;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,14 +24,25 @@ public class ParkingEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
+	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
 	/**
 	 *  common fields
 	 */
 	private BaseEntity base;
 	
+
+	
 	/**
 	 *  the name of the parking
 	 */
+	@Column(unique = true)
 	private String name;
 	
 	/**
@@ -48,7 +63,7 @@ public class ParkingEntity implements Serializable{
 	/**
 	 * price per 1 hour
 	 */
-	private Double pricePerHour;
+	private BigDecimal pricePerHour;
 
 
 	

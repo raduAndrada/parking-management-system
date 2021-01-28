@@ -24,9 +24,7 @@ public class ParkingLevelMapper {
 	public static ParkingLevelEntity toParkingLevelEntity(final ParkingLevel parkingLevel) {
 		final ParkingLevelEntity entity = new ParkingLevelEntity();
 		entity.getBase().setCode(parkingLevel.getCode());
-		entity.getBase().setId(parkingLevel.getId());
-		entity.getBase().setCreatedAt(parkingLevel.getCreatedAt());
-		entity.getBase().setUpdatedAt(parkingLevel.getUpdatedAt());
+		entity.setId(parkingLevel.getId());
 		entity.setNumber(parkingLevel.getNumber());
 		entity.setParking(ParkingMapper.toParkingEntity(parkingLevel.getParking()));
 		return entity;
@@ -39,9 +37,7 @@ public class ParkingLevelMapper {
 	public static ParkingLevel toParkingLevel(final ParkingLevelEntity entity) {
 		return ImtParkingLevel.builder()
 				.code(entity.getBase().getCode())
-				.createdAt(entity.getBase().getCreatedAt())
-				.id(entity.getBase().getId())
-				.updatedAt(entity.getBase().getUpdatedAt())
+				.id(entity.getId())
 				.number(entity.getNumber())
 				.parking(ParkingMapper.toParking(entity.getParking()))
 				.parkingZones(Objects.nonNull(entity.getParkingZones()) && !entity.getParkingZones().isEmpty() ? 

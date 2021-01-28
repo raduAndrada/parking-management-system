@@ -82,7 +82,7 @@ public class VehicleServiceIT extends BusinessTests {
     	ve.setName(VEHICLE_NAME1);
     	ve = vehicleRepo.save(ve);
     	final List<Vehicle> actualResult = vehicleService.getList();	
-        vehicleService.removeById(ve.getBase().getId());
+        vehicleService.removeById(ve.getId());
         final List<Vehicle> expectedResult = vehicleService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
@@ -96,7 +96,7 @@ public class VehicleServiceIT extends BusinessTests {
     	UserEntity ue = new UserEntity();
     	ve.setUser(ue);
     	ve = vehicleRepo.save(ve);
-        final Vehicle actualResult = vehicleService.getById(ve.getBase().getId());
+        final Vehicle actualResult = vehicleService.getById(ve.getId());
         final Vehicle expectedResult = ImtVehicle.builder()
     											.id(actualResult.getId())
     											.name(VEHICLE_NAME1)
@@ -136,7 +136,7 @@ public class VehicleServiceIT extends BusinessTests {
     	ve.setUser(ue);
     	ve.setName(VEHICLE_NAME1);
     	ve = vehicleRepo.save(ve);
-        final Vehicle actualResult = vehicleService.update(ImtVehicle.copyOf(VEHICLE_1).withId(ve.getBase().getId()));
+        final Vehicle actualResult = vehicleService.update(ImtVehicle.copyOf(VEHICLE_1).withId(ve.getId()));
         final Vehicle expectedResult = ImtVehicle.copyOf(VEHICLE_1)
         											.withUser(actualResult.getUser())
         											.withId(actualResult.getId())

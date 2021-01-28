@@ -2,7 +2,11 @@ package ro.upet.parking.system.management.data.api.parking.spot;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -25,36 +29,46 @@ public class ParkingSpotEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
+	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
 	/**
 	 *  common fields
 	 */
 	private BaseEntity base;
+	
 	/**
 	 *  number of the parking spot
 	 */
-	String number;
+	@Column(nullable = false)
+	private String number;
 	
 	/**
 	 * true if the spot is free, false otherwise
 	 */
 	@ColumnDefault("true")
-	Boolean available;
+	private Boolean available;
 	
 	/**
 	 * true if it can be rent through a membership, false otherwise
 	 */
 	@ColumnDefault("false")
-	Boolean rentable;
+	private Boolean rentable;
 	
 	/**
 	 * true if it can be rented, false otherwise
 	 */
 	@ColumnDefault("false")
-	Boolean rented;
+	private Boolean rented;
 	
-	@ManyToOne
+	@ManyToOne (fetch = FetchType.LAZY)
 	@JsonIgnore
-	ParkingZoneEntity parkingZone;
+	private ParkingZoneEntity parkingZone;
 
 	
 }

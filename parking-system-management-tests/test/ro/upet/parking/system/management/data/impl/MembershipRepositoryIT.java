@@ -80,7 +80,7 @@ public class MembershipRepositoryIT extends DataTests {
 	    @Transactional
 	    public void addMembership_test_success() {
 	        final MembershipEntity testEntity = membershipRepo.save(MEMBERSHIP_1);
-	        final Optional<MembershipEntity> expectedEntity = membershipRepo.findById(testEntity.getBase().getId());
+	        final Optional<MembershipEntity> expectedEntity = membershipRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getUser().getUsername()).isEqualTo(MEMBERSHIP_USER_USERNAME1);
 	    }
@@ -90,7 +90,7 @@ public class MembershipRepositoryIT extends DataTests {
 	    public void deleteMembership_test_success() {
 	        final MembershipEntity testEntity = membershipRepo.save(MEMBERSHIP_1);
 	        membershipRepo.delete(testEntity);
-	        final Optional<MembershipEntity> expectedEntity = membershipRepo.findById(testEntity.getBase().getId());
+	        final Optional<MembershipEntity> expectedEntity = membershipRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity.isEmpty());
 	    }
 	    
@@ -113,7 +113,7 @@ public class MembershipRepositoryIT extends DataTests {
 	        final MembershipEntity testEntity = membershipRepo.save(MEMBERSHIP_1);
 	        testEntity.setMembershipType(MEMBERSHIP_TYPE2);
 	        membershipRepo.save(testEntity);
-	        final Optional<MembershipEntity> expectedEntity = membershipRepo.findById(testEntity.getBase().getId());
+	        final Optional<MembershipEntity> expectedEntity = membershipRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getMembershipType()).isEqualTo(MEMBERSHIP_TYPE2);
 	    }

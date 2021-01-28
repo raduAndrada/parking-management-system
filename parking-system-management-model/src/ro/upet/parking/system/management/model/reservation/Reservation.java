@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.model.reservation;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import javax.annotation.Nullable;
@@ -59,7 +60,7 @@ public interface Reservation extends BaseModel{
 	/**
 	 * @return the price of the reservation
 	 */
-	String getCost();
+	BigDecimal getCost();
 	
 
 }

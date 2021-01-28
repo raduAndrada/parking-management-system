@@ -1,10 +1,14 @@
 package ro.upet.parking.system.management.data.api.reservation;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -27,6 +31,13 @@ public class ReservationEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
+	/**
 	 *  common fields
 	 */
 	private BaseEntity base;
@@ -40,45 +51,42 @@ public class ReservationEntity implements Serializable{
 	/**
 	 *  end time 
 	 */
-	Instant endTime;
+	private Instant endTime;
 
 	/**
 	 *  additional info for the reservation
 	 */
 	@Nullable
-	String notes;
+	private String notes;
 
 	/**
 	 *  status for the reservation 
 	 */
-	ReservationStatus reservationStatus;
+	private ReservationStatus reservationStatus;
 	
 
 	/**
 	 *  registration number of the vehicle that will be parked 
 	 */
-	String vehicleLicencePlate;
+	private String vehicleLicencePlate;
 	
 	/**
 	 * Cost of staying
 	 */
-	Double cost;
+	private BigDecimal cost;
 	
 	/**
 	 * the user
 	 */
-	@ManyToOne
-	UserEntity user;
+	@ManyToOne (fetch = FetchType.LAZY)
+	private UserEntity user;
 
 	
 	/**
 	 *  parking spot
 	 */
-	@OneToOne
-	ParkingSpotEntity parkingSpot;
-	
-	
-
+	@OneToOne(fetch = FetchType.LAZY)
+	private ParkingSpotEntity parkingSpot;
 	
 	
 }

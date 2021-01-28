@@ -22,9 +22,7 @@ public class ParkingSpotMapper {
 	public static ParkingSpotEntity toParkingSpotEntity(final ParkingSpot parkingSpot) {
 		ParkingSpotEntity entity = new ParkingSpotEntity();
 		entity.getBase().setCode(parkingSpot.getCode());
-		entity.getBase().setId(parkingSpot.getId());
-		entity.getBase().setCreatedAt(parkingSpot.getCreatedAt());
-		entity.getBase().setUpdatedAt(parkingSpot.getUpdatedAt());
+		entity.setId(parkingSpot.getId());
 		entity.setNumber(parkingSpot.getNumber());
 		entity.setAvailable(parkingSpot.isAvailable());
 		entity.setRentable(parkingSpot.isRentable());
@@ -40,9 +38,7 @@ public class ParkingSpotMapper {
 	public static ParkingSpot toParkingSpot(final ParkingSpotEntity entity) {
 		return ImtParkingSpot.builder()
 				.code(entity.getBase().getCode())
-				.createdAt(entity.getBase().getCreatedAt())
-				.id(entity.getBase().getId())
-				.updatedAt(entity.getBase().getUpdatedAt())
+				.id(entity.getId())
 				.number(entity.getNumber())
 				.isRentable(entity.getRentable())
 				.isAvailable(entity.getAvailable())

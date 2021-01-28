@@ -91,7 +91,7 @@ public class UserServiceIT extends BusinessTests {
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
     	final List<User> actualResult = userService.getList();	
-        userService.removeById(ue.getBase().getId());
+        userService.removeById(ue.getId());
         final List<User> expectedResult = userService.getList();
         assertThat(actualResult).isNotNull();
         assertThat(actualResult.size() - 1).isEqualTo(expectedResult.size());
@@ -103,7 +103,7 @@ public class UserServiceIT extends BusinessTests {
     	UserEntity ue = new UserEntity();
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
-        final User actualResult = userService.getById(ue.getBase().getId());
+        final User actualResult = userService.getById(ue.getId());
         final User expectedResult = ImtUser.builder()
     											.id(actualResult.getId())
     											.username(USER_USERNAME1)
@@ -137,7 +137,7 @@ public class UserServiceIT extends BusinessTests {
        	UserEntity ue = new UserEntity();
     	ue.setUsername(USER_USERNAME1);
     	ue = userRepo.save(ue);
-        final User actualResult = userService.update(ImtUser.copyOf(USER_1).withId(ue.getBase().getId()));
+        final User actualResult = userService.update(ImtUser.copyOf(USER_1).withId(ue.getId()));
         final User expectedResult = ImtUser.copyOf(USER_1)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())

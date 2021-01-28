@@ -53,7 +53,7 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	    @Transactional
 	    public void addParkingLevel_test_success() {
 	        final ParkingLevelEntity testEntity = parkingLevelRepo.save(PARKING_LEVEL_1);
-	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getBase().getId());
+	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getNumber()).isEqualTo(PARKING_LEVEL_NUMBER1);
 	    }
@@ -63,7 +63,7 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	    public void deleteParkingLevel_test_success() {
 	        final ParkingLevelEntity testEntity = parkingLevelRepo.save(PARKING_LEVEL_1);
 	        parkingLevelRepo.delete(testEntity);
-	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getBase().getId());
+	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity.isEmpty());
 	    }
 	    
@@ -73,7 +73,6 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	    @Transactional
 	    public void findAllParkingLevels_test_success() {
 	        parkingLevelRepo.save(PARKING_LEVEL_1);
-	        parkingLevelRepo.save(PARKING_LEVEL_2);
 	        final List<ParkingLevelEntity> expectedList = parkingLevelRepo.findAll();
 	        assertThat(expectedList).isNotNull();
 	        assertThat(expectedList.size()).isEqualTo(2);
@@ -86,7 +85,7 @@ public class ParkingLevelRepositoryIT extends DataTests {
 	        final ParkingLevelEntity testEntity = parkingLevelRepo.save(PARKING_LEVEL_1);
 	        testEntity.setNumber(PARKING_LEVEL_NUMBER2);
 	        parkingLevelRepo.save(testEntity);
-	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getBase().getId());
+	        final Optional<ParkingLevelEntity> expectedEntity = parkingLevelRepo.findById(testEntity.getId());
 	        assertThat(expectedEntity).isNotNull();
 	        assertThat(expectedEntity.get().getNumber()).isEqualTo(PARKING_LEVEL_NUMBER2);
 	    }

@@ -1,5 +1,9 @@
 package ro.upet.parking.system.management.model.membership;
 
+import java.math.BigDecimal;
+
+import javax.annotation.Nullable;
+
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -36,5 +40,22 @@ public interface Membership extends BaseModel {
 	ParkingSpot getParkingSpot();
 	
 
+	/**
+	 *  some memberships might start at a given hour
+	 */
+	@Nullable
+	Integer getStartHour();
+	
+	
+	/**
+	 *  end hour of a membership
+	 */
+	@Nullable
+	Integer getEndHour();
+
+	/**
+	 *  the cost of a membership
+	 */
+	BigDecimal getCost();
 	
 }

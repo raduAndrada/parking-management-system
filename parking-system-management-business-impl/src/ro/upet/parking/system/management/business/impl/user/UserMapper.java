@@ -21,9 +21,7 @@ public class UserMapper {
 	public static UserEntity toUserEntity(final User user) {
 		final UserEntity entity = new UserEntity();
 		entity.getBase().setCode(user.getCode());
-		entity.getBase().setId(user.getId());
-		entity.getBase().setCreatedAt(user.getCreatedAt());
-		entity.getBase().setUpdatedAt(user.getUpdatedAt());
+		entity.setId(user.getId());
 		entity.setEmail(user.getEmail());
 		entity.setName(user.getName());
 		entity.setPhoneNumber(user.getPhoneNumber());
@@ -39,9 +37,7 @@ public class UserMapper {
 	public static User toUser(final UserEntity entity) {
 		return ImtUser.builder()
 				.code(entity.getBase().getCode())
-				.createdAt(entity.getBase().getCreatedAt())
-				.id(entity.getBase().getId())
-				.updatedAt(entity.getBase().getUpdatedAt())
+				.id(entity.getId())
 				.email(entity.getEmail())
 				.name(entity.getName())
 				.phoneNumber(entity.getPhoneNumber())

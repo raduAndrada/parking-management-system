@@ -1,8 +1,13 @@
 package ro.upet.parking.system.management.data.api.membership;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
+import javax.annotation.Nullable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
@@ -20,14 +25,23 @@ import ro.upet.parking.system.management.model.base.MembershipType;
 @Entity(name = "memberships")
 public class MembershipEntity implements Serializable{
 	
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	
-	private BaseEntity base;
+	
+	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	public Long id;
+
+	/**
+	 * common columns for all entities 
+	 */
+	public BaseEntity base;
 	
 	/**
 	 *  the type of the membership
@@ -37,15 +51,36 @@ public class MembershipEntity implements Serializable{
 	/**
 	 * the user
 	 */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEntity user;	
 	
 
 	/**
 	 *  the parking spot
 	 */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ParkingSpotEntity parkingSpot;
+	
+	
+	/**
+	 *  some memberships might start at a given hour
+	 */
+	@Nullable
+	private Integer startHour;
+	
+	
+	/**
+	 *  end hour of a membership
+	 */
+	@Nullable
+	private Integer endHour;
+
+	/**
+	 *  the cost of a membership
+	 */
+	private BigDecimal cost;
+	
+	
 
 	
 }

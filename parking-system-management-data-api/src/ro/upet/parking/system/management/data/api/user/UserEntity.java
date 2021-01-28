@@ -3,8 +3,11 @@ package ro.upet.parking.system.management.data.api.user;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,9 +26,18 @@ public class UserEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 *  identifier for the entity
+	 */
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
+	
+	/**
 	 *  common fields
 	 */
 	private BaseEntity base;
+	
 	/**
 	 * first name and last name of the user
 	 */
@@ -39,6 +51,7 @@ public class UserEntity implements Serializable{
 	/**
 	 * unique username
 	 */
+	@Column(unique = true, nullable = false)
 	private String username;
 
 	/**
@@ -50,11 +63,13 @@ public class UserEntity implements Serializable{
 	/**
 	 * the email of the user (must be unique)
 	 */
+	@Column(unique = true, nullable = false)
 	private String email;
 
 	/**
 	 * phone number for the user
 	 */
+	@Column(length = 10)
 	private String phoneNumber;
 
 	/**
