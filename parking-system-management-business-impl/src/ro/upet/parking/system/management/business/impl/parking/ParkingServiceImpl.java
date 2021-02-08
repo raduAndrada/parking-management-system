@@ -23,23 +23,26 @@ import ro.upet.parking.system.management.model.parking.Parking;
 import ro.upet.parking.system.management.model.parking.ParkingCreate;
 
 /**
- * @author Andrada
- * Business level logic implementation for parkings 
+ * @author Andrada 
+ * Business level logic implementation for parkings
  */
 @Service
-public class ParkingServiceImpl implements ParkingService{
-	
-	@Inject
-	private ParkingRepository parkingRepo;
-	
-	@Inject
-	private ParkingLevelRepository parkingLevelRepo;
-	
-	@Inject
-	private ParkingZoneRepository parkingZoneRepo;
-	
-	@Inject
-	private ParkingSpotRepository parkingSpotRepo;
+public class ParkingServiceImpl implements ParkingService {
+
+	private final ParkingRepository parkingRepo;
+
+	private final ParkingLevelRepository parkingLevelRepo;
+
+	private final ParkingZoneRepository parkingZoneRepo;
+
+	private final ParkingSpotRepository parkingSpotRepo;
+
+	public ParkingServiceImpl(ParkingRepository parkingRepo, ParkingLevelRepository parkingLevelRepo, ParkingZoneRepository parkingZoneRepo, ParkingSpotRepository parkingSpotRepo) {
+		this.parkingRepo = parkingRepo;
+		this.parkingLevelRepo = parkingLevelRepo;
+		this.parkingZoneRepo = parkingZoneRepo;
+		this.parkingSpotRepo = parkingSpotRepo;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -58,7 +61,6 @@ public class ParkingServiceImpl implements ParkingService{
 		return null;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -66,7 +68,6 @@ public class ParkingServiceImpl implements ParkingService{
 	public List<Parking> getList() {
 		return ParkingMapper.toParkingList(parkingRepo.findAll());
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -79,7 +80,6 @@ public class ParkingServiceImpl implements ParkingService{
 		return ParkingMapper.toParking(savedEntity);
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -91,20 +91,18 @@ public class ParkingServiceImpl implements ParkingService{
 		return ParkingMapper.toParking(savedEntity);
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Parking removeById(final Long parkingId) throws BusinessException {
 		final ParkingEntity entity = parkingRepo.getOne(parkingId);
-		if (entity == null ) {
+		if (entity == null) {
 			throw new BusinessException("Parking does not exist");
 		}
 		parkingRepo.deleteById(parkingId);
 		return ParkingMapper.toParking(entity);
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -122,18 +120,18 @@ public class ParkingServiceImpl implements ParkingService{
 	@Transactional
 	public ParkingCreate configureParking(final ParkingCreate parkingCreate) {
 		final ParkingEntity parking = ParkingMapper.toParkingEntity(add(parkingCreate.getParking()));
-		for (int level = 0; level < parkingCreate.getNumberOfLevels(); level ++) {
-		   ParkingLevelEntity ple = new ParkingLevelEntity();
-		        ple.setNumber("" + level);
-		        ple.setParking(parking);
-		        
-		        final List<ParkingZoneEntity> parkingZones = Lists.newArrayList();
-			for(char zone = Character.toUpperCase(parkingCreate.getParkingZoneStartingLetter()); zone <= Character.toUpperCase(parkingCreate.getParkingZoneEndingLetter()); zone++ )
-		    {
+		for (int level = 0; level < parkingCreate.getNumberOfLevels(); level++) {
+			ParkingLevelEntity ple = new ParkingLevelEntity();
+			ple.setNumber("" + level);
+			ple.setParking(parking);
+
+			final List<ParkingZoneEntity> parkingZones = Lists.newArrayList();
+			for (char zone = Character.toUpperCase(parkingCreate.getParkingZoneStartingLetter()); zone <= Character
+					.toUpperCase(parkingCreate.getParkingZoneEndingLetter()); zone++) {
 				ParkingZoneEntity pze = new ParkingZoneEntity();
 				pze.setLetter("" + zone);
 				final List<ParkingSpotEntity> parkingSpots = Lists.newArrayList();
-				for (int spot= 0; spot < parkingCreate.getParkingZoneSpotNumber(); spot++) {
+				for (int spot = 0; spot < parkingCreate.getParkingZoneSpotNumber(); spot++) {
 					final ParkingSpotEntity pse = new ParkingSpotEntity();
 					pse.setNumber("" + zone + spot);
 					pse.setAvailable(Boolean.TRUE);
@@ -145,7 +143,7 @@ public class ParkingServiceImpl implements ParkingService{
 				pze.setParkingSpots(parkingSpots);
 				ParkingZoneEntity savedPze = parkingZoneRepo.save(pze);
 				parkingZones.add(savedPze);
-		    }
+			}
 			ple.setParkingZones(parkingZones);
 			final ParkingLevelEntity pl = parkingLevelRepo.save(ple);
 			pl.getParkingZones().forEach(pz -> {
@@ -157,10 +155,8 @@ public class ParkingServiceImpl implements ParkingService{
 				});
 			});
 		}
-		
+
 		return parkingCreate;
 	}
-	
-	
-	
+
 }

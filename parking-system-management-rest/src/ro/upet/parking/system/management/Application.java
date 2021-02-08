@@ -1,4 +1,4 @@
-package ro.upet.parking.system.management.rest;
+package ro.upet.parking.system.management;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

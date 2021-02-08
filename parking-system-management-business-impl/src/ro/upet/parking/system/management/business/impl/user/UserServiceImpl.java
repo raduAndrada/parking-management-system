@@ -24,15 +24,18 @@ import ro.upet.parking.system.management.model.user.UserUpdate;
 @Service
 public class UserServiceImpl implements UserService{
 	
-	@Inject
-	private UserRepository userRepo;
+	private final UserRepository userRepo;
 	
-	@Inject
-	private UserValidator userValidator;
+	private final UserValidator userValidator;
 	
-	@Inject
-	private VehicleRepository vehicleRepo;
-	
+	private final VehicleRepository vehicleRepo;
+
+	public UserServiceImpl(UserRepository userRepo, UserValidator userValidator, VehicleRepository vehicleRepo) {
+		this.userRepo = userRepo;
+		this.userValidator = userValidator;
+		this.vehicleRepo = vehicleRepo;
+	}
+
 
 	/**
 	 * {@inheritDoc}

@@ -52,19 +52,19 @@ public class ParkingSpotEntity implements Serializable{
 	 * true if the spot is free, false otherwise
 	 */
 	@ColumnDefault("true")
-	private Boolean available;
+	private boolean available;
 	
 	/**
 	 * true if it can be rent through a membership, false otherwise
 	 */
 	@ColumnDefault("false")
-	private Boolean rentable;
+	private boolean rentable;
 	
 	/**
 	 * true if it can be rented, false otherwise
 	 */
 	@ColumnDefault("false")
-	private Boolean rented;
+	private boolean rented;
 	
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JsonIgnore

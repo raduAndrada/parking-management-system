@@ -1,7 +1,7 @@
-spring.datasource.url=jdbc:postgresql://localhost:5432/test
-spring.datasource.password=warlord
-spring.datasource.username=postgres
-spring.jpa.hibernate.ddl-auto=validate
-spring.flyway.enabled=true
+spring:
+  profile: inttest
+  datasource: jdbc:postgresql://localhost:5432/pms_it
+  flyway:
+    enabled: true
 
-reserversion.claim.allocated.time= 30
+reserversion.claim.allocated.time: 30

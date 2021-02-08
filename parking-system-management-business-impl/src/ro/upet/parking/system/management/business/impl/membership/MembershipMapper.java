@@ -3,52 +3,49 @@ package ro.upet.parking.system.management.business.impl.membership;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ro.upet.parking.system.management.business.impl.base.GenericMapper;
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.business.impl.user.UserMapper;
 import ro.upet.parking.system.management.data.api.membership.MembershipEntity;
-import ro.upet.parking.system.management.model.membership.ImtMembership;
+import ro.upet.parking.system.management.model.membership.MdfMembership;
 import ro.upet.parking.system.management.model.membership.Membership;
 
 /**
  * 
- * @author Andrada
- * Mapper for the membership entity and model
+ * @author Andrada Mapper for the membership entity and model
  */
 public class MembershipMapper {
+	private static final GenericMapper<MembershipEntity, Membership> MAPPER = new GenericMapper();
 
 	/**
-	 * @param membership model for the membership
+	 * @param model for the membership
 	 * @return the corresponding entity
 	 */
-	public static MembershipEntity toMembershipEntity(final Membership membership) {
+	public static MembershipEntity toMembershipEntity(final Membership model) {
 		final MembershipEntity entity = new MembershipEntity();
-		entity.getBase().setCode(membership.getCode());
-		entity.setId(membership.getId());
-		entity.setMembershipType(membership.getMembershipType());
-		entity.setUser(UserMapper.toUserEntity(membership.getUser()));
-		entity.setParkingSpot(ParkingSpotMapper.toParkingSpotEntity(membership.getParkingSpot()));
+		MAPPER.mapToEntity(model, entity);
+		entity.setUser(UserMapper.toUserEntity(model.getUser()));
+		entity.setParkingSpot(ParkingSpotMapper.toParkingSpotEntity(model.getParkingSpot()));
 		return entity;
 	}
-	
+
 	/**
 	 * @param entity database level membership
 	 * @return the model for the entity
 	 */
 	public static Membership toMembership(final MembershipEntity entity) {
-		return ImtMembership.builder()
-				.code(entity.getBase().getCode())
-				.id(entity.getId())
-				.membershipType(entity.getMembershipType())
-				.parkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
-				.user(UserMapper.toUser(entity.getUser()))
-				.build();
+		MdfMembership model = MdfMembership.create();
+		MAPPER.mapToModel(entity, model);
+		model.setParkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()))
+				.setUser(UserMapper.toUser(entity.getUser()));
+		return model.toImmutable();
 	}
-	
+
 	/**
 	 * @param entityList the list with the database entities
 	 * @return the models for the list
 	 */
-	public static List<Membership> toMembershipList (final List<MembershipEntity> entityList) {
+	public static List<Membership> toMembershipList(final List<MembershipEntity> entityList) {
 		return entityList.stream().map(MembershipMapper::toMembership).collect(Collectors.toList());
 	}
 }

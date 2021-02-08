@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,7 @@ public class VehicleEntity implements Serializable{
 	/**
 	 *  common fields
 	 */
+	@Embedded
 	private BaseEntity base;
 	/**
 	 *  the name of the vehicle

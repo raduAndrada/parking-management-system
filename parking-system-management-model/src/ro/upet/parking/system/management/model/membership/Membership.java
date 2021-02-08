@@ -20,6 +20,7 @@ import ro.upet.parking.system.management.model.user.User;
  * Model entity for a membership
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtMembership.class)
 @JsonDeserialize(builder = ImtMembership.Builder.class)
 public interface Membership extends BaseModel {

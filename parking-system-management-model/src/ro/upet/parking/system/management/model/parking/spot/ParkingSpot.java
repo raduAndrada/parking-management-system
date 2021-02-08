@@ -14,6 +14,7 @@ import ro.upet.parking.system.management.model.base.BaseModel;
  * Parking spot model
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtParkingSpot.class)
 @JsonDeserialize(builder = ImtParkingSpot.Builder.class)
 public interface ParkingSpot extends BaseModel{
@@ -27,17 +28,17 @@ public interface ParkingSpot extends BaseModel{
 	/**
 	 * @return true if the spot is free, false otherwise
 	 */
-	Boolean isAvailable();
+	Boolean getAvailable();
 	
 	/**
 	 * @return true if it can be rent through a membership, false otherwise
 	 */
-	Boolean isRentable();
+	Boolean getRentable();
 	
 	/**
 	 * @return true if it is rented through a membership, false otherwise
 	 */
-	Boolean isRented();
+	Boolean getRented();
 	
 	/**
 	 * @return number of the level

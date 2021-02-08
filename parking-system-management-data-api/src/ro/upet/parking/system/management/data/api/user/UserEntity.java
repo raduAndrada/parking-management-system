@@ -1,19 +1,14 @@
 package ro.upet.parking.system.management.data.api.user;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.model.base.UserType;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,6 +31,7 @@ public class UserEntity implements Serializable{
 	/**
 	 *  common fields
 	 */
+	@Embedded
 	private BaseEntity base;
 	
 	/**

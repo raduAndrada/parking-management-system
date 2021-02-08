@@ -5,5 +5,5 @@ import java.math.BigDecimal;
 @FunctionalInterface
 public interface CostCalculator {
 
-	public BigDecimal comupteCost();
+	BigDecimal computeCost();
 }

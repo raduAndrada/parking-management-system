@@ -32,6 +32,9 @@ public class ParkingSpotServiceIT extends BusinessTests {
     
     private static final ParkingSpot PARKING_SPOT_1 = ImtParkingSpot.builder()
     		.number("A1")
+    		.parkingLevelNumber("")
+    		.parkingZoneLetter("")
+    		.parkingName("")
 			.build();
 	
     @Test
@@ -40,8 +43,10 @@ public class ParkingSpotServiceIT extends BusinessTests {
         final ParkingSpot actualResult = parkingSpotService.add(PARKING_SPOT_1);
         final ParkingSpot expectedResult = ImtParkingSpot.copyOf(PARKING_SPOT_1)
         											.withId(actualResult.getId())
-        											.withIsAvailable(true)
-        											.withIsRentable(false)
+        											.withCode(actualResult.getCode())
+        											.withAvailable(true)
+        											.withRentable(false)
+        											.withRented(false)
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());
         assertThat(actualResult).isNotNull();
@@ -102,8 +107,8 @@ public class ParkingSpotServiceIT extends BusinessTests {
         final ParkingSpot actualResult = parkingSpotService.update(ImtParkingSpot.copyOf(PARKING_SPOT_1).withId(pse.getId()));
         final ParkingSpot expectedResult = ImtParkingSpot.copyOf(PARKING_SPOT_1)
         											.withId(actualResult.getId())
-        											.withIsAvailable(true)
-        											.withIsRentable(false)
+        											.withAvailable(true)
+        											.withRentable(false)
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());
         assertThat(actualResult).isNotNull();

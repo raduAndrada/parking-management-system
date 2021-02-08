@@ -46,17 +46,20 @@ public class ReservationServiceImpl implements ReservationService {
 	@Value("${reserversion.claim.allocated.time}")
 	private Integer RESERVATION_EXPIRATION_TIME; // 15 minutes
 
-	@Inject
-	private ReservationValidator reservationValidator;
+	private final ReservationValidator reservationValidator;
 
-	@Inject
-	private ReservationRepository reservationRepo;
+	private final ReservationRepository reservationRepo;
 
-	@Inject
-	private UserRepository userRepo;
+	private final UserRepository userRepo;
 
-	@Inject
-	private ParkingSpotRepository parkingSpotRepo;
+	private final ParkingSpotRepository parkingSpotRepo;
+
+	public ReservationServiceImpl(ReservationValidator reservationValidator, ReservationRepository reservationRepo, UserRepository userRepo, ParkingSpotRepository parkingSpotRepo) {
+		this.reservationValidator = reservationValidator;
+		this.reservationRepo = reservationRepo;
+		this.userRepo = userRepo;
+		this.parkingSpotRepo = parkingSpotRepo;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -165,7 +168,7 @@ public class ReservationServiceImpl implements ReservationService {
 		// validate parking spot availability during the selected time
 		re.setParkingSpot(parkingSpots.stream().filter(x -> {
 			re.setParkingSpot(x);
-			return x.getAvailable() && reservationValidator.validate(re);
+			return x.isAvailable() && reservationValidator.validate(re);
 		}).findFirst().orElseThrow(BusinessException::new));
 		
 		re.setReservationStatus(ReservationStatus.PENDING);
@@ -331,7 +334,7 @@ public class ReservationServiceImpl implements ReservationService {
 										.multiply(BigDecimal.valueOf(duration.toHours()));
 		
 		// set cost as price per hour * reservation duration
-		re.setCost(reservationCostCalculator.comupteCost());
+		re.setCost(reservationCostCalculator.computeCost());
 	}
 
 }

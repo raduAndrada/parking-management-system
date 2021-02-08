@@ -41,6 +41,7 @@ public class ParkingZoneServiceIT extends BusinessTests {
         final ParkingZone actualResult = parkingZoneService.add(PARKING_ZONE_1);
         final ParkingZone expectedResult = ImtParkingZone.copyOf(PARKING_ZONE_1)
         											.withId(actualResult.getId())
+        											.withCode(actualResult.getCode())
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());
         assertThat(actualResult).isNotNull();

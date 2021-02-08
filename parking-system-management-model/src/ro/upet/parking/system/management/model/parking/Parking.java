@@ -15,6 +15,7 @@ import ro.upet.parking.system.management.model.base.BaseModel;
  * Model for representing a parking
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtParking.class)
 @JsonDeserialize(builder = ImtParking.Builder.class)
 public interface Parking extends BaseModel {

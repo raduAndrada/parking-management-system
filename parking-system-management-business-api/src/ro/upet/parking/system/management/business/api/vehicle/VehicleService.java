@@ -16,6 +16,6 @@ public interface VehicleService extends BaseService<Vehicle> {
 	 * @param username the username of the user
 	 * @return the list of all the vehicle for the given username
 	 */
-	public List<Vehicle> findByUserUsername(final String username);
+	List<Vehicle> findByUserUsername(final String username);
 }
 	

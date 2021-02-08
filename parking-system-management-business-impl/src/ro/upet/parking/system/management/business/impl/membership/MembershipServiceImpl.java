@@ -30,15 +30,21 @@ import ro.upet.parking.system.management.model.user.User;
 @Service
 public class MembershipServiceImpl implements MembershipService{
 	
-	@Inject
+	final
 	MembershipRepository membershipRepo;
 	
-	@Inject
+	final
 	ParkingLevelRepository parkingLevelRepo;
 	
-	@Inject
+	final
 	UserRepository userRepo;
-	
+
+	public MembershipServiceImpl(MembershipRepository membershipRepo, ParkingLevelRepository parkingLevelRepo, UserRepository userRepo) {
+		this.membershipRepo = membershipRepo;
+		this.parkingLevelRepo = parkingLevelRepo;
+		this.userRepo = userRepo;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

@@ -16,9 +16,12 @@ import ro.upet.parking.system.management.data.impl.reservation.ReservationReposi
 @Service
 public class ReservationValidatorImpl implements ReservationValidator {
 
-	@Inject
-	private ReservationRepository reservationRepo;
-	
+	private final ReservationRepository reservationRepo;
+
+	public ReservationValidatorImpl(ReservationRepository reservationRepo) {
+		this.reservationRepo = reservationRepo;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

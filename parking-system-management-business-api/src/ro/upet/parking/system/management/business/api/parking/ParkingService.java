@@ -16,5 +16,5 @@ public interface ParkingService extends BaseService<Parking>{
 	 * @param parkingCreate the configuration for the parking
 	 * @return the created parking
 	 */
-	public ParkingCreate configureParking(final ParkingCreate parkingCreate);
+	ParkingCreate configureParking(final ParkingCreate parkingCreate);
 }

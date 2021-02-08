@@ -8,10 +8,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
-import org.springframework.util.StringUtils;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +25,6 @@ public class BaseEntity {
 	/**
 	 * unique code for the entity
 	 */
-	@Generated(GenerationTime.INSERT)
 	@Column(unique = true, updatable = false)
 	private String code;
 

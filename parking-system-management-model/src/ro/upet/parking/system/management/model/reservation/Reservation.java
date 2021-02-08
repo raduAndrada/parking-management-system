@@ -20,6 +20,7 @@ import ro.upet.parking.system.management.model.user.User;
  * Model for a reservation
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtReservation.class)
 @JsonDeserialize(builder = ImtReservation.Builder.class)
 public interface Reservation extends BaseModel{

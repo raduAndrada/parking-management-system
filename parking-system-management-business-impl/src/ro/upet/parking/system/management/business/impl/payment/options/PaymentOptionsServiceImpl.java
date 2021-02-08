@@ -20,12 +20,17 @@ import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
 @Service
 public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	
-	@Inject
+	final
 	PaymentOptionsRepository paymentOptionsRepo;
 	
-	@Inject
+	final
 	UserRepository userRepo;
-	
+
+	public PaymentOptionsServiceImpl(PaymentOptionsRepository paymentOptionsRepo, UserRepository userRepo) {
+		this.paymentOptionsRepo = paymentOptionsRepo;
+		this.userRepo = userRepo;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

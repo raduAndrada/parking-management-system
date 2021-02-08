@@ -68,6 +68,7 @@ public class MembershipServiceIT extends BusinessTests {
         																					.withParkingSpot(ps)
         																					.withUser(u));
         final Membership expectedResult = ImtMembership.copyOf(MEMBERSHIP_1)
+        											.withCode(actualResult.getCode())
         											.withUser(u)
         											.withParkingSpot(ps)
         											.withId(actualResult.getId())

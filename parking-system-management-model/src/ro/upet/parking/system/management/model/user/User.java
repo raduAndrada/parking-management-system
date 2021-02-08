@@ -1,5 +1,9 @@
 package ro.upet.parking.system.management.model.user;
 
+import java.time.LocalDate;
+
+import javax.annotation.Nullable;
+
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -12,7 +16,9 @@ import ro.upet.parking.system.management.model.base.UserType;
  * @author Andrada
  * Model for the user of the application
  */
+
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtUser.class)
 @JsonDeserialize(builder = ImtUser.Builder.class)
 public interface User extends BaseModel {
@@ -46,5 +52,11 @@ public interface User extends BaseModel {
 	 * @return get the type of the user
 	 */
 	UserType getUserType();
+	
+	/**
+	 * @return user's birthday
+	 */
+	@Nullable
+	LocalDate getBirthday();
 	
 }

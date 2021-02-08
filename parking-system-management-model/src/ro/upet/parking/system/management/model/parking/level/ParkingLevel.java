@@ -19,6 +19,7 @@ import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
  * Model that represents a level in a parking
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtParkingLevel.class)
 @JsonDeserialize(builder = ImtParkingLevel.Builder.class)
 public interface ParkingLevel  extends BaseModel{

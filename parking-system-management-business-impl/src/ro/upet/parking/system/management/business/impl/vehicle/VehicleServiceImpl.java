@@ -20,12 +20,15 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
-	@Inject
-	private VehicleRepository vehicleRepo;
+	private final VehicleRepository vehicleRepo;
 
 	
-	@Inject
-	private  VehicleValidator vehicleValidator;
+	private final VehicleValidator vehicleValidator;
+
+	public VehicleServiceImpl(VehicleRepository vehicleRepo, VehicleValidator vehicleValidator) {
+		this.vehicleRepo = vehicleRepo;
+		this.vehicleValidator = vehicleValidator;
+	}
 
 	/**
 	 * {@inheritDoc}
