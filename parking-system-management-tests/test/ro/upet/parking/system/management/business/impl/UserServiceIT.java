@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ro.upet.parking.system.management.business.BusinessTests;
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.business.api.user.UserValidator;
@@ -23,7 +22,7 @@ import ro.upet.parking.system.management.model.user.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserServiceIT extends BusinessTests {
+public class UserServiceIT  {
 
 	private static final String USER_EMAIL1 = "email@example.com";
 

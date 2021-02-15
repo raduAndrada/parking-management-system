@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
@@ -25,6 +26,7 @@ import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity
 @AllArgsConstructor
 @Data
 @Entity(name = "parking_zones")
+@Builder
 public class ParkingZoneEntity implements Serializable{
 	/**
 	 * 

@@ -33,11 +33,13 @@ public interface Membership extends BaseModel {
 	/**
 	 * @return the user
 	 */
+	@Nullable
 	User getUser();
 	
 	/**
 	 * @return the parking spot
 	 */
+	@Nullable
 	ParkingSpot getParkingSpot();
 	
 

@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ro.upet.parking.system.management.business.BusinessTests;
 import ro.upet.parking.system.management.business.api.parking.zone.ParkingZoneService;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 import ro.upet.parking.system.management.data.impl.parking.zone.ParkingZoneRepository;
@@ -21,7 +20,7 @@ import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class ParkingZoneServiceIT extends BusinessTests {
+public class ParkingZoneServiceIT  {
     
     @Inject
     protected ParkingZoneRepository parkingZoneRepo;

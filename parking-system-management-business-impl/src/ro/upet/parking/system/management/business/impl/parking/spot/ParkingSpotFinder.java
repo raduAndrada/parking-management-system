@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.business.impl.parking.spot;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
@@ -45,12 +46,15 @@ public class ParkingSpotFinder {
     }
 
     private static List<ParkingZone> sortByZone(final List<ParkingZone> parkingZonesList, final ParkingSpotZoneSortOptions pszso) {
-        List<ParkingZone> sortedZones = Lists.newArrayList(parkingZonesList);
-        Collections.sort(sortedZones, (pz1, pz2) -> pz1.getLetter().compareToIgnoreCase(pz2.getLetter()));
-        if (pszso.equals(ParkingSpotZoneSortOptions.EXIT)) {
-            Collections.reverse(sortedZones);
+        if (Objects.nonNull(parkingZonesList)) {
+            List<ParkingZone> sortedZones = Lists.newArrayList(parkingZonesList);
+            Collections.sort(sortedZones, (pz1, pz2) -> pz1.getLetter().compareToIgnoreCase(pz2.getLetter()));
+            if (pszso.equals(ParkingSpotZoneSortOptions.EXIT)) {
+                Collections.reverse(sortedZones);
+            }
+            return sortedZones;
         }
-        return sortedZones;
+        return  parkingZonesList;
     }
 
     private static void filterBySpotPreference(List<ParkingSpot> parkingSpotList, final ParkingSpotPreferenceOptions pspo) {

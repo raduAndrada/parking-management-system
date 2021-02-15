@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ro.upet.parking.system.management.business.BusinessTests;
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleValidator;
@@ -27,7 +26,7 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class VehicleServiceIT extends BusinessTests {
+public class VehicleServiceIT {
 	private static final String VEHICLE_NAME1 = "name 1";
 	private static final String VEHICLE_NAME2 = "name 2";
 

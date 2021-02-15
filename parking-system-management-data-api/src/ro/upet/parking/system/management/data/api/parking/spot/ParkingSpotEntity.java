@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,6 +24,7 @@ import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity
 @AllArgsConstructor
 @Data
 @Entity(name = "parking_spots")
+@Builder
 public class ParkingSpotEntity implements Serializable{
 	/**
 	 * 

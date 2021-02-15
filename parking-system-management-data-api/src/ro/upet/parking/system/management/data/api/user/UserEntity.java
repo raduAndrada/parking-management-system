@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.data.api.user;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Entity(name = "users")
+@Builder
 public class UserEntity implements Serializable{
 	/**
 	 * 

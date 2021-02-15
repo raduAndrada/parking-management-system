@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
@@ -23,6 +24,7 @@ import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity
 @AllArgsConstructor
 @Data
 @Entity(name = "parking_levels")
+@Builder
 public class ParkingLevelEntity implements Serializable{
 	/**
 	 * 

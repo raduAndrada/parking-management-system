@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
@@ -18,6 +19,7 @@ import ro.upet.parking.system.management.data.api.base.BaseEntity;
 @AllArgsConstructor
 @Data	
 @Entity(name = "parkings")
+@Builder
 public class ParkingEntity implements Serializable{
 	/**
 	 * 

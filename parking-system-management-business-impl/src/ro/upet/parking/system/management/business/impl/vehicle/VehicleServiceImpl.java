@@ -2,8 +2,6 @@ package ro.upet.parking.system.management.business.impl.vehicle;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 
 import ro.upet.parking.system.management.business.api.core.BusinessException;
@@ -106,7 +104,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 */
 	@Override
 	public List<Vehicle> findByUserUsername(String username) {
-		return VehicleMapper.toVehicleList(vehicleRepo.findAllByUserUsename(username));
+		return VehicleMapper.toVehicleList(vehicleRepo.findAllByUserUsername(username));
 	}
 
 }

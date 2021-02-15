@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
@@ -22,6 +23,7 @@ import ro.upet.parking.system.management.model.base.Size;
 @AllArgsConstructor
 @Data
 @Entity(name = "vehicles")
+@Builder
 public class VehicleEntity implements Serializable{
 	/**
 	 * 

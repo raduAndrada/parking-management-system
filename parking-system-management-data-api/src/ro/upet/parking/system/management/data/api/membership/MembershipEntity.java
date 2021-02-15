@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
@@ -23,6 +24,7 @@ import ro.upet.parking.system.management.model.base.MembershipType;
 @AllArgsConstructor
 @Data
 @Entity(name = "memberships")
+@Builder
 public class MembershipEntity implements Serializable{
 	
 	/**

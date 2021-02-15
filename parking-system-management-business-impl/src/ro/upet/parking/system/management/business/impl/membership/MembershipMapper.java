@@ -1,6 +1,7 @@
 package ro.upet.parking.system.management.business.impl.membership;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ro.upet.parking.system.management.business.impl.base.GenericMapper;
@@ -24,8 +25,12 @@ public class MembershipMapper {
 	public static MembershipEntity toMembershipEntity(final Membership model) {
 		final MembershipEntity entity = new MembershipEntity();
 		MAPPER.mapToEntity(model, entity);
-		entity.setUser(UserMapper.toUserEntity(model.getUser()));
-		entity.setParkingSpot(ParkingSpotMapper.toParkingSpotEntity(model.getParkingSpot()));
+		if (Objects.nonNull(model.getUser())) {
+			entity.setUser(UserMapper.toUserEntity(model.getUser()));
+		}
+		if (Objects.nonNull(entity.getParkingSpot())) {
+			entity.setParkingSpot(ParkingSpotMapper.toParkingSpotEntity(model.getParkingSpot()));
+		}
 		return entity;
 	}
 

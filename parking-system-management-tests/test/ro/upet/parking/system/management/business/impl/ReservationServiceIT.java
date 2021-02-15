@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ro.upet.parking.system.management.business.BusinessTests;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
@@ -32,7 +31,7 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class ReservationServiceIT extends BusinessTests {
+public class ReservationServiceIT  {
     
     private static final String RESERVATION_LICENCE_PLATE1 = "HD00ABC";
     private static final String RESERVATION_LICENCE_PLATE2 = "HD00ABC";

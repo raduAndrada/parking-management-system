@@ -3,8 +3,6 @@ package ro.upet.parking.system.management.business.impl.user;
 import java.util.List;
 import java.util.Optional;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 
 import ro.upet.parking.system.management.business.api.core.BusinessException;
@@ -136,7 +134,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User update(UserUpdate userUpdate) {
 		// TODO stripe update if needed
-		VehicleEntity ve =vehicleRepo.findAllByUserUsename(userUpdate.getUsername())
+		VehicleEntity ve =vehicleRepo.findAllByUserUsername(userUpdate.getUsername())
 							.stream().findFirst().orElseThrow(BusinessException :: new);
 		UserEntity ue = ve.getUser();
 		ue.setEmail(userUpdate.getEmail());
