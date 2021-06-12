@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.payment.options;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,12 +20,17 @@ import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
 @Service
 public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	
-	@Inject
+	final
 	PaymentOptionsRepository paymentOptionsRepo;
 	
-	@Inject
+	final
 	UserRepository userRepo;
-	
+
+	public PaymentOptionsServiceImpl(PaymentOptionsRepository paymentOptionsRepo, UserRepository userRepo) {
+		this.paymentOptionsRepo = paymentOptionsRepo;
+		this.userRepo = userRepo;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -61,8 +65,6 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	public PaymentOptions add(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = PaymentOptionsMapper.toPaymentOptionsEntity(paymentOptions);
 		entity.setUser(userRepo.getOne(paymentOptions.getUserId()));
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		final PaymentOptionsEntity savedEntity = paymentOptionsRepo.save(entity);
 		return PaymentOptionsMapper.toPaymentOptions(savedEntity);
 	}
@@ -75,7 +77,6 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	public PaymentOptions update(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = PaymentOptionsMapper.toPaymentOptionsEntity(paymentOptions);
 		entity.setUser(userRepo.getOne(paymentOptions.getUserId()));
-		entity.setUpdatedAt(Instant.now());
 		final PaymentOptionsEntity savedEntity = paymentOptionsRepo.save(entity);
 		return PaymentOptionsMapper.toPaymentOptions(savedEntity);
 	}

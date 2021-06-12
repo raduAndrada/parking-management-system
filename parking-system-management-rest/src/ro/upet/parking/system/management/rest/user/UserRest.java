@@ -3,6 +3,7 @@ package ro.upet.parking.system.management.rest.user;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
+import ro.upet.parking.system.management.business.impl.base.GenericMapper;
+import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.user.User;
 import ro.upet.parking.system.management.model.user.UserCreate;
 import ro.upet.parking.system.management.model.user.UserUpdate;
@@ -26,15 +29,18 @@ import ro.upet.parking.system.management.rest.base.BaseRest;
  */
 @RestController
 @RequestMapping(value = "/v1/users")
-@CrossOrigin(maxAge = 3600)
-public class UserRest extends BaseRest<User> {
+@Slf4j
+@CrossOrigin(maxAge = 3600)public class UserRest extends BaseRest<User> {
 
-	@Inject
-	private UserService userService;
+	private final UserService userService;
 	
 
-	@Inject
-	private VehicleService vehicleService;
+	private final VehicleService vehicleService;
+
+	public UserRest(UserService userService, VehicleService vehicleService) {
+		this.userService = userService;
+		this.vehicleService = vehicleService;
+	}
 
 
 	@Override
@@ -44,15 +50,15 @@ public class UserRest extends BaseRest<User> {
 	}
 	
 	/**
-	 * @param id of the entity
-	 * @return the entity with the corresponding id
+	 * @param username of the entity
+	 * @return the entity with the corresponding username
 	 */
 	@GetMapping(path = USER_USERNAME_PATH)
 	public ResponseEntity<User> get(@PathVariable final String username) {
-		LOGGER.info(String.format("REST request to GET entity by username: %s", username));
+		log.info("REST request to GET entity by username: {}", username);
 		final User entity = userService.getByUsername(username);
 		if (entity == null) {
-			LOGGER.info(String.format(" with id: %s does not exist", username));
+			log.info(" with id: {} does not exist", username);
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(entity);
@@ -61,13 +67,13 @@ public class UserRest extends BaseRest<User> {
 	
 	/**
 	 * 
-	 * @param entity the entity to be added
+	 * @param user the entity to be added
 	 * @return the created entity
 	 */
 	@PostMapping("/login")
 	@Transactional
 	public ResponseEntity<User> post(@RequestBody final User user) {
-		LOGGER.info(String.format("REST request to login : %s", user.toString()));
+		log.info("REST request to login : {}", user.toString());
 		User validUser;
 		try {
 			validUser = userService.loginWithUsernameAndPassword(user.getUsername(), user.getPassword());
@@ -75,7 +81,7 @@ public class UserRest extends BaseRest<User> {
 				validUser = userService.loginWithEmailAndPassword(user.getUsername(), user.getPassword());
 			}
 		} catch (final Exception e) {
-			LOGGER.info(String.format("Something went wrong loggin in the user : %s", user));
+			log.info("Something went wrong logging in the user : {}", user);
 			return null;
 		}
 	//	SecurityContextHolder.getContext().setAuthentication(new AuthenticationImpl(validUser));
@@ -84,19 +90,20 @@ public class UserRest extends BaseRest<User> {
 	
 	/**
 	 * 
-	 * @param entity the entity to be added
+	 * @param userCreate the entity to be added
 	 * @return the created entity
 	 */
 	@PostMapping("/customer-create")
 	@Transactional
 	public ResponseEntity<User> createUser(@RequestBody final UserCreate userCreate) {
-		LOGGER.info(String.format("REST request to CREATE User : %s", userCreate.toString()));
+		log.info("REST request to CREATE User : {}", userCreate.toString());
 		final User created;
 		try {
 			created = vehicleService.add(userCreate.getVehicle()).getUser();
+
 			//TODO stripe for credit card
 		} catch (final Exception e) {
-			LOGGER.info(String.format("Something went wrong creating the entity : %s", userCreate));
+			log.info("Something went wrong creating the entity : {}", userCreate);
 			return null;
 		}
 		return ResponseEntity.ok(created);
@@ -105,19 +112,19 @@ public class UserRest extends BaseRest<User> {
 	
 	/**
 	 * 
-	 * @param entity the entity to be added
+	 * @param userUpdate the entity to be updated
 	 * @return the created entity
 	 */
 	@PutMapping("/customer-update")
 	@Transactional
 	public ResponseEntity<User> updateUser(@RequestBody final UserUpdate userUpdate) {
-		LOGGER.info(String.format("REST request to UPDATE User : %s", userUpdate.toString()));
+		log.info("REST request to UPDATE User : {}", userUpdate.toString());
 		final User updated;
 		try {
 			updated = userService.update(userUpdate);
 			//TODO stripe for credit card
 		} catch (final Exception e) {
-			LOGGER.info(String.format("Something went wrong UPDATING the entity : %s", userUpdate));
+			log.info("Something went wrong UPDATING the entity : {}", userUpdate);
 			return null;
 		}
 		return ResponseEntity.ok(updated);

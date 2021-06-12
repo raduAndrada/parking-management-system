@@ -1,9 +1,6 @@
 package ro.upet.parking.system.management.business.impl.vehicle;
 
-import java.time.Instant;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
@@ -21,12 +18,15 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
-	@Inject
-	private VehicleRepository vehicleRepo;
+	private final VehicleRepository vehicleRepo;
 
 	
-	@Inject
-	private  VehicleValidator vehicleValidator;
+	private final VehicleValidator vehicleValidator;
+
+	public VehicleServiceImpl(VehicleRepository vehicleRepo, VehicleValidator vehicleValidator) {
+		this.vehicleRepo = vehicleRepo;
+		this.vehicleValidator = vehicleValidator;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -59,8 +59,6 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle add(final Vehicle vehicle) throws BusinessException {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		if (vehicleValidator.validate(vehicle)) {
 			final VehicleEntity savedEntity = vehicleRepo.save(entity);
 			return VehicleMapper.toVehicle(savedEntity);
@@ -74,7 +72,6 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle update(final Vehicle vehicle) {
 		final VehicleEntity entity = VehicleMapper.toVehicleEntity(vehicle);
-		entity.setUpdatedAt(Instant.now());
 		final VehicleEntity savedEntity = vehicleRepo.save(entity);
 		return VehicleMapper.toVehicle(savedEntity);
 	}
@@ -107,7 +104,7 @@ public class VehicleServiceImpl implements VehicleService {
 	 */
 	@Override
 	public List<Vehicle> findByUserUsername(String username) {
-		return VehicleMapper.toVehicleList(vehicleRepo.findAllByUserUsename(username));
+		return VehicleMapper.toVehicleList(vehicleRepo.findAllByUserUsername(username));
 	}
 
 }

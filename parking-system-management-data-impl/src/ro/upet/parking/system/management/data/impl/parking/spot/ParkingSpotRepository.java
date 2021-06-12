@@ -12,7 +12,7 @@ import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity
 public interface ParkingSpotRepository extends JpaRepository<ParkingSpotEntity, Long>{
 	
 	
-	@Query("SELECT ps FROM ParkingSpotEntity ps WHERE ps.parkingZone.parkingLevel.parking.name = ?1 and ps.available = true")
+	@Query("SELECT ps FROM parking_spots ps WHERE ps.parkingZone.parkingLevel.parking.name = ?1 and ps.available = true")
 	public List<ParkingSpotEntity> findAllAvailableByParkingName(final String parkingName);
 	
 	public List<ParkingSpotEntity> findAllByAvailable(final boolean available);

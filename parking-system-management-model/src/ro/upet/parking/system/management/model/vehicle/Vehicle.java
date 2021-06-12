@@ -16,6 +16,7 @@ import ro.upet.parking.system.management.model.user.User;
  * Model for the vehicle
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtVehicle.class)
 @JsonDeserialize(builder = ImtVehicle.Builder.class)
 public interface Vehicle extends BaseModel{

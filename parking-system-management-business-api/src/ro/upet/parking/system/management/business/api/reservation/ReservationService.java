@@ -19,20 +19,20 @@ public interface ReservationService extends BaseService<Reservation> {
 	 * 
 	 */
 	List<Reservation> findAllForUserByUsername(final String username);
-	
-	
+
+
 	/**
 	 * @param reservationCreate the details for the reservation to be created
 	 * @return the created reservation
 	 */
 	Reservation createReservation(final ReservationCreate reservationCreate);
-	
+
 	/**
 	 * @param username the user for which we search for the next reservation
 	 * @return the next reservation of the user with the requested username
 	 */
 	ReservationNext getReservationNext(final String username);
-	
+
 	/**
 	 * @param reservationId the reservation that needs to be claimed
 	 * @return the updated value

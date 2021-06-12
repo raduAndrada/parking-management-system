@@ -1,154 +1,76 @@
 package ro.upet.parking.system.management.data.api.parking.spot;
 
 import java.io.Serializable;
-import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
+import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 
-@Entity
-@Table(name = "parking_spots")
-public class ParkingSpotEntity implements Serializable {
-	
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity(name = "parking_spots")
+@Builder
+public class ParkingSpotEntity implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 *  identifier for the entity	
-	 */
-	@Id
-	@GeneratedValue
-	Long id;
 	
 	/**
-	 *  unique code for the entity
+	 *  identifier for the entity
 	 */
-	@GeneratedValue
-	String code;	
-
+	@Id
+	@GeneratedValue		
+	private Long id;
+	
 	/**
-	 *  creation time
+	 *  common fields
 	 */
-	Instant createdAt;
-
-	/**
-	 *  last update time
-	 */
-	Instant updatedAt;
+	private BaseEntity base;
 	
 	/**
 	 *  number of the parking spot
 	 */
-	String number;
+	@Column(nullable = false)
+	private String number;
 	
 	/**
 	 * true if the spot is free, false otherwise
 	 */
 	@ColumnDefault("true")
-	Boolean available;
+	private boolean available;
 	
 	/**
 	 * true if it can be rent through a membership, false otherwise
 	 */
 	@ColumnDefault("false")
-	Boolean rentable;
+	private boolean rentable;
 	
 	/**
 	 * true if it can be rented, false otherwise
 	 */
 	@ColumnDefault("false")
-	Boolean rented;
+	private boolean rented;
 	
-	@ManyToOne
+	@ManyToOne (fetch = FetchType.LAZY)
 	@JsonIgnore
-	ParkingZoneEntity parkingZone;
+	private ParkingZoneEntity parkingZone;
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-
-	public Boolean getAvailable() {
-		return available;
-	}
-
-	public void setAvailable(Boolean available) {
-		this.available = available;
-	}
-
-	public Boolean getRentable() {
-		return rentable;
-	}
-
-	public void setRentable(Boolean rentable) {
-		this.rentable = rentable;
-	}
-
-	public Boolean getRented() {
-		return rented;
-	}
-
-	public void setRented(Boolean rented) {
-		this.rented = rented;
-	}
-
-	public ParkingZoneEntity getParkingZone() {
-		return parkingZone;
-	}
-
-	public void setParkingZone(ParkingZoneEntity parkingZone) {
-		this.parkingZone = parkingZone;
-	}
-	
-	
-	
 	
 }

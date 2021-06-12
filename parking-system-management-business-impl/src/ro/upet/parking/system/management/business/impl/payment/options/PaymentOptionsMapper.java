@@ -3,8 +3,9 @@ package ro.upet.parking.system.management.business.impl.payment.options;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ro.upet.parking.system.management.business.impl.base.GenericMapper;
 import ro.upet.parking.system.management.data.api.payment.options.PaymentOptionsEntity;
-import ro.upet.parking.system.management.model.payment.options.ImtPaymentOptions;
+import ro.upet.parking.system.management.model.payment.options.MdfPaymentOptions;
 import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
 
 /**
@@ -14,19 +15,15 @@ import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
  */
 public class PaymentOptionsMapper {
 
+	private static final GenericMapper<PaymentOptionsEntity, PaymentOptions> MAPPER = new GenericMapper();
+	
 	/**
 	 * @param paymentOptions model for the paymentOptions
 	 * @return the corresponding entity
 	 */
 	public static PaymentOptionsEntity toPaymentOptionsEntity(final PaymentOptions paymentOptions) {
 		final PaymentOptionsEntity entity = new PaymentOptionsEntity();
-		entity.setCode(paymentOptions.getCode());
-		entity.setId(paymentOptions.getId());
-		entity.setCreatedAt(paymentOptions.getCreatedAt());
-		entity.setUpdatedAt(paymentOptions.getUpdatedAt());
-		entity.setPaymentStatus(paymentOptions.getPaymentStatus());
-		entity.setStartPeriod(paymentOptions.getStartPeriod());
-		entity.setEndPeriod(paymentOptions.getEndPeriod());
+		MAPPER.mapToEntity(paymentOptions, entity);
 		return entity;
 	}
 	
@@ -35,17 +32,10 @@ public class PaymentOptionsMapper {
 	 * @return the model for the entity
 	 */
 	public static PaymentOptions toPaymentOptions(final PaymentOptionsEntity entity) {
-		return ImtPaymentOptions.builder()
-				.code(entity.getCode())
-				.createdAt(entity.getCreatedAt())
-				.id(entity.getId())
-				.updatedAt(entity.getUpdatedAt())
-				.userCode(entity.getUser().getCode())
-				.userId(entity.getUser().getId())
-				.endPeriod(entity.getEndPeriod())
-				.startPeriod(entity.getStartPeriod())
-				.paymentStatus(entity.getPaymentStatus())
-				.build();
+		MdfPaymentOptions model = MdfPaymentOptions.create();
+		MAPPER.mapToModel(entity, model);
+		model.setUserId(entity.getId());
+		return model.toImmutable();
 	}
 	
 	/**

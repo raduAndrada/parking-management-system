@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.parking.zone;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,8 +56,6 @@ public class ParkingZoneServiceImpl implements ParkingZoneService{
 	@Override
 	public ParkingZone add(final ParkingZone parkingZone) {
 		final ParkingZoneEntity entity = ParkingZoneMapper.toParkingZoneEntity(parkingZone);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		final ParkingZoneEntity savedEntity = parkingZoneRepo.save(entity);
 		return ParkingZoneMapper.toParkingZone(savedEntity);
 	}
@@ -70,7 +67,6 @@ public class ParkingZoneServiceImpl implements ParkingZoneService{
 	@Override
 	public ParkingZone update(final ParkingZone parkingZone) {
 		final ParkingZoneEntity entity = ParkingZoneMapper.toParkingZoneEntity(parkingZone);
-		entity.setUpdatedAt(Instant.now());
 		final ParkingZoneEntity savedEntity = parkingZoneRepo.save(entity);
 		return ParkingZoneMapper.toParkingZone(savedEntity);
 	}

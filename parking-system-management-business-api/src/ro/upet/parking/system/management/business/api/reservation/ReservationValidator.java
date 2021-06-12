@@ -12,5 +12,5 @@ public interface ReservationValidator {
 	 * @param entity the reservation to be checked 
 	 * @return true if the reservation can be saved, false otherwise
 	 */
-	public boolean validate (final ReservationEntity entity) ;
+	boolean validate (final ReservationEntity entity) ;
 }

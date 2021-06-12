@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import lombok.extern.slf4j.Slf4j;
+import org.immutables.value.internal.$processor$.meta.$SerialMirrors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import ro.upet.parking.system.management.rest.base.BaseRest;
 @RestController
 @RequestMapping(value = "/v1/parkingLevels")
 @CrossOrigin(maxAge = 3600)
+@Slf4j
 public class ParkingLevelRest extends BaseRest<ParkingLevel>{
 
 	@Inject
@@ -42,10 +45,10 @@ public class ParkingLevelRest extends BaseRest<ParkingLevel>{
 	 */
 	@GetMapping("/parking/{parkingId}")
 	public ResponseEntity<List<ParkingLevel>> getParkingZonesByParking(@PathVariable final Long parkingId) {
-		LOGGER.info(String.format("REST request to GET parkingLevel by parkingId : %s", parkingId));
+		log.info("REST request to GET parkingLevel by parkingId :{}", parkingId);
 		final List<ParkingLevel> parkingLevelList= service.getParkingLevelListByParking(parkingId);
 		if (parkingLevelList == null) {
-			LOGGER.info(String.format("No parkingLevels found for the parking with id: %s", parkingId));
+			log.info("No parkingLevels found for the parking with id: {}", parkingId);
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(parkingLevelList);

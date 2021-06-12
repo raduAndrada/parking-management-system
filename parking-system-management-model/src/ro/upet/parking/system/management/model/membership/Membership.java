@@ -1,5 +1,9 @@
 package ro.upet.parking.system.management.model.membership;
 
+import java.math.BigDecimal;
+
+import javax.annotation.Nullable;
+
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -16,6 +20,7 @@ import ro.upet.parking.system.management.model.user.User;
  * Model entity for a membership
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtMembership.class)
 @JsonDeserialize(builder = ImtMembership.Builder.class)
 public interface Membership extends BaseModel {
@@ -28,13 +33,32 @@ public interface Membership extends BaseModel {
 	/**
 	 * @return the user
 	 */
+	@Nullable
 	User getUser();
 	
 	/**
 	 * @return the parking spot
 	 */
+	@Nullable
 	ParkingSpot getParkingSpot();
 	
 
+	/**
+	 *  some memberships might start at a given hour
+	 */
+	@Nullable
+	Integer getStartHour();
+	
+	
+	/**
+	 *  end hour of a membership
+	 */
+	@Nullable
+	Integer getEndHour();
+
+	/**
+	 *  the cost of a membership
+	 */
+	BigDecimal getCost();
 	
 }

@@ -1,137 +1,88 @@
 package ro.upet.parking.system.management.data.api.membership;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.math.BigDecimal;
 
+import javax.annotation.Nullable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.MembershipType;
 
-@Entity
-@Table(name = "memberships")
-public class MembershipEntity implements Serializable {
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity(name = "memberships")
+@Builder
+public class MembershipEntity implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	/**
 	 *  identifier for the entity
 	 */
 	@Id
 	@GeneratedValue		
-	Long id;
-	
-	/**
-	 *  unique code for the entity
-	 */
-	@GeneratedValue
-	String code;	
+	public Long id;
 
 	/**
-	 *  creation time
+	 * common columns for all entities 
 	 */
-	Instant createdAt;
-
-	/**
-	 *  last update time
-	 */
-	Instant updatedAt;
+	public BaseEntity base;
 	
 	/**
 	 *  the type of the membership
 	 */
-	MembershipType membershipType;
+	private MembershipType membershipType;
 	
 	/**
 	 * the user
 	 */
-	@ManyToOne
-	UserEntity user;	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private UserEntity user;	
 	
 
 	/**
 	 *  the parking spot
 	 */
-	@ManyToOne
-	ParkingSpotEntity parkingSpot;
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getCode() {
-		return code;
-	}
-
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
-
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
-
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
-
-
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-
-	public MembershipType getMembershipType() {
-		return membershipType;
-	}
-
-
-	public void setMembershipType(MembershipType membershipType) {
-		this.membershipType = membershipType;
-	}
-
-
-	public UserEntity getUser() {
-		return user;
-	}
-
-
-	public void setUser(UserEntity user) {
-		this.user = user;
-	}
-
-
-	public ParkingSpotEntity getParkingSpot() {
-		return parkingSpot;
-	}
-
-
-	public void setParkingSpot(ParkingSpotEntity parkingSpot) {
-		this.parkingSpot = parkingSpot;
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	private ParkingSpotEntity parkingSpot;
 	
+	
+	/**
+	 *  some memberships might start at a given hour
+	 */
+	@Nullable
+	private Integer startHour;
+	
+	
+	/**
+	 *  end hour of a membership
+	 */
+	@Nullable
+	private Integer endHour;
+
+	/**
+	 *  the cost of a membership
+	 */
+	private BigDecimal cost;
+	
+	
+
 	
 }

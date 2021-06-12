@@ -12,7 +12,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<User> {
-    const urlTemp = this.baseUrl + '/login';
+    const urlTemp = this.baseUrl + '/v1/users/login';
     return this.http.post<User>(urlTemp, {username: username, password: password}).pipe(
       catchError(this.handleError<User>('login'))
     );

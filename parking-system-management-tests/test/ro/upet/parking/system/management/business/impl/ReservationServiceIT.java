@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ro.upet.parking.system.management.business.BusinessTests;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.business.impl.vehicle.VehicleMapper;
@@ -32,7 +31,7 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class ReservationServiceIT extends BusinessTests {
+public class ReservationServiceIT  {
     
     private static final String RESERVATION_LICENCE_PLATE1 = "HD00ABC";
     private static final String RESERVATION_LICENCE_PLATE2 = "HD00ABC";
@@ -82,11 +81,11 @@ public class ReservationServiceIT extends BusinessTests {
     	final ParkingSpot PARKING_SPOT = ParkingSpotMapper.toParkingSpot(pse);
         final Reservation actualResult = reservationService
         										.add(ImtReservation.copyOf(RESERVATION_1)
-        																			.withVehicle(VEHICLE)
+        																			//.withVehicle(VEHICLE)
         																			.withParkingSpot(PARKING_SPOT)
         																			);
         final Reservation expectedResult = ImtReservation.copyOf(RESERVATION_1)
-        											.withVehicle(actualResult.getVehicle())
+        										//	.withVehicle(actualResult.getVehicle())
         											.withParkingSpot(PARKING_SPOT)
         											.withId(actualResult.getId())
         											.withCreatedAt(actualResult.getCreatedAt())
@@ -105,7 +104,7 @@ public class ReservationServiceIT extends BusinessTests {
     	ve.setLicencePlate(RESERVATION_LICENCE_PLATE1);
     	ve.setUser(new UserEntity());
     	ve = vehicleRepo.save(ve);
-    	re.setVehicle(ve);
+    	//re.setVehicle(ve);
     	
       	ParkingSpotEntity pse = new ParkingSpotEntity();
     	pse.setNumber("A1");
@@ -133,7 +132,7 @@ public class ReservationServiceIT extends BusinessTests {
     	ve.setLicencePlate(RESERVATION_LICENCE_PLATE1);
     	ve.setUser(new UserEntity());
     	ve = vehicleRepo.save(ve);
-    	re.setVehicle(ve);
+    //	re.setVehicle(ve);
     	
       	ParkingSpotEntity pse = new ParkingSpotEntity();
     	pse.setNumber("A1");
@@ -150,7 +149,7 @@ public class ReservationServiceIT extends BusinessTests {
     											.notes(RESERVATION_NOTES_1)
     											.createdAt(actualResult.getCreatedAt())
     											.updatedAt(actualResult.getUpdatedAt())
-    											.vehicle(actualResult.getVehicle())
+    											//.vehicle(actualResult.getVehicle())
     											.parkingSpot(actualResult.getParkingSpot())
     											.build();
         assertThat(actualResult).isNotNull();
@@ -166,7 +165,7 @@ public class ReservationServiceIT extends BusinessTests {
     	ve.setLicencePlate(RESERVATION_LICENCE_PLATE1);
     	ve.setUser(new UserEntity());
     	ve = vehicleRepo.save(ve);
-    	re.setVehicle(ve);
+    	//re.setVehicle(ve);
     	
       	ParkingSpotEntity pse = new ParkingSpotEntity();
     	pse.setNumber("A1");
@@ -182,7 +181,7 @@ public class ReservationServiceIT extends BusinessTests {
     	ve.setLicencePlate(RESERVATION_LICENCE_PLATE2);
     	ve.setUser(new UserEntity());
     	ve = vehicleRepo.save(ve);
-    	re.setVehicle(ve);
+    	//re.setVehicle(ve);
     	
       	pse = new ParkingSpotEntity();
     	pse.setNumber("A2");
@@ -206,7 +205,7 @@ public class ReservationServiceIT extends BusinessTests {
        	ve.setLicencePlate(RESERVATION_LICENCE_PLATE1);
     	ve.setUser(new UserEntity());
     	ve = vehicleRepo.save(ve);
-    	re.setVehicle(ve);
+    	//re.setVehicle(ve);
     	
       	ParkingSpotEntity pse = new ParkingSpotEntity();
     	pse.setNumber("A1");
@@ -221,7 +220,7 @@ public class ReservationServiceIT extends BusinessTests {
         					.withId(re.getId())
         					.withParkingSpot(ParkingSpotMapper.toParkingSpot(pse)));
         final Reservation expectedResult = ImtReservation.copyOf(RESERVATION_1)
-        											.withVehicle(actualResult.getVehicle())
+        											//.withVehicle(actualResult.getVehicle())
         											.withId(actualResult.getId())
         											.withParkingSpot(actualResult.getParkingSpot())
         											.withCreatedAt(actualResult.getCreatedAt())

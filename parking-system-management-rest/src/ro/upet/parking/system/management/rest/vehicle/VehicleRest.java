@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +24,14 @@ import ro.upet.parking.system.management.rest.base.BaseRest;
 @RestController
 @RequestMapping(value = "/v1/vehicles")
 @CrossOrigin(maxAge = 3600)
+@Slf4j
 public class VehicleRest extends BaseRest<Vehicle> {
 
-	@Inject
-	private VehicleService service;
+	private final VehicleService service;
+
+	public VehicleRest(VehicleService service) {
+		this.service = service;
+	}
 
 	@Override
 	@Inject
@@ -40,10 +45,10 @@ public class VehicleRest extends BaseRest<Vehicle> {
 	 */
 	@GetMapping("/user/{username}")
 	public ResponseEntity<List<Vehicle>> getVehiclesForUser(@PathVariable final String username) {
-		LOGGER.info(String.format("REST request to GET membership by userId : %s", username));
+		log.info("REST request to GET membership by userId : {}", username);
 		final List<Vehicle> reservationList= service.findByUserUsername(username);
 		if (reservationList == null) {
-			LOGGER.info(String.format("No memberships found for the user with id: %s", username));
+			log.info("No memberships found for the user with id: {}", username);
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(reservationList);

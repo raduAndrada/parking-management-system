@@ -1,5 +1,7 @@
 package ro.upet.parking.system.management.model.parking;
 
+import java.math.BigDecimal;
+
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -13,6 +15,7 @@ import ro.upet.parking.system.management.model.base.BaseModel;
  * Model for representing a parking
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtParking.class)
 @JsonDeserialize(builder = ImtParking.Builder.class)
 public interface Parking extends BaseModel {
@@ -42,6 +45,6 @@ public interface Parking extends BaseModel {
 	/**
 	 * @return price per hour
 	 */
-	Double getPricePerHour();
+	BigDecimal getPricePerHour();
 	
 }

@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.parking.level;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,102 +16,104 @@ import ro.upet.parking.system.management.model.parking.level.ParkingLevel;
 
 /**
  * @author Andrada
- * Business level logic implementation for parkingLevels 
+ * Business level logic implementation for parkingLevels
  */
 @Service
-public class ParkingLevelServiceImpl implements ParkingLevelService{
-	
-	@Inject
-	ParkingLevelRepository parkingLevelRepo;
-	
-	@Inject
-	ParkingRepository parkingRepo;
-	
+public class ParkingLevelServiceImpl implements ParkingLevelService {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ParkingLevel getById(final Long parkingLevelId) {
-		return ParkingLevelMapper.toParkingLevel(parkingLevelRepo.getOne(parkingLevelId));
-	}
+    final
+    ParkingLevelRepository parkingLevelRepo;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ParkingLevel getByCode(final String parkingLevelCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    final
+    ParkingRepository parkingRepo;
+
+    public ParkingLevelServiceImpl(ParkingLevelRepository parkingLevelRepo, ParkingRepository parkingRepo) {
+        this.parkingLevelRepo = parkingLevelRepo;
+        this.parkingRepo = parkingRepo;
+    }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ParkingLevel> getList() {
-		return ParkingLevelMapper.toParkingLevelList(parkingLevelRepo.findAll());
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ParkingLevel getById(final Long parkingLevelId) {
+        return ParkingLevelMapper.toParkingLevel(parkingLevelRepo.getOne(parkingLevelId));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ParkingLevel getByCode(final String parkingLevelCode) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ParkingLevel add(final ParkingLevel parkingLevel) {
-		final ParkingLevelEntity entity = ParkingLevelMapper.toParkingLevelEntity(parkingLevel);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
-		final ParkingLevelEntity savedEntity = parkingLevelRepo.save(entity);
-		return ParkingLevelMapper.toParkingLevel(savedEntity);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ParkingLevel> getList() {
+        return ParkingLevelMapper.toParkingLevelList(parkingLevelRepo.findAll());
+    }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ParkingLevel update(final ParkingLevel parkingLevel) {
-		final ParkingLevelEntity entity = ParkingLevelMapper.toParkingLevelEntity(parkingLevel);
-		entity.setUpdatedAt(Instant.now());
-		final ParkingLevelEntity savedEntity = parkingLevelRepo.save(entity);
-		return ParkingLevelMapper.toParkingLevel(savedEntity);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ParkingLevel add(final ParkingLevel parkingLevel) {
+        final ParkingLevelEntity entity = ParkingLevelMapper.toParkingLevelEntity(parkingLevel);
+        final ParkingLevelEntity savedEntity = parkingLevelRepo.save(entity);
+        return ParkingLevelMapper.toParkingLevel(savedEntity);
+    }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ParkingLevel removeById(final Long parkingLevelId) throws BusinessException {
-		final ParkingLevelEntity entity = parkingLevelRepo.getOne(parkingLevelId);
-		if (entity == null ) {
-			throw new BusinessException("Parking Level does not exist");
-		}
-		parkingLevelRepo.deleteById(parkingLevelId);
-		return ParkingLevelMapper.toParkingLevel(entity);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ParkingLevel update(final ParkingLevel parkingLevel) {
+        final ParkingLevelEntity entity = ParkingLevelMapper.toParkingLevelEntity(parkingLevel);
+        final ParkingLevelEntity savedEntity = parkingLevelRepo.save(entity);
+        return ParkingLevelMapper.toParkingLevel(savedEntity);
+    }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ParkingLevel removeByCode(final String parkingLevelCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ParkingLevel removeById(final Long parkingLevelId) throws BusinessException {
+        final ParkingLevelEntity entity = parkingLevelRepo.getOne(parkingLevelId);
+        if (entity == null) {
+            throw new BusinessException("Parking Level does not exist");
+        }
+        parkingLevelRepo.deleteById(parkingLevelId);
+        return ParkingLevelMapper.toParkingLevel(entity);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ParkingLevel> getParkingLevelListByParking(final Long parkingId) {
-		return ParkingLevelMapper.toParkingLevelList(parkingLevelRepo.findAll().stream()
-																.filter(pl -> pl.getParking().getId().equals(parkingId))
-																.collect(Collectors.toList()));
-	}
-	
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ParkingLevel removeByCode(final String parkingLevelCode) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ParkingLevel> getParkingLevelListByParking(final Long parkingId) {
+        return ParkingLevelMapper.toParkingLevelList(parkingLevelRepo.findAll().stream()
+                .filter(pl -> pl.getParking().getId().equals(parkingId))
+                .collect(Collectors.toList()));
+    }
+
+
 }

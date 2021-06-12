@@ -12,9 +12,8 @@ import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 @Repository
 public interface VehicleRepository extends JpaRepository<VehicleEntity, Long>{
 	
-	public Optional<VehicleEntity> findOptionalByLicencePlate(final String licencePlate);
+	Optional<VehicleEntity> findOptionalByLicencePlate(final String licencePlate);
 	
-	@Query("SELECT v FROM VehicleEntity v WHERE v.user.username = ?1")
-	public List<VehicleEntity> findAllByUserUsename(final String username);
+	List<VehicleEntity> findAllByUserUsername(final String username);
 
 }

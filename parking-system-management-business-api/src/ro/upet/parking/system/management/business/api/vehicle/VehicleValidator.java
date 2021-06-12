@@ -11,5 +11,5 @@ public interface VehicleValidator {
 	 * @param vehicle the entity to be validated
 	 * @return true is the vehicle is defined correctly, false otherwise
 	 */
-	public boolean validate (final Vehicle vehicle);
+	boolean validate (final Vehicle vehicle);
 }

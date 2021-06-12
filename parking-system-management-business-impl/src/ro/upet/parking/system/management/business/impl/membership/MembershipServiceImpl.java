@@ -1,7 +1,7 @@
 package ro.upet.parking.system.management.business.impl.membership;
 
-import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import ro.upet.parking.system.management.business.api.core.BusinessException;
+import ro.upet.parking.system.management.business.api.core.NotFoundException;
 import ro.upet.parking.system.management.business.api.membership.MembershipService;
 import ro.upet.parking.system.management.business.impl.parking.level.ParkingLevelMapper;
 import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotFinder;
@@ -31,21 +32,27 @@ import ro.upet.parking.system.management.model.user.User;
 @Service
 public class MembershipServiceImpl implements MembershipService{
 	
-	@Inject
+	final
 	MembershipRepository membershipRepo;
 	
-	@Inject
+	final
 	ParkingLevelRepository parkingLevelRepo;
 	
-	@Inject
+	final
 	UserRepository userRepo;
-	
+
+	public MembershipServiceImpl(MembershipRepository membershipRepo, ParkingLevelRepository parkingLevelRepo, UserRepository userRepo) {
+		this.membershipRepo = membershipRepo;
+		this.parkingLevelRepo = parkingLevelRepo;
+		this.userRepo = userRepo;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Membership getById(final Long membershipId) {
-		return MembershipMapper.toMembership(membershipRepo.getOne(membershipId));
+		return MembershipMapper.toMembership(membershipRepo.findById(membershipId).orElseThrow(BusinessException::new));
 	}
 
 	/**
@@ -73,8 +80,6 @@ public class MembershipServiceImpl implements MembershipService{
 	@Override
 	public Membership add(final Membership membership) {
 		final MembershipEntity entity = MembershipMapper.toMembershipEntity(membership);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		final MembershipEntity savedEntity = membershipRepo.save(entity);
 		return MembershipMapper.toMembership(savedEntity);
 	}
@@ -86,9 +91,10 @@ public class MembershipServiceImpl implements MembershipService{
 	@Override
 	public Membership update(final Membership membership) {
 		final MembershipEntity entity = MembershipMapper.toMembershipEntity(membership);
-		entity.setUpdatedAt(Instant.now());
-		final MembershipEntity savedEntity = membershipRepo.save(entity);
-		return MembershipMapper.toMembership(savedEntity);
+		if (membershipRepo.findById(entity.getId()).isPresent()) {
+			return MembershipMapper.toMembership(membershipRepo.save(entity));
+		}
+		throw new NotFoundException(String.format("Entity with id %d not found" , membership.getId()));
 	}
 
 
@@ -97,12 +103,12 @@ public class MembershipServiceImpl implements MembershipService{
 	 */
 	@Override
 	public Membership removeById(final Long membershipId) throws BusinessException {
-		final MembershipEntity entity = membershipRepo.getOne(membershipId);
-		if (entity == null ) {
+		final Optional<MembershipEntity> entity = membershipRepo.findById(membershipId);
+		if (!entity.isPresent() ) {
 			throw new BusinessException("Membership does not exist");
 		}
 		membershipRepo.deleteById(membershipId);
-		return MembershipMapper.toMembership(entity);
+		return MembershipMapper.toMembership(entity.get());
 	}
 
 

@@ -16,6 +16,7 @@ import ro.upet.parking.system.management.model.base.PaymentStatus;
  * Payment Options model
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtPaymentOptions.class)
 @JsonDeserialize(builder = ImtPaymentOptions.Builder.class)
 public interface PaymentOptions extends BaseModel{

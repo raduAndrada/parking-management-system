@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ro.upet.parking.system.management.business.BusinessTests;
 import ro.upet.parking.system.management.business.api.parking.ParkingService;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
 import ro.upet.parking.system.management.data.impl.parking.ParkingRepository;
@@ -21,7 +20,7 @@ import ro.upet.parking.system.management.model.parking.Parking;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class ParkingServiceIT extends BusinessTests {
+public class ParkingServiceIT  {
     
     @Inject
     protected ParkingRepository parkingRepo;
@@ -44,6 +43,7 @@ public class ParkingServiceIT extends BusinessTests {
         final Parking actualResult = parkingService.add(PARKING_1);
         final Parking expectedResult = ImtParking.copyOf(PARKING_1)
         											.withId(actualResult.getId())
+        											.withCode(actualResult.getCode())
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());
         assertThat(actualResult).isNotNull();

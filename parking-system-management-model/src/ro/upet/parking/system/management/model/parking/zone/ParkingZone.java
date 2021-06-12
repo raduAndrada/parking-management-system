@@ -18,6 +18,7 @@ import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
  * Parking zone model
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtParkingZone.class)
 @JsonDeserialize(builder = ImtParkingZone.Builder.class)
 public interface ParkingZone extends BaseModel {

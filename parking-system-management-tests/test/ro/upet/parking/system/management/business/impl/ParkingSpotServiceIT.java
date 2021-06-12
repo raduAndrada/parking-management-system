@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ro.upet.parking.system.management.business.BusinessTests;
 import ro.upet.parking.system.management.business.api.parking.spot.ParkingSpotService;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
@@ -21,7 +20,7 @@ import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class ParkingSpotServiceIT extends BusinessTests {
+public class ParkingSpotServiceIT  {
     
     @Inject
     protected ParkingSpotRepository parkingSpotRepo;
@@ -32,6 +31,9 @@ public class ParkingSpotServiceIT extends BusinessTests {
     
     private static final ParkingSpot PARKING_SPOT_1 = ImtParkingSpot.builder()
     		.number("A1")
+    		.parkingLevelNumber("")
+    		.parkingZoneLetter("")
+    		.parkingName("")
 			.build();
 	
     @Test
@@ -40,8 +42,10 @@ public class ParkingSpotServiceIT extends BusinessTests {
         final ParkingSpot actualResult = parkingSpotService.add(PARKING_SPOT_1);
         final ParkingSpot expectedResult = ImtParkingSpot.copyOf(PARKING_SPOT_1)
         											.withId(actualResult.getId())
-        											.withIsAvailable(true)
-        											.withIsRentable(false)
+        											.withCode(actualResult.getCode())
+        											.withAvailable(true)
+        											.withRentable(false)
+        											.withRented(false)
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());
         assertThat(actualResult).isNotNull();
@@ -102,8 +106,8 @@ public class ParkingSpotServiceIT extends BusinessTests {
         final ParkingSpot actualResult = parkingSpotService.update(ImtParkingSpot.copyOf(PARKING_SPOT_1).withId(pse.getId()));
         final ParkingSpot expectedResult = ImtParkingSpot.copyOf(PARKING_SPOT_1)
         											.withId(actualResult.getId())
-        											.withIsAvailable(true)
-        											.withIsRentable(false)
+        											.withAvailable(true)
+        											.withRentable(false)
         											.withCreatedAt(actualResult.getCreatedAt())
         											.withUpdatedAt(actualResult.getUpdatedAt());
         assertThat(actualResult).isNotNull();

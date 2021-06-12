@@ -1,0 +1,6 @@
+I wanted to remove the countdown timer from the reservationActivity in the android project but it is not efficient since i still have 
+to display a countdown timer on the mobile screen therefore that logic will remain on the android app. 
+The system might require some backup in case the server fails. At this point if the server stops for any reason the reservations will not
+have e fineshed/completed status which might generate inconsistences between the actual parking and the virtual model the application 
+implements. The physical parking must be well represented and kept updated all the time. Either trigger updated automatically on the db or
+find a different approach for this issue.

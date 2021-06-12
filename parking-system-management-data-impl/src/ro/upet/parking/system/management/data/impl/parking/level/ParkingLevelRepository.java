@@ -11,7 +11,7 @@ import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEnti
 @Repository
 public interface ParkingLevelRepository extends JpaRepository <ParkingLevelEntity, Long> {
 	
-	@Query("SELECT pl FROM ParkingLevelEntity pl WHERE pl.parking.name= ?1")
+	@Query("SELECT pl FROM parking_levels pl WHERE pl.parking.name= ?1")
 	public List<ParkingLevelEntity> findAllByParkingName(final String parkingName);
 
 }

@@ -1,6 +1,5 @@
 package ro.upet.parking.system.management.business.impl.parking.spot;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,8 +55,6 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	@Override
 	public ParkingSpot add(final ParkingSpot parkingSpot) {
 		final ParkingSpotEntity entity = ParkingSpotMapper.toParkingSpotEntity(parkingSpot);
-		entity.setCreatedAt(Instant.now());
-		entity.setUpdatedAt(Instant.now());
 		final ParkingSpotEntity savedEntity = parkingSpotRepo.save(entity);
 		return ParkingSpotMapper.toParkingSpot(savedEntity);
 	}
@@ -69,7 +66,6 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 	@Override
 	public ParkingSpot update(final ParkingSpot parkingSpot) {
 		final ParkingSpotEntity entity = ParkingSpotMapper.toParkingSpotEntity(parkingSpot);
-		entity.setUpdatedAt(Instant.now());
 		final ParkingSpotEntity savedEntity = parkingSpotRepo.save(entity);
 		return ParkingSpotMapper.toParkingSpot(savedEntity);
 	}

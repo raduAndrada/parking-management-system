@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.model.reservation;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import javax.annotation.Nullable;
@@ -19,6 +20,7 @@ import ro.upet.parking.system.management.model.user.User;
  * Model for a reservation
  */
 @Value.Immutable
+@Value.Modifiable
 @JsonSerialize(as = ImtReservation.class)
 @JsonDeserialize(builder = ImtReservation.Builder.class)
 public interface Reservation extends BaseModel{
@@ -59,7 +61,7 @@ public interface Reservation extends BaseModel{
 	/**
 	 * @return the price of the reservation
 	 */
-	String getCost();
+	BigDecimal getCost();
 	
 
 }

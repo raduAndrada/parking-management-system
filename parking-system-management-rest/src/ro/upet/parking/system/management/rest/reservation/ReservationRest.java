@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,136 +30,131 @@ import ro.upet.parking.system.management.rest.base.BaseRest;
 @RestController
 @RequestMapping(value = "/v1/reservations")
 @CrossOrigin(maxAge = 3600)
-public class ReservationRest extends BaseRest<Reservation>{
+@Slf4j
+public class ReservationRest extends BaseRest<Reservation> {
 
-	 static final String RESERVATION_CLAIM_PATH = "claim/{reservationId}";
-	 static final String RESERVATION_START_PATH = "start/{reservationId}";
-	 static final String RESERVATION_COMPLETE_PATH = "complete/{reservationId}";
-	
-	
-	@Inject
-	private ReservationService service;
-	
-   
-	
-	@Override
-	@Inject
-	public void setService(BaseService<Reservation> service) {
-		super.setService(this.service);
-	}
-	
-	/**
-	 * @param username of the user
-	 * @return the list with all the reservations of a user
-	 */
-	@GetMapping("/user/{username}")
-	public ResponseEntity<List<Reservation>> getReservationsForUser(@PathVariable final String username) {
-		LOGGER.info(String.format("RESRT request to GET reservations by username : %s", username));
-		final List<Reservation> reservationList= service.findAllForUserByUsername(username);
-		if (reservationList == null) {
-			LOGGER.info(String.format("No reservations found for the user with username: %s", username));
-			return ResponseEntity.notFound().build();
-		} else {
-			LOGGER.info(String.format("Reservationss found for the user: %s", reservationList.toString()));
-			return ResponseEntity.ok(reservationList);
-		}
-	}
-	
+    static final String RESERVATION_CLAIM_PATH = "claim/{reservationId}";
+    static final String RESERVATION_START_PATH = "start/{reservationId}";
+    static final String RESERVATION_COMPLETE_PATH = "complete/{reservationId}";
 
-	/**
-	 * 
-	 * @param entity the entity to be added
-	 * @return the created entity
-	 */
-	@PostMapping("/create")
-	@Transactional
-	public ResponseEntity<Reservation> createReservation(@RequestBody final ReservationCreate reservationCreate) {
-		LOGGER.info(String.format("REST request to CREATE RESERVATION : %s", reservationCreate));
-		final Reservation created;
-		try {
-			created = service.createReservation(reservationCreate);
-		} catch (final Exception e) {
-			LOGGER.info(String.format("Something went wrong creating the entity : %s", reservationCreate));
-			return null;
-		}
-		return ResponseEntity.ok(created);
-	}
-	
-	
-	/**
-	 * @param username of the user
-	 * @return the list with all the reservations of a user
-	 */
-	@GetMapping("/reservation-next/{username}")
-	public ResponseEntity<ReservationNext> getReservationNextForUser(@PathVariable final String username) {
-		LOGGER.info(String.format("RESRT request to GET reservationsNEXT by username : %s", username));
-		final ReservationNext reservationNext= service.getReservationNext(username);
-		if (reservationNext == null) {
-			LOGGER.info(String.format("No reservations found for the user with username: %s", username));
-			return ResponseEntity.notFound().build();
-		} else {
-			LOGGER.info(String.format("Reservationss found for the user: %s", reservationNext.toString()));
-			return ResponseEntity.ok(reservationNext);
-		}
-	}
-	
-	/**
-	 * 
-	 * @param entity the entity to be added
-	 * @return the created entity
-	 */
-	@PutMapping(RESERVATION_CLAIM_PATH)
-	@Transactional
-	public ResponseEntity<Reservation> claim(@PathVariable final Long reservationId) {
-		LOGGER.info(String.format("REST request to CLAIM RESERVATION : %s",reservationId));
-		final Reservation updated;
-		try {
-			updated = service.claim(reservationId);
-		} catch (final Exception e) {
-			LOGGER.info(String.format("Something went wrong UPDATING the entity : %s", reservationId));
-			return null;
-		}
-		return ResponseEntity.ok(updated);
-	}
-	
-	/**
-	 * 
-	 * @param entity the entity to be added
-	 * @return the created entity
-	 */
-	@PutMapping(RESERVATION_START_PATH)
-	@Transactional
-	public ResponseEntity<Reservation> start(@PathVariable final Long reservationId) {
-		LOGGER.info(String.format("REST request to CLAIM RESERVATION : %s",reservationId));
-		final Reservation updated;
-		try {
-			updated = service.start(reservationId);
-		} catch (final Exception e) {
-			LOGGER.info(String.format("Something went wrong UPDATING the entity : %s", reservationId));
-			return null;
-		}
-		return ResponseEntity.ok(updated);
-	}
 
-	
-	
-	/**
-	 * 
-	 * @param entity the entity to be added
-	 * @return the created entity
-	 */
-	@PutMapping(RESERVATION_COMPLETE_PATH)
-	@Transactional
-	public ResponseEntity<Reservation> complete(@PathVariable final Long reservationId) {
-		LOGGER.info(String.format("REST request to CLAIM RESERVATION : %s",reservationId));
-		final Reservation updated;
-		try {
-			updated = service.complete(reservationId);
-		} catch (final Exception e) {
-			LOGGER.info(String.format("Something went wrong UPDATING the entity : %s", reservationId));
-			return null;
-		}
-		return ResponseEntity.ok(updated);
-	}
+    @Inject
+    private ReservationService service;
+
+
+    @Override
+    @Inject
+    public void setService(BaseService<Reservation> service) {
+        super.setService(this.service);
+    }
+
+    /**
+     * @param username of the user
+     * @return the list with all the reservations of a user
+     */
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<Reservation>> getReservationsForUser(@PathVariable final String username) {
+        log.info("REST request to GET reservations by username : {}", username);
+        final List<Reservation> reservationList = service.findAllForUserByUsername(username);
+        if (reservationList == null) {
+            log.info("No reservations found for the user with username: {}", username);
+            return ResponseEntity.notFound().build();
+        } else {
+            log.info("Reservationss found for the user: {}", reservationList.toString());
+            return ResponseEntity.ok(reservationList);
+        }
+    }
+
+
+    /**
+     * @param reservationCreate the entity to be added
+     * @return the created entity
+     */
+    @PostMapping("/create")
+    @Transactional
+    public ResponseEntity<Reservation> createReservation(@RequestBody final ReservationCreate reservationCreate) {
+        log.info("REST request to CREATE RESERVATION : {}", reservationCreate);
+        final Reservation created;
+        try {
+            created = service.createReservation(reservationCreate);
+        } catch (final Exception e) {
+            log.info("Something went wrong creating the entity : {}", reservationCreate);
+            return null;
+        }
+        return ResponseEntity.ok(created);
+    }
+
+
+    /**
+     * @param username of the user
+     * @return the list with all the reservations of a user
+     */
+    @GetMapping("/reservation-next/{username}")
+    public ResponseEntity<ReservationNext> getReservationNextForUser(@PathVariable final String username) {
+        log.info("RESRT request to GET reservationsNEXT by username : {}", username);
+        final ReservationNext reservationNext = service.getReservationNext(username);
+        if (reservationNext == null) {
+            log.info("No reservations found for the user with username: {}", username);
+            return ResponseEntity.notFound().build();
+        } else {
+            log.info("Reservationss found for the user: {}", reservationNext.toString());
+            return ResponseEntity.ok(reservationNext);
+        }
+    }
+
+    /**
+     * @param reservationId id of the resevation to be claimed
+     * @return the created entity
+     */
+    @PutMapping(RESERVATION_CLAIM_PATH)
+    @Transactional
+    public ResponseEntity<Reservation> claim(@PathVariable final Long reservationId) {
+        log.info("REST request to CLAIM RESERVATION : {}", reservationId);
+        final Reservation updated;
+        try {
+            updated = service.claim(reservationId);
+        } catch (final Exception e) {
+            log.info("Something went wrong UPDATING the entity : {}", reservationId);
+            return null;
+        }
+        return ResponseEntity.ok(updated);
+    }
+
+    /**
+     * @param reservationId the id of the reservation to be started
+     * @return the created entity
+     */
+    @PutMapping(RESERVATION_START_PATH)
+    @Transactional
+    public ResponseEntity<Reservation> start(@PathVariable final Long reservationId) {
+        log.info("REST request to CLAIM RESERVATION : {}", reservationId);
+        final Reservation updated;
+        try {
+            updated = service.start(reservationId);
+        } catch (final Exception e) {
+            log.info("Something went wrong UPDATING the entity : {}", reservationId);
+            return null;
+        }
+        return ResponseEntity.ok(updated);
+    }
+
+
+    /**
+     * @param reservationId identifier of the completed reservation
+     * @return the created entity
+     */
+    @PutMapping(RESERVATION_COMPLETE_PATH)
+    @Transactional
+    public ResponseEntity<Reservation> complete(@PathVariable final Long reservationId) {
+        log.info("REST request to CLAIM RESERVATION : {}", reservationId);
+        final Reservation updated;
+        try {
+            updated = service.complete(reservationId);
+        } catch (final Exception e) {
+            log.info("Something went wrong UPDATING the entity : {}", reservationId);
+            return null;
+        }
+        return ResponseEntity.ok(updated);
+    }
 
 }

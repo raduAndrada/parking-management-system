@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
+import ro.upet.parking.system.management.business.impl.base.GenericMapper;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
-import ro.upet.parking.system.management.model.parking.ImtParking;
+import ro.upet.parking.system.management.model.parking.MdfParking;
 import ro.upet.parking.system.management.model.parking.Parking;
 
 /**
@@ -13,9 +15,11 @@ import ro.upet.parking.system.management.model.parking.Parking;
  * @author Andrada
  * Mapper for the parking entity and model
  */
+@Slf4j
 public class ParkingMapper {
 
-	protected static final Logger LOGGER  = Logger.getLogger(ParkingMapper.class.getName());
+
+	private static final GenericMapper<ParkingEntity, Parking> MAPPER = new GenericMapper();
 	
 	/**
 	 * @param parking model for the parking
@@ -24,15 +28,9 @@ public class ParkingMapper {
 	public static ParkingEntity toParkingEntity(final Parking parking) {
 		final ParkingEntity entity = new ParkingEntity();
 		final String [] openingHours = validateOpenHours(parking.getOpensAt(), parking.getClosesAt());
-		entity.setCode(parking.getCode());
-		entity.setId(parking.getId());
-		entity.setCreatedAt(parking.getCreatedAt());
-		entity.setUpdatedAt(parking.getUpdatedAt());
-		entity.setLocation(parking.getLocation());
+		MAPPER.mapToEntity(parking, entity);
 		entity.setOpensAt(openingHours[0]);
 		entity.setClosesAt(openingHours[1]);
-		entity.setName(parking.getName());
-		entity.setPricePerHour(parking.getPricePerHour());
 		return entity;
 	}
 	
@@ -41,18 +39,9 @@ public class ParkingMapper {
 	 * @return the model for the entity
 	 */
 	public static Parking toParking(final ParkingEntity entity) {
-		return ImtParking.builder()
-				.code(entity.getCode())
-				.createdAt(entity.getCreatedAt())
-				.id(entity.getId())
-				.updatedAt(entity.getUpdatedAt())
-				.name(entity.getName())
-				.closesAt(entity.getClosesAt())
-				.opensAt(entity.getOpensAt())
-				.location(entity.getLocation())
-				.name(entity.getName())
-				.pricePerHour(entity.getPricePerHour())
-				.build();
+		MdfParking model = MdfParking.create();
+		MAPPER.mapToModel(entity, model);
+		return model.toImmutable();
 	}
 	
 	/**
@@ -87,11 +76,11 @@ public class ParkingMapper {
 	
 	private  static  String correctHour(final int [] times, final String correction) {
 		if (times[0] >= 24 || times[0] < 0) {
-			LOGGER.info(String.format("Invalid hour introduced by the user: { %s }, defaulting to: %s", times[0], correction));
+			log.info("Invalid hour introduced by the user: {}, defaulting to: {}", times[0], correction);
 			return "00:00";		
 		}
 		if (times[1] > 59 || times[1] < 0) {
-			LOGGER.info(String.format("Invalid minutes introduced by the user: { %s }, defaulting to hh:00", times[1]));
+			log.info("Invalid minutes introduced by the user: {}, defaulting to hh:00", times[1]);
 			return times[0] + ":00";
 		}
 		return times[0] + ":" + times[1];
