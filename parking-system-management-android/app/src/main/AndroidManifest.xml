@@ -32,7 +32,7 @@
             android:theme="@style/Theme.Parking.NoActionBar" />
         <activity
             android:name=".activities.ReservationActivity"
-            android:label="@string/title_activity_reservation"
+            android:label="@string/create_reservations"
             android:theme="@style/Theme.Parking.NoActionBar" />
         <activity
             android:name=".activities.ReservationHistoryActivity"
@@ -40,7 +40,7 @@
             android:theme="@style/Theme.Parking.NoActionBar" />
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name"
+            android:label="@string/upcoming_reservations"
             android:theme="@style/Theme.Parking.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

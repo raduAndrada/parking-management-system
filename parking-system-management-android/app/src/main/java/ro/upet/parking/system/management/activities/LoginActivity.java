@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordET = (EditText) findViewById(R.id.login_password_id);
 
         final TextView loginFailureTV = (TextView) findViewById(R.id.login_invalid_id);
-        final TextView registerTV = (TextView) findViewById(R.id.login_create_account_id);
+        final BootstrapButton registerBtn = (BootstrapButton) findViewById(R.id.login_create_account_id);
 
         final BootstrapButton loginBtn = (BootstrapButton) findViewById(R.id.login_button_id);
 
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        registerTV.setOnClickListener(new View.OnClickListener() {
+        registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
