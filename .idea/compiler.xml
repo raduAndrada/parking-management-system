@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.immutables/value/2.8.8/d99fa1e04af5a1fda42fa9412d68eb7fe17a1071/value-2.8.8.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.immutables/serial/2.8.8/40cd1e76ad5e521f7bcf06c0e14b8f1d5b3f6834/serial-2.8.8.jar" />
+        </processorPath>
+        <module name="disertatie.parking-system-management-tests.test" />
+        <module name="disertatie.parking-system-management-rest.main" />
+        <module name="disertatie.parking-system-management-business-api.main" />
+        <module name="disertatie.parking-system-management-ui.main" />
+        <module name="disertatie.parking-system-management-model.main" />
+        <module name="disertatie.parking-system-management-ui.test" />
+        <module name="disertatie.parking-system-management-tests.main" />
+        <module name="disertatie.parking-system-management-data-impl.main" />
+        <module name="disertatie.parking-system-management-data-api.test" />
+        <module name="disertatie.parking-system-management-model.test" />
+        <module name="disertatie.parking-system-management-business-api.test" />
+        <module name="disertatie.parking-system-management-rest.test" />
+        <module name="disertatie.parking-system-management-data-api.main" />
+        <module name="disertatie.parking-system-management-business-impl.test" />
+        <module name="disertatie.parking-system-management-data-impl.test" />
+        <module name="disertatie.parking-system-management-business-impl.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8" />
+  </component>
+</project>
