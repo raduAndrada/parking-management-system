@@ -1,17 +1,5 @@
 package ro.upet.parking.system.management.data.api.parking.level;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,11 +8,16 @@ import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+
 @Entity(name = "parking_levels")
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParkingLevelEntity implements Serializable{
 	/**
 	 * 
@@ -42,6 +35,7 @@ public class ParkingLevelEntity implements Serializable{
 	/**
 	 *  common fields
 	 */
+	@Embedded
 	private BaseEntity base;
 	
 	/**
@@ -60,8 +54,14 @@ public class ParkingLevelEntity implements Serializable{
 	 *  parking zones
 	 */
 	@OneToMany(cascade= CascadeType.MERGE, orphanRemoval = true)
-	// @JoinColumn(name = "parking_zone_id")
+	@JoinColumn(name = "parking_zone_id")
 	private List<ParkingZoneEntity> parkingZones;
 
-	
+	@Override
+	public String toString() {
+		return "ParkingLevelEntity{" +
+				"id=" + id +
+				", number='" + number + '\'' +
+				'}';
+	}
 }

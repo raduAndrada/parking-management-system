@@ -1,58 +1,57 @@
 package ro.upet.parking.system.management.model;
 
-import java.time.Instant;
-
 import javax.annotation.Nullable;
 
-import org.immutables.value.Value;
-
-
-
-import ro.upet.parking.system.management.model.ReservationStatus;
-import ro.upet.parking.system.management.model.Vehicle;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author Andrada
  * Model for a reservation
  */
-@Value.Immutable
-public interface Reservation extends BaseModel{
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class Reservation extends BaseModel{
 
 	/**
 	 * @return start time 
 	 */
-	String getStartTime();
+	String startTime;
 	
 
 	/**
 	 * @return end time 
 	 */
-	String getEndTime();
+	String endTime;
 
 	/**
 	 * @return additional info for the reservation
 	 */
 	@Nullable
-	String getNotes();
+	String notes;
 
 	/**
 	 * @return status for the reservation 
 	 */
-	ReservationStatus getReservationStatus();
+	ReservationStatus reservationStatus;
 
 	/**
 	 * @return user for the reservation
 	 */
-	User getUser();
+	User user;
 
 	/**
 	 * @return parking spot id
 	 */
-	ParkingSpot getParkingSpot();
+	ParkingSpot parkingSpot;
 
 	/**
 	 * @return the price of the reservation
 	 */
-	String getCost();
+	String cost;
 
 }

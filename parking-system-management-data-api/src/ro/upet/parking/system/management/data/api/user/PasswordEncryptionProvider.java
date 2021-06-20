@@ -1,15 +1,13 @@
 package ro.upet.parking.system.management.data.api.user;
 
-import lombok.extern.slf4j.Slf4j;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 
 /**
  * Secure the password of the user

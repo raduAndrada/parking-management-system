@@ -12,10 +12,8 @@ import ro.upet.parking.system.management.business.impl.membership.MembershipServ
 import ro.upet.parking.system.management.data.api.membership.MembershipEntity;
 import ro.upet.parking.system.management.data.impl.membership.MembershipRepository;
 import ro.upet.parking.system.management.data.impl.parking.level.ParkingLevelRepository;
-import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepository;
+import ro.upet.parking.system.management.data.impl.parking.zone.ParkingZoneRepository;
 import ro.upet.parking.system.management.data.impl.user.UserRepository;
-import ro.upet.parking.system.management.model.base.MembershipType;
-import ro.upet.parking.system.management.model.membership.ImtMembership;
 import ro.upet.parking.system.management.model.membership.Membership;
 import ro.upet.parking.system.management.model.membership.MembershipCreate;
 
@@ -42,10 +40,12 @@ public class MembershipServiceImplTest {
     @Mock
     private ParkingLevelRepository parkingLevelRepo;
 
+    @Mock
+    private ParkingZoneRepository parkingZoneRepository;
 
     @Before
     public void setUp() {
-        membershipsService = new MembershipServiceImpl(membershipsRepo, parkingLevelRepo, userRepo);
+        membershipsService = new MembershipServiceImpl(membershipsRepo, parkingLevelRepo, userRepo, parkingZoneRepository);
     }
 
 
@@ -56,7 +56,7 @@ public class MembershipServiceImplTest {
         val entity = buildMembershipEntity();
         val parkingLevel = buildParkingLevelEntity();
         val parkingZone = buildParkingZoneEntity();
-        val parkingSpot = buildParkingSpotEntity();
+        val parkingSpot = buildParkingSpotEntity(1L);
         val user = buildUserEntity();
 
         parkingZone.setParkingSpots(ImmutableList.of(parkingSpot));

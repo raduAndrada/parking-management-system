@@ -1,7 +1,5 @@
 package ro.upet.parking.system.management.services;
 
-import com.google.gson.JsonObject;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -9,11 +7,9 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import ro.upet.parking.system.management.model.ImtUser;
-import ro.upet.parking.system.management.model.ImtUserCreate;
-import ro.upet.parking.system.management.model.ImtUserUpdate;
 import ro.upet.parking.system.management.model.User;
 import ro.upet.parking.system.management.model.UserCreate;
+import ro.upet.parking.system.management.model.UserUpdate;
 
 import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
 
@@ -26,18 +22,18 @@ public interface UserService extends BaseService {
 
     @GET(USER_USERNAME_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
-    Call<ImtUser> getUserByUsername (@Path(USERNAME) final String username);
+    Call<User> getUserByUsername (@Path(USERNAME) final String username);
 
     @POST(CUSTOMER_CREATE_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
-    Call<ImtUser> createCustomer (@Body final ImtUserCreate userCreate);
+    Call<User> createCustomer (@Body final UserCreate userCreate);
 
     @POST(LOGIN_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
-    Call<ImtUser> login (@Body final ImtUser user);
+    Call<User> login (@Body final User user);
 
     @PUT(CUSTOMER_UPDATE_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})
-    Call<ImtUser> updateCustomer(@Body final ImtUserUpdate userUpdate);
+    Call<User> updateCustomer(@Body final UserUpdate userUpdate);
 
 }

@@ -1,12 +1,11 @@
 package ro.upet.parking.system.management.business.impl.payment.options;
 
+import org.modelmapper.ModelMapper;
+import ro.upet.parking.system.management.data.api.payment.options.PaymentOptionsEntity;
+import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import ro.upet.parking.system.management.business.impl.base.GenericMapper;
-import ro.upet.parking.system.management.data.api.payment.options.PaymentOptionsEntity;
-import ro.upet.parking.system.management.model.payment.options.MdfPaymentOptions;
-import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
 
 /**
  * 
@@ -15,16 +14,15 @@ import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
  */
 public class PaymentOptionsMapper {
 
-	private static final GenericMapper<PaymentOptionsEntity, PaymentOptions> MAPPER = new GenericMapper();
+	private static final ModelMapper MAPPER = new ModelMapper();
+
 	
 	/**
 	 * @param paymentOptions model for the paymentOptions
 	 * @return the corresponding entity
 	 */
 	public static PaymentOptionsEntity toPaymentOptionsEntity(final PaymentOptions paymentOptions) {
-		final PaymentOptionsEntity entity = new PaymentOptionsEntity();
-		MAPPER.mapToEntity(paymentOptions, entity);
-		return entity;
+		return MAPPER.map(paymentOptions, PaymentOptionsEntity.class);
 	}
 	
 	/**
@@ -32,10 +30,10 @@ public class PaymentOptionsMapper {
 	 * @return the model for the entity
 	 */
 	public static PaymentOptions toPaymentOptions(final PaymentOptionsEntity entity) {
-		MdfPaymentOptions model = MdfPaymentOptions.create();
-		MAPPER.mapToModel(entity, model);
+		PaymentOptions model =MAPPER.map(entity, PaymentOptions.class);
+		MAPPER.map(entity, model);
 		model.setUserId(entity.getId());
-		return model.toImmutable();
+		return model;
 	}
 	
 	/**

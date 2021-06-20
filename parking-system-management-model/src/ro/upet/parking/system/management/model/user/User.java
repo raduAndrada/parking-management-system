@@ -1,62 +1,67 @@
 package ro.upet.parking.system.management.model.user;
 
-import java.time.LocalDate;
-
-import javax.annotation.Nullable;
-
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.validation.annotation.Validated;
 import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.base.UserType;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * @author Andrada
  * Model for the user of the application
  */
 
-@Value.Immutable
-@Value.Modifiable
-@JsonSerialize(as = ImtUser.class)
-@JsonDeserialize(builder = ImtUser.Builder.class)
-public interface User extends BaseModel {
+@Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+@Validated
+public class User extends BaseModel {
 	/**
 	 * @return first name and last name of the user
 	 */
-	String getName();
+
+	String name;
 	
 	/**
 	 * @return unique username
-	 */	
-	String getUsername();
+	 */
+	@NotNull
+	String username;
 	
 	/**
 	 * @return password
 	 */
-	String getPassword();
+	@NotNull
+	String password;
 	
 	/**
 	 * @return the email of the user (must be unique)
 	 */
-	String getEmail();
+	@NotNull
+	@Email
+	String email;
 
 	/**
 	 * @return phone number for the user
 	 */
-	String getPhoneNumber();
+	String phoneNumber;
 
 	
 	/**
-	 * @return get the type of the user
+	 * @return  the type of the user
 	 */
-	UserType getUserType();
+	UserType userType;
 	
 	/**
 	 * @return user's birthday
 	 */
-	@Nullable
-	LocalDate getBirthday();
+	LocalDate birthday;
 	
 }

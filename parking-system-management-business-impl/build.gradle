@@ -1,3 +1,4 @@
 dependencies {
 	compile project(':parking-system-management-business-api')
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.1.1'
 }

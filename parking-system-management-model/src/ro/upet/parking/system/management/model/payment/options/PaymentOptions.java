@@ -1,48 +1,47 @@
 package ro.upet.parking.system.management.model.payment.options;
 
-import java.time.LocalDate;
-
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.base.PaymentStatus;
+
+import java.time.LocalDate;
 
 
 /**
  * @author Andrada
  * Payment Options model
  */
-@Value.Immutable
-@Value.Modifiable
-@JsonSerialize(as = ImtPaymentOptions.class)
-@JsonDeserialize(builder = ImtPaymentOptions.Builder.class)
-public interface PaymentOptions extends BaseModel{
+@Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+public class PaymentOptions extends BaseModel{
 	
 	/**
 	 * @return status of the payment
 	 */
-	PaymentStatus getPaymentStatus();
+	PaymentStatus paymentStatus;
 	
 	/**
 	 * @return start date of the  availability of the payment (for memberships)
 	 */
-	LocalDate getStartPeriod();
+	LocalDate startPeriod;
 	
 	/**
 	 * @return end date of the  availability of the payment (for memberships)
 	 */
-	LocalDate getEndPeriod();
+	LocalDate endPeriod;
 	
 	/**
 	 * @return user id
 	 */
-	Long getUserId();
+	Long userId;
 	
 	/**
 	 * @return user's unique code
 	 */
-	String getUserCode();
+	String userCode;
 }

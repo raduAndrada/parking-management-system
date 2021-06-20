@@ -1,35 +1,41 @@
 package ro.upet.parking.system.management.model;
 
-import java.time.Instant;
 
-import org.immutables.value.Value;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author Andrada
  * Model for representing a parking
  */
-@Value.Immutable
-public interface Parking {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class Parking {
 	
 	/**
 	 * @return the name of the parking
 	 */
-	String getName();
-	
+	String name;
+
 	/**
 	 * @return the location of the parking
 	 */
-	String getLocation();
-	
+	String location;
+
 	/**
 	 * @return open time
 	 */
-	String getOpensAt();
-	
+	String opensAt;
+
 	/**
 	 * @return closing time
 	 */
-	String getClosesAt();
+	String closesAt;
 
 	
 }

@@ -1,7 +1,7 @@
 package ro.upet.parking.system.management.business.impl.vehicle;
 
-import javax.inject.Inject;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ro.upet.parking.system.management.business.api.vehicle.VehicleValidator;
 import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
@@ -9,14 +9,13 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 
 @Service
+@AllArgsConstructor
 public class VehicleValidatorImpl implements VehicleValidator{
 
-	final
-	VehicleRepository vehicleRepo;
+	private final static String LICENCE_PLATE_REGEX = "^([a-zA-Z]{2}\\d{2}[a-zA-Z]{3})$";
 
-	public VehicleValidatorImpl(VehicleRepository vehicleRepo) {
-		this.vehicleRepo = vehicleRepo;
-	}
+	private final
+	VehicleRepository vehicleRepo;
 
 	/**
 	 * {@inheritDoc}
@@ -27,7 +26,11 @@ public class VehicleValidatorImpl implements VehicleValidator{
 			return false;
 		}
 		// TODO figure out if we want to permit foreign cars
-		return true;
+		return validateLicencePlateNumber(vehicle.getLicencePlate());
+	}
+
+	private static boolean validateLicencePlateNumber(final String licencePlate){
+		return licencePlate.matches(LICENCE_PLATE_REGEX);
 	}
 
 }

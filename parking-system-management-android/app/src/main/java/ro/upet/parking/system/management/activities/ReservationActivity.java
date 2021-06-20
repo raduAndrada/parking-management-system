@@ -5,14 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-
-import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.google.common.collect.Lists;
-
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,10 +15,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.google.common.collect.Lists;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,15 +32,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ro.upet.parking.system.management.R;
 import ro.upet.parking.system.management.activities.common.BaseUtils;
 import ro.upet.parking.system.management.activities.common.MenuHelper;
-import ro.upet.parking.system.management.model.ImtParking;
-import ro.upet.parking.system.management.model.ImtReservation;
-import ro.upet.parking.system.management.model.ImtReservationCreate;
-import ro.upet.parking.system.management.model.MdfReservationCreate;
 import ro.upet.parking.system.management.model.Parking;
 import ro.upet.parking.system.management.model.Reservation;
+import ro.upet.parking.system.management.model.ReservationCreate;
 import ro.upet.parking.system.management.services.ParkingService;
 import ro.upet.parking.system.management.services.ReservationService;
+import ro.upet.parking.system.management.services.RetrofitServicesInitializer;
 
+import static ro.upet.parking.system.management.activities.common.BaseUtils.convertTimeToParsingInstantFormat;
+import static ro.upet.parking.system.management.activities.common.BaseUtils.isValidHourAndMinute;
+import static ro.upet.parking.system.management.activities.common.StringConstants.BASE_URL;
 import static ro.upet.parking.system.management.activities.common.StringConstants.PARKINGS_URL;
 import static ro.upet.parking.system.management.activities.common.StringConstants.RESERVATIONS_URL;
 import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
@@ -53,20 +51,11 @@ public class ReservationActivity extends MenuHelper implements
         AdapterView.OnItemSelectedListener  {
 
 
-    private  static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(PARKINGS_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    private static final ParkingService parkingService = retrofit.create(ParkingService.class);
+    private ParkingService parkingService;
 
+    private ReservationService reservationService;
 
-    private  static final Retrofit retrofit2 = new Retrofit.Builder()
-            .baseUrl(RESERVATIONS_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    private static final ReservationService reservationService = retrofit2.create(ReservationService.class);
-
-    final MdfReservationCreate reservationCreate = MdfReservationCreate.create();
+    final ReservationCreate reservationCreate = ReservationCreate.builder().build();
     List<String> parkingList = Lists.newArrayList();
 
     static TextView selectedDateTV;
@@ -81,11 +70,14 @@ public class ReservationActivity extends MenuHelper implements
         setSupportActionBar(toolbar);
         final SharedPreferences sharedPref = this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         final String username= sharedPref.getString(USERNAME, "none");
-
-
+        RetrofitServicesInitializer retrofitServicesInitializer = new RetrofitServicesInitializer(sharedPref.getString(BASE_URL, "none"));
+        reservationService = retrofitServicesInitializer.getReservationService();
+        parkingService = retrofitServicesInitializer.getParkingService();
 
         final EditText startTimeET = (EditText) findViewById(R.id.reservation_start_time_id);
         final EditText endTimeET = (EditText) findViewById(R.id.reservation_end_time_id);
+        final TextView invalidTimeTV = (TextView) findViewById(R.id.reservation_invalid_time_id);
+        invalidTimeTV.setVisibility(View.INVISIBLE);
 
         selectedDateTV  = (TextView) findViewById(R.id.reservation_selected_date_id);
 
@@ -95,10 +87,10 @@ public class ReservationActivity extends MenuHelper implements
         final Spinner parkingNamesSpinner = (Spinner) findViewById(R.id.reservation_parking_names_id);
 
 
-        parkingService.getAll().enqueue(new Callback<List<ImtParking>>() {
+        parkingService.getAll().enqueue(new Callback<List<Parking>>() {
 
             @Override
-            public void onResponse(Call<List<ImtParking>> call, Response<List<ImtParking>> response) {
+            public void onResponse(Call<List<Parking>> call, Response<List<Parking>> response) {
                 parkingList = response.body().stream().map(Parking::getName).collect(Collectors.toList());
                 ArrayAdapter parkingNamesAdaptor = new ArrayAdapter(ReservationActivity.this,
                         android.R.layout.simple_spinner_item,
@@ -110,7 +102,7 @@ public class ReservationActivity extends MenuHelper implements
             }
 
             @Override
-            public void onFailure(Call<List<ImtParking>> call, Throwable t) {
+            public void onFailure(Call<List<Parking>> call, Throwable t) {
                 //Nothing happens on failure
                 Toast.makeText(ReservationActivity.this, "failed to load parking names", Toast.LENGTH_LONG);
             }
@@ -119,25 +111,32 @@ public class ReservationActivity extends MenuHelper implements
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String startTime =  BaseUtils.convertTimeToParsingInstantFormat(date, startTimeET.getText().toString());
-                final String endTime =   BaseUtils.convertTimeToParsingInstantFormat(date, endTimeET.getText().toString());
-                reservationCreate.setStartTime(startTime)
-                                 .setEndTime(endTime)
-                                 .setUsername(username);
-                reservationService.createReservation(ImtReservationCreate.builder().from(reservationCreate).build()).enqueue(new Callback<ImtReservation>() {
-                    @Override
-                    public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
-                        Toast.makeText(getApplicationContext(), "Created reservation: " + response.body().toString() , Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(ReservationActivity.this, ReservationHistoryActivity.class);
-                        startActivity(intent);
-                    }
+                String startTime = startTimeET.getText().toString();
+                String endTime = endTimeET.getText().toString();
+                if (isValidHourAndMinute(endTime) && isValidHourAndMinute(startTime)) {
+                    startTime = convertTimeToParsingInstantFormat(date, startTime);
+                    endTime = convertTimeToParsingInstantFormat(date, endTime);
+                    reservationCreate.setStartTime(startTime);
+                    reservationCreate.setEndTime(endTime);
+                    reservationCreate.setUsername(username);
+                    reservationService.createReservation(reservationCreate).enqueue(new Callback<Reservation>() {
+                        @Override
+                        public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                            invalidTimeTV.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(), "Created reservation: " + response.body().toString(), Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(ReservationActivity.this, ReservationHistoryActivity.class);
+                            startActivity(intent);
+                        }
 
-                    @Override
-                    public void onFailure(Call<ImtReservation> call, Throwable t) {
-                        //TODO
-                        Toast.makeText(getApplicationContext(), "Failed to create reservation" , Toast.LENGTH_LONG).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Reservation> call, Throwable t) {
+                            //TODO
+                            Toast.makeText(getApplicationContext(), "Failed to create reservation", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    invalidTimeTV.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -165,6 +164,7 @@ public class ReservationActivity extends MenuHelper implements
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
 
 
     public static class DatePickerFragment extends DialogFragment

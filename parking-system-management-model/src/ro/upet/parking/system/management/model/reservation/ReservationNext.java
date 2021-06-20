@@ -1,5 +1,9 @@
 package ro.upet.parking.system.management.model.reservation;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -7,47 +11,48 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 
-@Value.Immutable
-@JsonSerialize(as = ImtReservationNext.class)
-@JsonDeserialize(builder = ImtReservationNext.Builder.class)
-public interface ReservationNext {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ReservationNext {
 
 	/**
 	 * @return days till the next reservation
 	 */
-	Integer getDays();
+	Integer days;
 	
 
 	/**
 	 * @return hours till the next reservation
 	 */
-	Integer getHours();
+	Integer hours;
 	
 
 	/**
 	 * @return minutes till the next reservation
 	 */
-	Integer getMinutes();
+	Integer minutes;
 	
 	/**
 	 * @return the id of the reservation
 	 */
-	Long getReservationId();
+	Long reservationId;
 	
 	/**
 	 * @return duration in hours
 	 */
-	Integer getDurationHours();
+	Integer durationHours;
 	
 
 	/**
 	 * @return duration in minutes
 	 */
-	Integer getDurationMinutes();
+	Integer durationMinutes;
 	
 	
 	/**
-	 * @return get the status of the reservation
+	 * @return  the status of the reservation
 	 */
-	ReservationStatus getReservationStatus();
+	ReservationStatus reservationStatus;
 }

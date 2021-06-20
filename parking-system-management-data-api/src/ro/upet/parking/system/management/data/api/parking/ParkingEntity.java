@@ -1,25 +1,20 @@
 package ro.upet.parking.system.management.data.api.parking;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
 
+import javax.persistence.*;
+import java.io.Serializable;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data	
-@Entity(name = "parkings")
+
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "parkings")
 public class ParkingEntity implements Serializable{
 	/**
 	 * 
@@ -37,8 +32,8 @@ public class ParkingEntity implements Serializable{
 	/**
 	 *  common fields
 	 */
+	@Embedded
 	private BaseEntity base;
-	
 
 	
 	/**
@@ -65,9 +60,6 @@ public class ParkingEntity implements Serializable{
 	/**
 	 * price per 1 hour
 	 */
-	private BigDecimal pricePerHour;
+	private double pricePerHour;
 
-
-	
-	
 }

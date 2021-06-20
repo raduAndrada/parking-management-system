@@ -1,5 +1,7 @@
 package ro.upet.parking.system.management.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
@@ -16,27 +18,21 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import ro.upet.parking.system.management.R;
 import ro.upet.parking.system.management.activities.common.BaseUtils;
 import ro.upet.parking.system.management.activities.common.MenuHelper;
 import ro.upet.parking.system.management.adaptors.ReservationAdapter;
-import ro.upet.parking.system.management.model.ImtReservation;
 import ro.upet.parking.system.management.model.Reservation;
 import ro.upet.parking.system.management.services.ReservationService;
+import ro.upet.parking.system.management.services.RetrofitServicesInitializer;
 
-import static ro.upet.parking.system.management.activities.common.StringConstants.RESERVATIONS_URL;
-import static ro.upet.parking.system.management.activities.common.StringConstants.SERVER_BASE_ADDRESS;
+import static ro.upet.parking.system.management.activities.common.StringConstants.BASE_URL;
+import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
 
 public class ReservationHistoryActivity extends MenuHelper {
 
     private final List<Reservation> reservationList = Lists.newArrayList();
-    private static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(RESERVATIONS_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    private static final ReservationService service = retrofit.create(ReservationService.class);
+    private  ReservationService service;
 
     private ReservationAdapter adapter = null;
 
@@ -50,22 +46,25 @@ public class ReservationHistoryActivity extends MenuHelper {
         adapter = new ReservationAdapter(ReservationHistoryActivity.this, reservationList);
         ListView listView = (ListView) findViewById(R.id.reservation_list_id);
         listView.setAdapter(adapter);
+        final SharedPreferences sharedPref = this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        RetrofitServicesInitializer retrofitServicesInitializer = new RetrofitServicesInitializer(sharedPref.getString(BASE_URL, "none"));
+        service = retrofitServicesInitializer.getReservationService();
 
-        service.getAll(adapter.getUsername()).enqueue(new Callback<List<ImtReservation>>() {
+        service.getAll(adapter.getUsername()).enqueue(new Callback<List<Reservation>>() {
             @Override
-            public void onResponse(Call<List<ImtReservation>> call, Response<List<ImtReservation>> response) {
+            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
                 response.body()
                         .stream()
-                        .forEach(r -> reservationList.add(ImtReservation.builder()
-                                                                .from(r)
-                                                                .startTime(BaseUtils.displayDateTime(BaseUtils.extractDateFromInstantFormat(r.getStartTime())))
-                                                                .endTime(BaseUtils.displayDateTime(BaseUtils.extractDateFromInstantFormat(r.getEndTime())))
-                                                                .build()));
+                        .forEach(r -> {
+                            r.setStartTime(BaseUtils.displayDateTime(BaseUtils.extractDateFromInstantFormat(r.getStartTime())));
+                            r.setEndTime(BaseUtils.displayDateTime(BaseUtils.extractDateFromInstantFormat(r.getEndTime())));
+                            reservationList.add(r);
+                        });
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<List<ImtReservation>> call, Throwable t) {
+            public void onFailure(Call<List<Reservation>> call, Throwable t) {
 
             }
         });

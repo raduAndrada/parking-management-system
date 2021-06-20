@@ -21,7 +21,6 @@ import lombok.Setter;
 public class BaseEntity {
 
 
-
 	/**
 	 * unique code for the entity
 	 */

@@ -1,27 +1,18 @@
 package ro.upet.parking.system.management.rest.reservation;
 
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import ro.upet.parking.system.management.business.api.core.BaseService;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
 import ro.upet.parking.system.management.model.reservation.Reservation;
 import ro.upet.parking.system.management.model.reservation.ReservationCreate;
 import ro.upet.parking.system.management.model.reservation.ReservationNext;
 import ro.upet.parking.system.management.rest.base.BaseRest;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author Andrada
@@ -71,14 +62,13 @@ public class ReservationRest extends BaseRest<Reservation> {
      * @return the created entity
      */
     @PostMapping("/create")
-    @Transactional
-    public ResponseEntity<Reservation> createReservation(@RequestBody final ReservationCreate reservationCreate) {
+    public ResponseEntity<Reservation> createReservation(@RequestBody  final ReservationCreate reservationCreate) {
         log.info("REST request to CREATE RESERVATION : {}", reservationCreate);
         final Reservation created;
         try {
             created = service.createReservation(reservationCreate);
         } catch (final Exception e) {
-            log.info("Something went wrong creating the entity : {}", reservationCreate);
+            log.info("Something went wrong creating the entity : {}", reservationCreate, e);
             return null;
         }
         return ResponseEntity.ok(created);
@@ -97,7 +87,7 @@ public class ReservationRest extends BaseRest<Reservation> {
             log.info("No reservations found for the user with username: {}", username);
             return ResponseEntity.notFound().build();
         } else {
-            log.info("Reservationss found for the user: {}", reservationNext.toString());
+            log.info("Reservations found for the user: {}", reservationNext);
             return ResponseEntity.ok(reservationNext);
         }
     }

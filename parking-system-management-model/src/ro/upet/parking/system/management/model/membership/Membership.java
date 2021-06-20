@@ -1,64 +1,65 @@
 package ro.upet.parking.system.management.model.membership;
 
-import java.math.BigDecimal;
-
-import javax.annotation.Nullable;
-
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import org.springframework.validation.annotation.Validated;
 import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.base.MembershipType;
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 import ro.upet.parking.system.management.model.user.User;
+
+import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 /**
  * @author Andrada
  * Model entity for a membership
  */
-@Value.Immutable
-@Value.Modifiable
-@JsonSerialize(as = ImtMembership.class)
-@JsonDeserialize(builder = ImtMembership.Builder.class)
-public interface Membership extends BaseModel {
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+@Validated
+public class Membership extends BaseModel implements Serializable  {
 	
 	/**
 	 * @return the type of the membership
 	 */
-	MembershipType getMembershipType();
+	MembershipType membershipType;
 	
 	/**
 	 * @return the user
 	 */
-	@Nullable
-	User getUser();
+	@NotNull
+	User user;
 	
 	/**
 	 * @return the parking spot
 	 */
-	@Nullable
-	ParkingSpot getParkingSpot();
+	ParkingSpot parkingSpot;
 	
 
 	/**
 	 *  some memberships might start at a given hour
 	 */
-	@Nullable
-	Integer getStartHour();
+	Integer startHour;
 	
 	
 	/**
 	 *  end hour of a membership
 	 */
-	@Nullable
-	Integer getEndHour();
+	Integer endHour;
 
 	/**
 	 *  the cost of a membership
 	 */
-	BigDecimal getCost();
+	BigDecimal cost;
 	
 }

@@ -1,19 +1,23 @@
 package ro.upet.parking.system.management.util;
 
 import com.google.common.collect.ImmutableList;
+import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.membership.MembershipEntity;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
 import ro.upet.parking.system.management.data.api.parking.level.ParkingLevelEntity;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
+import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
 import ro.upet.parking.system.management.model.base.MembershipType;
+import ro.upet.parking.system.management.model.base.ReservationStatus;
 import ro.upet.parking.system.management.model.base.UserType;
-import ro.upet.parking.system.management.model.vehicle.Vehicle;
+import ro.upet.parking.system.management.model.reservation.Reservation;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 
 import static ro.upet.parking.system.management.util.TestUtil.*;
@@ -29,14 +33,14 @@ public class TestDataEntityBuilder {
      */
     public static UserEntity buildUserEntity(final Object... args) {
         return UserEntity.builder()
-                .username(changeNullStringToDefault(args, 0, "Username1"))
-                .email(changeNullStringToDefault(args, 1, "email1@test.com"))
-                .password(changeNullStringToDefault(args, 2, "Password1"))
-                .id(Long.getLong(changeNullStringToDefault(args, 3, null)))
-                .address(changeNullStringToDefault(args, 4, "Address1"))
-                .birthday(LocalDate.parse(changeNullStringToDefault(args, 5, "1980-01-01")))
-                .name(changeNullStringToDefault(args, 6, "Name1"))
-                .stripeId(changeNullStringToDefault(args, 7, "StripeID1"))
+                .username("Andrada")
+                .email(changeNullStringToDefault(args, 0, "email1@test.com"))
+                .password(changeNullStringToDefault(args, 1, "Password1"))
+                .id(Long.getLong(changeNullStringToDefault(args, 2, null)))
+                .address(changeNullStringToDefault(args, 3, "Address1"))
+                .birthday(LocalDate.parse(changeNullStringToDefault(args, 4, "1980-01-01")))
+                .name(changeNullStringToDefault(args, 5, "Name1"))
+                .stripeId(changeNullStringToDefault(args, 6, "StripeID1"))
                 .base(new BaseEntity())
                 .userType(UserType.CUSTOMER)
                 .build();
@@ -69,7 +73,7 @@ public class TestDataEntityBuilder {
                 .startHour(Integer.parseInt(changeNullStringToDefault(args, 1, "7")))
                 .endHour(Integer.parseInt(changeNullStringToDefault(args, 2, "10")))
                 .membershipType(MembershipType.MONTH)
-                .parkingSpot((ParkingSpotEntity) changeNullToDefault(args, 3, () -> buildParkingSpotEntity()))
+                .parkingSpot((ParkingSpotEntity) changeNullToDefault(args, 3, () -> buildParkingSpotEntity(1l)))
                 .user((UserEntity) changeNullToDefault(args, 4, () -> buildUserEntity()))
                 .id(Long.getLong(changeNullStringToDefault(args, 5, null)))
                 .base(new BaseEntity())
@@ -82,14 +86,14 @@ public class TestDataEntityBuilder {
      * @param args number, rentable, rented, id, parkingZone
      * @return the entity
      */
-    public static ParkingSpotEntity buildParkingSpotEntity(final Object... args) {
+    public static ParkingSpotEntity buildParkingSpotEntity(final Long id, final Object... args) {
         return ParkingSpotEntity.builder()
-                .number(changeNullStringToDefault(args, 0, "1"))
+                .number(changeNullStringToDefault(args, 5, "1"))
                 .available(changeNullBooleanToDefault(args, 1, true))
                 .rentable(changeNullBooleanToDefault(args, 2, true))
                 .rented(changeNullBooleanToDefault(args, 3, false))
                 .parkingZone((ParkingZoneEntity) changeNullToDefault(args, 4, () -> buildParkingZoneEntity()))
-                .id(Long.getLong(changeNullStringToDefault(args, 5, null)))
+                .id(id)
                 .base(new BaseEntity())
                 .build();
     }
@@ -134,7 +138,7 @@ public class TestDataEntityBuilder {
     public static ParkingEntity buildParkingEntity(final Object... args) {
         return ParkingEntity.builder()
                 .name(changeNullStringToDefault(args, 0, "Parking1"))
-                .pricePerHour(BigDecimal.valueOf(Long.parseLong(changeNullStringToDefault(args, 1, "10"))))
+                .pricePerHour(Double.parseDouble(changeNullStringToDefault(args, 1, "10")))
                 .location(changeNullStringToDefault(args, 2, "Location1"))
                 .opensAt(changeNullStringToDefault(args, 3, "07:00"))
                 .closesAt(changeNullStringToDefault(args, 4, "23:00"))
@@ -143,4 +147,30 @@ public class TestDataEntityBuilder {
                 .build();
     }
 
+    public static ReservationEntity buildReservationEntity(final String startTime, final String endTime, final ReservationStatus status,
+                                                           final Object... args){
+        return ReservationEntity.builder()
+                .cost(Double.parseDouble(changeNullStringToDefault(args, 0, "10")))
+                .parkingSpot((ParkingSpotEntity) changeNullToDefault(args, 1, () -> buildParkingSpotEntity(1l)))
+                .startTime(Instant.parse(startTime))
+                .endTime(Instant.parse(endTime))
+                .reservationStatus(status)
+                .id(Long.getLong(changeNullStringToDefault(args, 0, null)))
+                .base(new BaseEntity())
+                .build();
+    }
+
+
+    public static Reservation buildReservation(final String startTime, final String endTime, final ReservationStatus status,
+                                                           final Object... args){
+        return Reservation.builder()
+                .cost(BigDecimal.TEN)
+                .parkingSpot(ParkingSpotMapper.toParkingSpot(
+                            (ParkingSpotEntity) changeNullToDefault(args, 1, () -> buildParkingSpotEntity(1l))))
+                .startTime(Instant.parse(startTime))
+                .endTime(Instant.parse(endTime))
+                .reservationStatus(status)
+                .id(Long.getLong(changeNullStringToDefault(args, 0, "1")))
+                .build();
+    }
 }

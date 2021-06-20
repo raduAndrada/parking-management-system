@@ -61,9 +61,9 @@
     <string name="ccv">CCV</string>
     <string name="ccv_example">000</string>
     <string name="reserve">Reserve</string>
-    <string name="starting_at">starting at</string>
+    <string name="starting_at">starting at hh:mm</string>
     <string name="starting_at_example">2018-11-30T18:35:24.00Z</string>
-    <string name="ending_at">ending at</string>
+    <string name="ending_at">ending at hh:mm</string>
     <string name="date">pick date</string>
     <string name="password_confirm">Re-type Password</string>
     <string name="save">Save</string>
@@ -78,4 +78,6 @@
     <string name="release">Release</string>
     <string name="upcoming_reservations">My upcoming reservations</string>
     <string name="create_reservations">Create reservation</string>
+    <string name="invalid_date_format">Hours must be hh:mm format</string>
+    <string name="ip_address">http://192.168.0.94:8000/</string>
 </resources>

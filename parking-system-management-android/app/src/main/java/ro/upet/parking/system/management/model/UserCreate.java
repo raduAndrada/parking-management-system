@@ -1,41 +1,45 @@
 package ro.upet.parking.system.management.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import org.immutables.value.Value;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author Andrada
  * Model for the user of the application
  */
-@Value.Immutable
-@Value.Modifiable
-public interface UserCreate {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class UserCreate {
 
 	/**
 	 * @return the details about the vehicle to be created
 	 */
-	Vehicle getVehicle();
+	Vehicle vehicle;
 	
 	/**
 	 * @return the credit card number
 	 */
-	String getCreditCardNumber();
+	String creditCardNumber;
 	
 	/**
 	 * @return credit card expiration month
 	 */
-	String getCreditCardExpMonth();
+	String creditCardExpMonth;
 
 	/**
 	 * @return credit card expiration year
 	 */
-	String getCreditCardExpYear();
+	String creditCardExpYear;
 	
 
 	/**
 	 * @return credit card ccv
 	 */
-	String getCreditCardCCV();
+	String creditCardCCV;
 }

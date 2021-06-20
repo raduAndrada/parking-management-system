@@ -139,5 +139,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp" />
 
+    <EditText
+        android:id="@+id/register_ip_address_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_user_create_btn_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:ems="10"
+        android:hint="@string/ip_address"
+        android:inputType="text"
+        android:textSize="@dimen/login_text_size"
+        />
 
 </RelativeLayout>

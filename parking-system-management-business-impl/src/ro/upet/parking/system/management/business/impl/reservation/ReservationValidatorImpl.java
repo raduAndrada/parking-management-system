@@ -1,14 +1,13 @@
 package ro.upet.parking.system.management.business.impl.reservation;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
-
 import ro.upet.parking.system.management.business.api.reservation.ReservationValidator;
 import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
 import ro.upet.parking.system.management.data.impl.reservation.ReservationRepository;
+import ro.upet.parking.system.management.model.base.ReservationStatus;
+
+import java.time.Instant;
+import java.util.List;
 
 /**
  * @author Andrada
@@ -26,30 +25,35 @@ public class ReservationValidatorImpl implements ReservationValidator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean validate(ReservationEntity entity) {
+	public boolean validate(final Long parkingSpotId, final Instant startTime, final Instant endTime) {
 		boolean valid = true;
 		final List<ReservationEntity> reservationsOnSpot = 
-							reservationRepo.findAllByParkingSpotNumber(entity.getParkingSpot().getNumber());
+							reservationRepo.findAllByParkingSpotId(parkingSpotId);
 		for (ReservationEntity oldReservation : reservationsOnSpot) {
-			
+
+			if (oldReservation.getReservationStatus().equals(ReservationStatus.COMPLETED)) {
+				break;
+			}
 	
 			/*   
 			 * Reservation 1:           |||||||||||||||||||||
 			 * Reservation 2:                    ||||||||||||||||||||
 			 */
-			if (oldReservation.getStartTime().isBefore(entity.getStartTime()) &&
-								oldReservation.getEndTime().isBefore(entity.getEndTime()))
+			if (oldReservation.getStartTime().isBefore(startTime) &&
+								oldReservation.getEndTime().isBefore(endTime))
 			{
 				valid = false;
+				break;
 			}
 
 			/*   
 			 * Reservation 1:           |||||||||||||||||||||||||||||||||||||||
 			 * Reservation 2:                    ||||||||||||||||||||
 			 */
-			if (oldReservation.getStartTime().isBefore(entity.getStartTime()) && 
-								oldReservation.getEndTime().isAfter(entity.getEndTime())) {
+			if (oldReservation.getStartTime().isBefore(startTime) &&
+								oldReservation.getEndTime().isAfter(endTime)) {
 				valid = false;
+				break;
 			}
 			
 
@@ -57,9 +61,10 @@ public class ReservationValidatorImpl implements ReservationValidator {
 			 * Reservation 1:                              |||||
 			 * Reservation 2:                    ||||||||||||||||||||
 			 */
-			if (oldReservation.getStartTime().isAfter(entity.getStartTime()) && 
-								oldReservation.getEndTime().isBefore(entity.getEndTime())) {
+			if (oldReservation.getStartTime().isAfter(startTime) &&
+								oldReservation.getEndTime().isBefore(endTime)) {
 				valid = false;
+				break;
 			}
 			
 
@@ -67,9 +72,10 @@ public class ReservationValidatorImpl implements ReservationValidator {
 			 * Reservation 1:           |||||||||||||||||||||
 			 * Reservation 2:        ||||||||||||||||||||
 			 */
-			if(oldReservation.getStartTime().isAfter(entity.getStartTime()) &&
-								oldReservation.getStartTime().isBefore(entity.getEndTime())) {
+			if(oldReservation.getStartTime().isAfter(startTime) &&
+								oldReservation.getStartTime().isBefore(endTime)) {
 				valid = false;
+				break;
 			}
 			
 		}

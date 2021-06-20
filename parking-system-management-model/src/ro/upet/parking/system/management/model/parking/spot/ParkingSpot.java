@@ -1,65 +1,65 @@
 package ro.upet.parking.system.management.model.parking.spot;
 
-import javax.annotation.Nullable;
-
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import ro.upet.parking.system.management.model.base.BaseModel;
 
 /**
  * @author Andrada
  * Parking spot model
  */
-@Value.Immutable
-@Value.Modifiable
-@JsonSerialize(as = ImtParkingSpot.class)
-@JsonDeserialize(builder = ImtParkingSpot.Builder.class)
-public interface ParkingSpot extends BaseModel{
-
+@Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ParkingSpot  extends BaseModel{
 	
 	/**
 	 * @return number of the parking spot
 	 */
-	String getNumber();
+	String number;
 	
 	/**
 	 * @return true if the spot is free, false otherwise
 	 */
-	Boolean getAvailable();
+	Boolean available;
 	
 	/**
 	 * @return true if it can be rent through a membership, false otherwise
 	 */
-	Boolean getRentable();
+	Boolean rentable;
 	
 	/**
 	 * @return true if it is rented through a membership, false otherwise
 	 */
-	Boolean getRented();
+	Boolean rented;
 	
 	/**
 	 * @return number of the level
 	 */
-	@Nullable
-	String getParkingLevelNumber();
+	String parkingLevelNumber;
 	
 	/**
 	 * @return letter of the zone
 	 */
-	@Nullable
-	String getParkingZoneLetter();
-	
+	String parkingZoneLetter;
+
 	/**
 	 * @return the name of the parking
 	 */
-	@Nullable
-	String getParkingName();
-	
-	
+	String parkingName;
 
-
+	@Override
+	public String toString() {
+		return "ParkingSpot{" +
+				"number='" + number + '\'' +
+				", available=" + available +
+				", rentable=" + rentable +
+				", rented=" + rented +
+				", parkingName='" + parkingName + '\'' +
+				'}';
+	}
 	
 }

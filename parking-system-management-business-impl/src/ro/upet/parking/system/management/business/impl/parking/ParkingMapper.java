@@ -1,14 +1,12 @@
 package ro.upet.parking.system.management.business.impl.parking;
 
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import lombok.extern.slf4j.Slf4j;
-import ro.upet.parking.system.management.business.impl.base.GenericMapper;
+import org.modelmapper.ModelMapper;
 import ro.upet.parking.system.management.data.api.parking.ParkingEntity;
-import ro.upet.parking.system.management.model.parking.MdfParking;
 import ro.upet.parking.system.management.model.parking.Parking;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -19,29 +17,25 @@ import ro.upet.parking.system.management.model.parking.Parking;
 public class ParkingMapper {
 
 
-	private static final GenericMapper<ParkingEntity, Parking> MAPPER = new GenericMapper();
+	private static final ModelMapper MAPPER = new ModelMapper();
 	
 	/**
 	 * @param parking model for the parking
 	 * @return the corresponding entity
 	 */
 	public static ParkingEntity toParkingEntity(final Parking parking) {
-		final ParkingEntity entity = new ParkingEntity();
 		final String [] openingHours = validateOpenHours(parking.getOpensAt(), parking.getClosesAt());
-		MAPPER.mapToEntity(parking, entity);
-		entity.setOpensAt(openingHours[0]);
-		entity.setClosesAt(openingHours[1]);
-		return entity;
+		parking.setOpensAt(openingHours[0]);
+		parking.setClosesAt(openingHours[1]);
+		return MAPPER.map(parking, ParkingEntity.class);
 	}
-	
+
 	/**
 	 * @param entity database level parking
 	 * @return the model for the entity
 	 */
 	public static Parking toParking(final ParkingEntity entity) {
-		MdfParking model = MdfParking.create();
-		MAPPER.mapToModel(entity, model);
-		return model.toImmutable();
+		return MAPPER.map(entity, Parking.class);
 	}
 	
 	/**

@@ -1,65 +1,66 @@
 package ro.upet.parking.system.management.model.user;
 
 
-import org.immutables.value.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-@Value.Immutable
-@JsonSerialize(as = ImtUserUpdate.class)
-@JsonDeserialize(builder = ImtUserUpdate.Builder.class)
-public interface UserUpdate {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserUpdate {
 	
 	/**
 	 * @return the username
 	 */
-	String getUsername();
+	String username;
 
     /**
      * @return password
      */
-    String getPassword();
+    String password;
 
     /**
      * @return password confirm
      */
-    String getPasswordConfirm();
+    String passwordConfirm;
 
 
     /**
      * @return the email of the user (must be unique)
      */
-    String getEmail();
+    String email;
 
     /**
      * @return phone number for the user
      */
-    String getPhoneNumber();
+    String phoneNumber;
 
     /**
      * @return the credit card number
      */
-    String getCreditCardNumber();
+    String creditCardNumber;
 
     /**
      * @return credit card expiration month
      */
-    String getCreditCardExpMonth();
+    String creditCardExpMonth;
 
     /**
      * @return credit card expiration year
      */
-    String getCreditCardExpYear();
+    String creditCardExpYear;
 
     /**
      * @return credit card ccv
      */
-    String getCreditCardCCV();
+    String creditCardCCV;
 
     /**
      * @return the registration plate of the vehicle
      */
-    String getLicencePlate();
+    String licencePlate;
 
 }

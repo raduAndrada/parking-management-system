@@ -1,59 +1,65 @@
 package ro.upet.parking.system.management.model;
 
-import org.immutables.value.Value;
 
-@Value.Immutable
-@Value.Modifiable
-public interface UserUpdate {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class UserUpdate {
     /**
      * @return the username
      */
-    String getUsername();
+    String username;
 
     /**
      * @return password
      */
-    String getPassword();
+    String password;
 
     /**
      * @return password confirm
      */
-    String getPasswordConfirm();
+    String passwordConfirm;
 
 
     /**
      * @return the email of the user (must be unique)
      */
-    String getEmail();
+    String email;
 
     /**
      * @return phone number for the user
      */
-    String getPhoneNumber();
+    String phoneNumber;
 
     /**
      * @return the credit card number
      */
-    String getCreditCardNumber();
+    String creditCardNumber;
 
     /**
      * @return credit card expiration month
      */
-    String getCreditCardExpMonth();
+    String creditCardExpMonth;
 
     /**
      * @return credit card expiration year
      */
-    String getCreditCardExpYear();
+    String creditCardExpYear;
 
     /**
      * @return credit card ccv
      */
-    String getCreditCardCCV();
+    String creditCardCCV;
 
     /**
      * @return the registration plate of the vehicle
      */
-    String getLicencePlate();
+    String licencePlate;
 
 }

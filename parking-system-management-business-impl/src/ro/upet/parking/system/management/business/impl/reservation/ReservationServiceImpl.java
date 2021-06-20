@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.business.impl.reservation;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ro.upet.parking.system.management.business.api.core.BusinessException;
@@ -12,45 +13,42 @@ import ro.upet.parking.system.management.data.impl.parking.spot.ParkingSpotRepos
 import ro.upet.parking.system.management.data.impl.reservation.ReservationRepository;
 import ro.upet.parking.system.management.data.impl.user.UserRepository;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
-import ro.upet.parking.system.management.model.reservation.ImtReservationNext;
 import ro.upet.parking.system.management.model.reservation.Reservation;
 import ro.upet.parking.system.management.model.reservation.ReservationCreate;
 import ro.upet.parking.system.management.model.reservation.ReservationNext;
 
-import javax.inject.Inject;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import javax.transaction.Transactional;
+import java.time.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 /**
  * @author Andrada
  * Business level logic implementation for reservations
  */
 @Service
+@Slf4j
 public class ReservationServiceImpl implements ReservationService {
 
-    protected static final Logger LOGGER = Logger.getLogger(ReservationService.class.getName());
-
-    @Value("${reserversion.claim.allocated.time}")
+    @Value("${reservation.claim.allocated.time}")
     private Integer RESERVATION_EXPIRATION_TIME; // 15 minutes
 
-    @Inject
-    private ReservationValidator reservationValidator;
+    private final ReservationValidator reservationValidator;
 
-    @Inject
-    private ReservationRepository reservationRepo;
+    private final ReservationRepository reservationRepo;
 
-    @Inject
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
-    @Inject
-    private ParkingSpotRepository parkingSpotRepo;
+    private final ParkingSpotRepository parkingSpotRepo;
+
+    public ReservationServiceImpl(ReservationValidator reservationValidator, ReservationRepository reservationRepo, UserRepository userRepo, ParkingSpotRepository parkingSpotRepo) {
+        this.reservationValidator = reservationValidator;
+        this.reservationRepo = reservationRepo;
+        this.userRepo = userRepo;
+        this.parkingSpotRepo = parkingSpotRepo;
+    }
 
     /**
      * {@inheritDoc}
@@ -84,8 +82,6 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation add(final Reservation reservation) {
         final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-        entity.setCreatedAt(Instant.now());
-        entity.setUpdatedAt(Instant.now());
         final ReservationEntity savedEntity = reservationRepo.save(entity);
         return ReservationMapper.toReservation(savedEntity);
     }
@@ -97,7 +93,6 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation update(final Reservation reservation) {
         final ReservationEntity entity = ReservationMapper.toReservationEntity(reservation);
-        entity.setUpdatedAt(Instant.now());
         final ReservationEntity savedEntity = reservationRepo.save(entity);
         return ReservationMapper.toReservation(savedEntity);
     }
@@ -146,28 +141,24 @@ public class ReservationServiceImpl implements ReservationService {
 
         // find all available parking spots by parking name
         final List<ParkingSpotEntity> parkingSpots = parkingSpotRepo.findAllAvailableByParkingName(reservationCreate.getParkingName());
-        final ReservationEntity re = new ReservationEntity();
-        re.setUser(ue);
-        re.setStartTime(Instant.parse(reservationCreate.getStartTime()));
-        re.setEndTime(Instant.parse(reservationCreate.getEndTime()));
+        final ReservationEntity re = ReservationEntity.builder()
+                .user(ue)
+                .startTime(Instant.parse(reservationCreate.getStartTime()))
+                .endTime(Instant.parse(reservationCreate.getEndTime()))
+                .reservationStatus(ReservationStatus.PENDING)
+                .build();
 
 
         // validate parking spot availability during the selected time
         re.setParkingSpot(parkingSpots.stream()
-                .filter(x -> {
-                    re.setParkingSpot(x);
-                    return x.getAvailable() && reservationValidator.validate(re);
-                })
+                .filter(x -> reservationValidator.validate(x.getId(), re.getStartTime(), re.getEndTime()))
                 .findFirst().orElseThrow(BusinessException::new));
 
         //save reservation
         // set cost as price per hour * reservation duration
         re.setCost(computeCost(re.getEndTime(), re.getStartTime(), re.getParkingSpot().getParkingZone().getParkingLevel().getParking().getPricePerHour()));
-        re.setCreatedAt(Instant.now());
-        re.setUpdatedAt(Instant.now());
-        re.setReservationStatus(ReservationStatus.PENDING);
         final ReservationEntity savedEntity = reservationRepo.save(re);
-        startCountdownTimer(savedEntity.getId());
+        startCountdownTimer(savedEntity);
         return ReservationMapper.toReservation(savedEntity);
     }
 
@@ -196,6 +187,7 @@ public class ReservationServiceImpl implements ReservationService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public Reservation claim(final Long reservationId) {
         return updateReservation(reservationId, ReservationStatus.CLAIMED, false);
     }
@@ -204,6 +196,7 @@ public class ReservationServiceImpl implements ReservationService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public Reservation start(final Long reservationId) {
         return updateReservation(reservationId, ReservationStatus.ONGOING, false);
     }
@@ -212,37 +205,38 @@ public class ReservationServiceImpl implements ReservationService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public Reservation complete(final Long reservationId) {
         return updateReservation(reservationId, ReservationStatus.COMPLETED, true);
     }
 
 
     /**
-     * @param reservationId the id of the reservation
+     * @param reservationEntity the reservation
      */
-    private void startCountdownTimer(final Long reservationId) {
-        ReservationEntity re = reservationRepo.findById(reservationId)
-                .orElseThrow(BusinessException::new);
+    private void startCountdownTimer(final ReservationEntity reservationEntity) {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 try {
-                    ReservationEntity re = reservationRepo.findById(reservationId)
+                    ReservationEntity re = reservationRepo.findById(reservationEntity.getId())
                             .orElseThrow(BusinessException::new);
                     re.setReservationStatus(ReservationStatus.UNCLAIMED);
+                    re.setParkingSpot(reservationEntity.getParkingSpot());
                     reservationRepo.save(re);
                     claimReservation(re);
                 } catch (Exception e) {
-                    LOGGER.info(String.format("Failed to make reservation in unclaimed {%s}", e));
+                    log.info("Failed to make reservation in unclaimed {}", e);
                 }
             }
         };
 
         // schedule the status to change to unclaimed when the reservation is starting
-        long duration = Math.abs(Duration.between(re.getStartTime(),
-                Instant.now()).toMillis());
-        LOGGER.info(String.format("Reservation status changing to UNCALIMED in : {%d} minutes", duration / 36000));
-        new Timer().scheduleAtFixedRate(timerTask, 30, duration);
+        // note Instant.now() gives the current time - 3h
+        long duration = Math.abs(Duration.between(reservationEntity.getStartTime(),
+                Instant.now()).toMinutes()) - 180;
+        log.info("Reservation status changing to UNCLAIMED in : {} minutes", duration);
+        new Timer().schedule(timerTask, duration * 60000);
     }
 
 
@@ -258,22 +252,21 @@ public class ReservationServiceImpl implements ReservationService {
                         reservationRepo.delete(reservationEntity);
                     }
                 } catch (Exception e) {
-                    LOGGER.info(String.format("Failed to remove  unclaimed reservation: {%s} ", e));
+                    log.error("Failed to remove  unclaimed reservation: {}", reservationEntity.getId(), e);
                 }
             }
         };
 
         // schedule a timer to check if the status is changed to claimed if not just remove the reservation
         long duration = Math.abs(Duration.between(reservationEntity.getStartTime().plusSeconds(RESERVATION_EXPIRATION_TIME),
-                reservationEntity.getStartTime()).toMillis());
-        LOGGER.info(String.format("Reservation status changing to UNCALIMED in : {%d} minutes", duration / 36000));
-        new Timer().scheduleAtFixedRate(timerTask, 30, duration);
+                reservationEntity.getStartTime()).toMinutes());
+        log.info("Reservation will be deleted in : {} minutes", duration);
+        new Timer().schedule(timerTask, duration * 60000);
     }
 
     private Reservation updateReservation(final Long reservationId, final ReservationStatus status, final boolean available) {
         ReservationEntity re = reservationRepo.findById(reservationId).orElseThrow(BusinessException::new);
         re.setReservationStatus(status);
-        re.setUpdatedAt(Instant.now());
         reservationRepo.save(re);
 
         //make spot occupied
@@ -296,8 +289,8 @@ public class ReservationServiceImpl implements ReservationService {
         LocalDateTime endTimeLDT = LocalDateTime.ofInstant(entity.getEndTime(), ZoneOffset.UTC);
 
 
-        final Integer daysTillReservation = startTimeLDT.getDayOfYear() - currentTimeLDT.getDayOfYear();
-        final Integer hoursTillReservation = startTimeLDT.getHour() - currentTimeLDT.getHour();
+        final Integer daysTillReservation = startTimeLDT.getDayOfYear() - currentTimeLDT.getDayOfYear() - currentTimeLDT.getHour() > startTimeLDT.getHour() ? 1 : 0;
+        final Integer hoursTillReservation = startTimeLDT.getHour() - currentTimeLDT.getHour() - 3;
         final Integer minutesTillReservation = startTimeLDT.getMinute() - currentTimeLDT.getMinute();
 
 
@@ -305,7 +298,7 @@ public class ReservationServiceImpl implements ReservationService {
         final Integer reservationDurationMinutes = Math.abs(endTimeLDT.getMinute() - startTimeLDT.getMinute());
 
 
-        return ImtReservationNext.builder()
+        return ReservationNext.builder()
                 .days(daysTillReservation)
                 .hours(correctNegativeTimes(hoursTillReservation, 24))
                 .minutes(correctNegativeTimes(minutesTillReservation, 60))

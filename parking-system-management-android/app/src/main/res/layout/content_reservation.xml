@@ -60,13 +60,25 @@
         android:inputType="text"
         android:autofillHints="@string/starting_at_example" />
 
+    <TextView
+        android:id="@+id/reservation_invalid_time_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/reservation_end_time_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/bootstrap_brand_danger"
+        android:text="@string/invalid_date_format"
+        />
+
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reserve"
         app:bootstrapBrand="success"
         android:id="@+id/reservation_reserve_btn_id"
-        android:layout_below="@+id/reservation_parking_names_id"
+        android:layout_below="@+id/reservation_invalid_time_id"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp" />
+        android:layout_marginTop="30dp" />
 </RelativeLayout>

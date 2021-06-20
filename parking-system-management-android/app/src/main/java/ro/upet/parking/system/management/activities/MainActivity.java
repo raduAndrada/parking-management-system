@@ -16,11 +16,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.upet.parking.system.management.R;
 import ro.upet.parking.system.management.activities.common.MenuHelper;
-import ro.upet.parking.system.management.model.ImtReservation;
-import ro.upet.parking.system.management.model.ImtReservationNext;
+
+import ro.upet.parking.system.management.model.Reservation;
 import ro.upet.parking.system.management.model.ReservationNext;
 import ro.upet.parking.system.management.model.ReservationStatus;
 import ro.upet.parking.system.management.services.ReservationService;
+import ro.upet.parking.system.management.services.RetrofitServicesInitializer;
+import ro.upet.parking.system.management.services.UserService;
 
 import android.os.CountDownTimer;
 
@@ -30,18 +32,15 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
+import static ro.upet.parking.system.management.activities.common.StringConstants.BASE_URL;
 import static ro.upet.parking.system.management.activities.common.StringConstants.RESERVATIONS_URL;
 import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
 import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
+import static ro.upet.parking.system.management.activities.common.StringConstants.USERS_URL;
 
 public class MainActivity extends MenuHelper {
 
-
-    private static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(RESERVATIONS_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    private static final ReservationService service = retrofit.create(ReservationService.class);
+    private ReservationService service ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +54,8 @@ public class MainActivity extends MenuHelper {
 
         final SharedPreferences sharedPref = this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         final String username= sharedPref.getString(USERNAME, "none");
+        RetrofitServicesInitializer retrofitServicesInitializer = new RetrofitServicesInitializer(sharedPref.getString(BASE_URL, "none"));
+        service = retrofitServicesInitializer.getReservationService();
 
         final TextView timeTextView = (TextView) findViewById(R.id.main_time_indicator_id);
         final TextView daysTextView = (TextView) findViewById(R.id.main_days_indicator_counter_id);
@@ -67,9 +68,9 @@ public class MainActivity extends MenuHelper {
 
         releaseBtn.setVisibility(View.INVISIBLE);
 
-        service.getReservationNext(username).enqueue(new Callback<ImtReservationNext>() {
+        service.getReservationNext(username).enqueue(new Callback<ReservationNext>() {
             @Override
-            public void onResponse(Call<ImtReservationNext> call, Response<ImtReservationNext> response) {
+            public void onResponse(Call<ReservationNext> call, Response<ReservationNext> response) {
                 final ReservationNext rn = response.body();
                 if (Objects.nonNull(rn)) {
 
@@ -88,9 +89,9 @@ public class MainActivity extends MenuHelper {
                     claimBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            service.claimReservation(rn.getReservationId()).enqueue(new Callback<ImtReservation>() {
+                            service.claimReservation(rn.getReservationId()).enqueue(new Callback<Reservation>() {
                                 @Override
-                                public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
+                                public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                                     Toast.makeText(getApplicationContext(), "Successfully claimed Reservation", Toast.LENGTH_LONG).show();
                                     claimBtn.setEnabled(false);
                                     claimBtn.setText(ReservationStatus.CLAIMED.toString());
@@ -98,7 +99,7 @@ public class MainActivity extends MenuHelper {
                                 }
 
                                 @Override
-                                public void onFailure(Call<ImtReservation> call, Throwable t) {
+                                public void onFailure(Call<Reservation> call, Throwable t) {
 
                                 }
                             });
@@ -108,16 +109,16 @@ public class MainActivity extends MenuHelper {
                     removeBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            service.deleteReservationById(rn.getReservationId()).enqueue(new Callback<ImtReservation>() {
+                            service.deleteReservationById(rn.getReservationId()).enqueue(new Callback<Reservation>() {
                                 @Override
-                                public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
+                                public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                                     Toast.makeText(getApplicationContext(), "Successfully removed Reservation", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
                                     startActivity(intent);
                                 }
 
                                 @Override
-                                public void onFailure(Call<ImtReservation> call, Throwable t) {
+                                public void onFailure(Call<Reservation> call, Throwable t) {
 
                                 }
                             });
@@ -126,9 +127,9 @@ public class MainActivity extends MenuHelper {
                     releaseBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            service.completeReservation(rn.getReservationId()).enqueue(new Callback<ImtReservation>() {
+                            service.completeReservation(rn.getReservationId()).enqueue(new Callback<Reservation>() {
                                 @Override
-                                public void onResponse(Call<ImtReservation> call, Response<ImtReservation> response) {
+                                public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                                     Toast.makeText(getApplicationContext(), "Successfully claimed Reservation", Toast.LENGTH_LONG).show();
                                     releaseBtn.setEnabled(false);
                                     releaseBtn.setText(ReservationStatus.COMPLETED.toString());
@@ -138,7 +139,7 @@ public class MainActivity extends MenuHelper {
                                 }
 
                                 @Override
-                                public void onFailure(Call<ImtReservation> call, Throwable t) {
+                                public void onFailure(Call<Reservation> call, Throwable t) {
 
                                 }
                             });
@@ -235,7 +236,7 @@ public class MainActivity extends MenuHelper {
             }
 
             @Override
-            public void onFailure(Call<ImtReservationNext> call, Throwable t) {
+            public void onFailure(Call<ReservationNext> call, Throwable t) {
 
             }
         });

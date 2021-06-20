@@ -110,9 +110,7 @@ public class ParkingLevelServiceImpl implements ParkingLevelService {
      */
     @Override
     public List<ParkingLevel> getParkingLevelListByParking(final Long parkingId) {
-        return ParkingLevelMapper.toParkingLevelList(parkingLevelRepo.findAll().stream()
-                .filter(pl -> pl.getParking().getId().equals(parkingId))
-                .collect(Collectors.toList()));
+        return ParkingLevelMapper.toParkingLevelList(parkingLevelRepo.findAllByParkingId(parkingId));
     }
 
 

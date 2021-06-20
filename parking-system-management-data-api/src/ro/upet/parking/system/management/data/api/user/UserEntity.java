@@ -1,5 +1,6 @@
 package ro.upet.parking.system.management.data.api.user;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +12,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Data
-@Entity(name = "users")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "users")
 public class UserEntity implements Serializable{
 	/**
 	 * 
@@ -55,7 +57,7 @@ public class UserEntity implements Serializable{
 	/**
 	 * password
 	 */
-	@Convert(converter = PasswordEncryptionConverter.class)
+	// @Convert(converter = PasswordEncryptionConverter.class)
 	private String password;
 
 	/**
@@ -85,5 +87,14 @@ public class UserEntity implements Serializable{
 	 */
 	private String stripeId;
 
-
+	@Override
+	public String toString() {
+		return "UserEntity{" +
+				"id=" + id +
+				", birthday=" + birthday +
+				", username='" + username + '\'' +
+				", email='" + email + '\'' +
+				", userType=" + userType +
+				'}';
+	}
 }

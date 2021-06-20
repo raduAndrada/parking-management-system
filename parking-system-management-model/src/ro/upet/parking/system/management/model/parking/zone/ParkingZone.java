@@ -1,44 +1,46 @@
 package ro.upet.parking.system.management.model.parking.zone;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import ro.upet.parking.system.management.model.base.BaseModel;
 import ro.upet.parking.system.management.model.parking.level.ParkingLevel;
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
+
+import java.util.List;
 
 /**
  * @author Andrada
  * Parking zone model
  */
-@Value.Immutable
-@Value.Modifiable
-@JsonSerialize(as = ImtParkingZone.class)
-@JsonDeserialize(builder = ImtParkingZone.Builder.class)
-public interface ParkingZone extends BaseModel {
+@Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ParkingZone extends BaseModel {
 
 	/**
-	 * @return the letter for the zone
+	 *the letter for the zone
 	 */
-	String getLetter();
+	String letter;
 
 
 	/**
-	 * @return list of all the parking spots
+	 * list of all the parking spots
 	 */
-	@Nullable
-	List<ParkingSpot> getParkingSpots();
+	List<ParkingSpot> parkingSpots;
 	
 	/**
-	 * @return parking level
+	 * parking level
 	 */
-	@Nullable
-	ParkingLevel getParkingLevel();
-	
+	ParkingLevel parkingLevel;
+
+	@Override
+	public String toString() {
+		return "ParkingZone{" +
+				"letter='" + letter + '\'' +
+				", parkingLevelNumber=" + parkingLevel +
+				'}';
+	}
 }

@@ -14,4 +14,5 @@ public interface ParkingLevelRepository extends JpaRepository <ParkingLevelEntit
 	@Query("SELECT pl FROM parking_levels pl WHERE pl.parking.name= ?1")
 	public List<ParkingLevelEntity> findAllByParkingName(final String parkingName);
 
+	List<ParkingLevelEntity> findAllByParkingId(final Long parkingId);
 }

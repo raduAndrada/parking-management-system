@@ -1,8 +1,6 @@
 package ro.upet.parking.system.management.services;
 
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -14,13 +12,13 @@ import retrofit2.http.Path;
 
 public interface BaseService {
 
-    static final String CONTENT_TYPE = "Content-Type: application/json";
-    static final String AUTHORIZATION = "X-Authorization: user";
+    String CONTENT_TYPE = "Content-Type: application/json";
+    String AUTHORIZATION = "X-Authorization: user";
 
-    static final String ID_PATH = "id/{id}";
-    static final String CODE_PATH = "code/{code}";
-    static final String LIST_PATH = "list";
-    static final String USER_USERNAME_PATH = "user/{username}";
+    String ID_PATH = "id/{id}";
+    String CODE_PATH = "code/{code}";
+    String LIST_PATH = "list";
+    String USER_USERNAME_PATH = "user/{username}";
 
     @GET(ID_PATH)
     @Headers({CONTENT_TYPE, AUTHORIZATION})

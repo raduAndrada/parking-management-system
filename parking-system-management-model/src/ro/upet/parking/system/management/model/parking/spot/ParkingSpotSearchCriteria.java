@@ -1,36 +1,32 @@
 package ro.upet.parking.system.management.model.parking.spot;
 
-import javax.annotation.Nullable;
-
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Andrada
  * Parking spot model search criteria
  */
-@Value.Immutable
-@JsonSerialize(as = ImtParkingSpotSearchCriteria.class)
-@JsonDeserialize(builder = ImtParkingSpotSearchCriteria.Builder.class)
-public interface ParkingSpotSearchCriteria {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ParkingSpotSearchCriteria {
 
 	/**
 	 * @return parking level sort options
 	 */
-	@Nullable
-	ParkingSpotLevelSortOptions getParkingSpotLevelSortOptions();
+	ParkingSpotLevelSortOptions parkingspotlevelsortoptions;
 	
 	/**
 	 * @return zone sort options
 	 */
-	@Nullable
-	ParkingSpotZoneSortOptions getParkingSpotZoneSortOptions();
+	ParkingSpotZoneSortOptions parkingspotzonesortoptions;
 	
 	/**
 	 * @return parking spot preference options
 	 */
-	@Nullable
-	ParkingSpotPreferenceOptions getParkingSpotPreferenceOptions();
+	ParkingSpotPreferenceOptions parkingspotpreferenceoptions;
 }

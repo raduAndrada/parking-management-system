@@ -1,32 +1,34 @@
 package ro.upet.parking.system.management.model;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-import org.immutables.value.Value;
-
-
-import ro.upet.parking.system.management.model.ParkingSpot;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author Andrada
  * Parking zone model
  */
-@Value.Immutable
-public interface ParkingZone extends BaseModel {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class ParkingZone extends BaseModel {
 	
 	/**
 	 * @return the letter for the zone
 	 */
-	String getLetter();
+	String letter;
 
 
 	/**
 	 * @return list of all the parking spots
 	 */
 	@Nullable
-	List<ParkingSpot> getParkingSpots();
+	List<ParkingSpot> parkingSpots;
 	
 }

@@ -1,11 +1,9 @@
 package ro.upet.parking.system.management.business.impl.user;
 
-import java.util.List;
-import java.util.Optional;
-
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import ro.upet.parking.system.management.business.api.core.BusinessException;
+import ro.upet.parking.system.management.business.api.core.NotFoundException;
 import ro.upet.parking.system.management.business.api.user.UserService;
 import ro.upet.parking.system.management.business.api.user.UserValidator;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
@@ -15,11 +13,16 @@ import ro.upet.parking.system.management.data.impl.vehicle.VehicleRepository;
 import ro.upet.parking.system.management.model.user.User;
 import ro.upet.parking.system.management.model.user.UserUpdate;
 
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * @author Andrada
  * Business level logic implementation for users 
  */
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
 	
 	private final UserRepository userRepo;
@@ -27,12 +30,6 @@ public class UserServiceImpl implements UserService{
 	private final UserValidator userValidator;
 	
 	private final VehicleRepository vehicleRepo;
-
-	public UserServiceImpl(UserRepository userRepo, UserValidator userValidator, VehicleRepository vehicleRepo) {
-		this.userRepo = userRepo;
-		this.userValidator = userValidator;
-		this.vehicleRepo = vehicleRepo;
-	}
 
 
 	/**
@@ -66,10 +63,11 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public User add(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
 		if (userValidator.validate(user)) {
-		final UserEntity savedEntity = userRepo.save(entity);
+		final UserEntity savedEntity = userRepo.save(entity);;
 		return UserMapper.toUser(savedEntity);
 		}
 		throw new BusinessException("The username or the email are already taken");
@@ -80,6 +78,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public User update(final User user) {
 		final UserEntity entity = UserMapper.toUserEntity(user);
 		final UserEntity savedEntity = userRepo.save(entity);
@@ -91,6 +90,7 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public User removeById(final Long userId) throws BusinessException {
 		final UserEntity entity = userRepo.getOne(userId);
 		if (entity == null ) {
@@ -132,8 +132,8 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public User update(UserUpdate userUpdate) {
-		// TODO stripe update if needed
 		VehicleEntity ve =vehicleRepo.findAllByUserUsername(userUpdate.getUsername())
 							.stream().findFirst().orElseThrow(BusinessException :: new);
 		UserEntity ue = ve.getUser();
@@ -155,5 +155,12 @@ public class UserServiceImpl implements UserService{
 		return UserMapper.toUser(userRepo.findByUsername(username).orElseThrow(BusinessException::new));
 	}
 
-	
+	@Override
+	public User updateStripe(final String email, final String stripeId) {
+		final UserEntity userEntity = userRepo.findByEmail(email).orElseThrow(NotFoundException::new);
+		userEntity.setStripeId(stripeId);
+		return UserMapper.toUser(userEntity);
+	}
+
+
 }

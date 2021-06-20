@@ -1,5 +1,9 @@
 package ro.upet.parking.system.management.model.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -11,34 +15,35 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
  * @author Andrada
  * Model for the user of the application
  */
-@Value.Immutable
-@JsonSerialize(as = ImtUserCreate.class)
-@JsonDeserialize(builder = ImtUserCreate.Builder.class)
-public interface UserCreate {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserCreate {
 
 	/**
 	 * @return the details about the vehicle to be created
 	 */
-	Vehicle getVehicle();
+	Vehicle vehicle;
 	
 	/**
 	 * @return the credit card number
 	 */
-	String getCreditCardNumber();
+	String creditCardNumber;
 	
 	/**
 	 * @return credit card expiration month
 	 */
-	String getCreditCardExpMonth();
+	String creditCardExpMonth;
 
 	/**
 	 * @return credit card expiration year
 	 */
-	String getCreditCardExpYear();
+	String creditCardExpYear;
 	
 
 	/**
 	 * @return credit card ccv
 	 */
-	String getCreditCardCCV();
+	String creditCardCCV;
 }

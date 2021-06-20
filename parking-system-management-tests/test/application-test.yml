@@ -4,4 +4,4 @@ spring:
   flyway:
     enabled: true
 
-reserversion.claim.allocated.time: 30
+reservation.claim.allocated.time: 900

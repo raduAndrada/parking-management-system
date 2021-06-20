@@ -46,12 +46,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     implementation 'com.beardedhen:androidbootstrap:2.3.2'
-
-    annotationProcessor "org.immutables:value:2.8.8"
-    compileOnly "org.immutables:value:2.8.8"
-    compileOnly "org.immutables:builder:2.8.8"
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
 }

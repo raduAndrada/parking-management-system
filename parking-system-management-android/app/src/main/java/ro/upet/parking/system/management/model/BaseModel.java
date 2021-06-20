@@ -2,19 +2,27 @@ package ro.upet.parking.system.management.model;
 
 import java.time.Instant;
 
-import org.immutables.value.Value;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 
-public interface BaseModel {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class BaseModel {
 	
 	/**
 	 * @return identifier for the entity
 	 */
-	Long getId();
+	Long id;
 	
 	/**
 	 * @return unique code for the entity
 	 */
-	String getCode();	
+	String code;
 
 }

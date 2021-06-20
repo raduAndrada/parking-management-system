@@ -1,16 +1,5 @@
 package ro.upet.parking.system.management.data.api.vehicle;
 
-import java.io.Serializable;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,11 +8,14 @@ import ro.upet.parking.system.management.data.api.base.BaseEntity;
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.Size;
 
-@NoArgsConstructor
-@AllArgsConstructor
+import javax.persistence.*;
+import java.io.Serializable;
+
 @Data
-@Entity(name = "vehicles")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "vehicles")
 public class VehicleEntity implements Serializable{
 	/**
 	 * 
@@ -65,5 +57,4 @@ public class VehicleEntity implements Serializable{
 	@ManyToOne(cascade= CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private UserEntity user;
 
-	
 }

@@ -1,50 +1,57 @@
 package ro.upet.parking.system.management.model.parking;
 
-import java.math.BigDecimal;
-
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import ro.upet.parking.system.management.model.base.BaseModel;
+
+import java.math.BigDecimal;
 
 
 /**
  * @author Andrada
  * Model for representing a parking
  */
-@Value.Immutable
-@Value.Modifiable
-@JsonSerialize(as = ImtParking.class)
-@JsonDeserialize(builder = ImtParking.Builder.class)
-public interface Parking extends BaseModel {
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class Parking extends BaseModel {
 
 	
 	/**
 	 * @return the name of the parking
 	 */
-	String getName();
+	String name;
 	
 	/**
 	 * @return the location of the parking
 	 */
-	String getLocation();
+	String location;
 	
 	/**
 	 * @return open time
 	 */
-	String getOpensAt();
+	String opensAt;
 	
 	/**
 	 * @return closing time
 	 */
-	String getClosesAt();
+	String closesAt;
 
 	
 	/**
 	 * @return price per hour
 	 */
-	BigDecimal getPricePerHour();
-	
+	BigDecimal pricePerHour;
+
+	@Override
+	public String toString() {
+		return "Parking{" +
+				"name='" + name + '\'' +
+				", location='" + location + '\'' +
+				", opensAt='" + opensAt + '\'' +
+				", closesAt='" + closesAt + '\'' +
+				", pricePerHour=" + pricePerHour +
+				'}';
+	}
 }

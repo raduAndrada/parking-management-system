@@ -1,15 +1,14 @@
 package ro.upet.parking.system.management.business.impl.reservation;
 
+import org.modelmapper.ModelMapper;
+import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
+import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
+import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
+import ro.upet.parking.system.management.model.reservation.Reservation;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import ro.upet.parking.system.management.business.impl.base.GenericMapper;
-import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotMapper;
-import ro.upet.parking.system.management.business.impl.user.UserMapper;
-import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
-import ro.upet.parking.system.management.model.reservation.MdfReservation;
-import ro.upet.parking.system.management.model.reservation.Reservation;
 
 /**
  * 
@@ -17,16 +16,15 @@ import ro.upet.parking.system.management.model.reservation.Reservation;
  * Mapper for the reservation entity and model
  */
 public class ReservationMapper {
-	
-	private static final GenericMapper<ReservationEntity, Reservation> MAPPER = new GenericMapper();
+
+	private static final ModelMapper MAPPER = new ModelMapper();
 
 	/**
 	 * @param reservation model for the reservation
 	 * @return the corresponding entity
 	 */
 	public static ReservationEntity toReservationEntity(final Reservation reservation) {
-		final ReservationEntity entity = new ReservationEntity();
-		MAPPER.mapToEntity(reservation, entity);
+		final ReservationEntity entity = MAPPER.map(reservation, ReservationEntity.class);
 		entity.setParkingSpot(Objects.nonNull(entity.getParkingSpot()) ? ParkingSpotMapper.toParkingSpotEntity(reservation.getParkingSpot()) : null);
 		return entity;
 	}
@@ -36,11 +34,11 @@ public class ReservationMapper {
 	 * @return the model for the entity
 	 */
 	public static Reservation toReservation(final ReservationEntity entity) {
-		MdfReservation model = MdfReservation.create();
-		MAPPER.mapToModel(entity, model);
-		model.setParkingSpot(ParkingSpotMapper.toParkingSpot(entity.getParkingSpot()));
-		model.setUser(UserMapper.toUser(entity.getUser()));
-		return model.toImmutable();
+		final ParkingSpotEntity parkingSpot = entity.getParkingSpot();
+		entity.setParkingSpot(null);
+		Reservation reservation = MAPPER.map(entity, Reservation.class);
+		 reservation.setParkingSpot(ParkingSpotMapper.toParkingSpot(parkingSpot));
+		 return reservation;
 	}
 	
 	/**

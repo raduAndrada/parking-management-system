@@ -1,19 +1,26 @@
 package ro.upet.parking.system.management.model;
 
-import org.immutables.value.Value;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 
-@Value.Immutable
-public interface ParkingCreate {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class ParkingCreate {
 	
-	Parking getParking();
+	Parking parking;
 	
-	Integer getNumberOfLevels();
+	Integer numberOfLevels;
 	
-	char getParkingZoneStartingLetter();
+	char parkingZoneStartingLetter;
 	
-	char getParkingZoneEndingLetter();
+	char parkingZoneEndingLetter;
 	
-	Integer getParkingZoneSpotNumber();
+	Integer parkingZoneSpotNumber;
 
 }

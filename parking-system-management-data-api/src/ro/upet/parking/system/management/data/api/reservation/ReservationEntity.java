@@ -1,18 +1,7 @@
 package ro.upet.parking.system.management.data.api.reservation;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.Instant;
-
-import javax.annotation.Nullable;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.upet.parking.system.management.data.api.base.BaseEntity;
@@ -20,9 +9,15 @@ import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity
 import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 
-@NoArgsConstructor
-@AllArgsConstructor
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+
+
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "reservations")
 public class ReservationEntity implements Serializable{
 	/**
@@ -40,6 +35,7 @@ public class ReservationEntity implements Serializable{
 	/**
 	 *  common fields
 	 */
+	@Embedded
 	private BaseEntity base;
 	
 	/**
@@ -56,7 +52,6 @@ public class ReservationEntity implements Serializable{
 	/**
 	 *  additional info for the reservation
 	 */
-	@Nullable
 	private String notes;
 
 	/**
@@ -73,7 +68,7 @@ public class ReservationEntity implements Serializable{
 	/**
 	 * Cost of staying
 	 */
-	private BigDecimal cost;
+	private double cost;
 	
 	/**
 	 * the user
@@ -85,8 +80,18 @@ public class ReservationEntity implements Serializable{
 	/**
 	 *  parking spot
 	 */
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ParkingSpotEntity parkingSpot;
-	
-	
+
+	@Override
+	public String toString() {
+		return "ReservationEntity{" +
+				"id=" + id +
+				", startTime=" + startTime +
+				", endTime=" + endTime +
+				", reservationStatus=" + reservationStatus +
+				", cost=" + cost +
+				", user=" + user +
+				'}';
+	}
 }

@@ -23,29 +23,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.upet.parking.system.management.R;
 import ro.upet.parking.system.management.activities.common.MenuHelper;
-import ro.upet.parking.system.management.model.ImtUser;
-import ro.upet.parking.system.management.model.ImtUserCreate;
-import ro.upet.parking.system.management.model.ImtUserUpdate;
-import ro.upet.parking.system.management.model.ImtVehicle;
-import ro.upet.parking.system.management.model.MdfUserCreate;
 import ro.upet.parking.system.management.model.User;
 import ro.upet.parking.system.management.model.UserCreate;
+import ro.upet.parking.system.management.model.UserUpdate;
+import ro.upet.parking.system.management.model.Vehicle;
+import ro.upet.parking.system.management.model.UserCreate;
+import ro.upet.parking.system.management.model.User;
+import ro.upet.parking.system.management.model.UserCreate;
+import ro.upet.parking.system.management.services.RetrofitServicesInitializer;
 import ro.upet.parking.system.management.services.UserService;
 
 import static ro.upet.parking.system.management.activities.common.BaseUtils.handleNulls;
 import static ro.upet.parking.system.management.activities.common.BaseUtils.initCreditCardSpinners;
+import static ro.upet.parking.system.management.activities.common.StringConstants.BASE_URL;
 import static ro.upet.parking.system.management.activities.common.StringConstants.SHARED_PREFERENCES;
 import static ro.upet.parking.system.management.activities.common.StringConstants.USERNAME;
 import static ro.upet.parking.system.management.activities.common.StringConstants.USERS_URL;
 
 public class UserProfileActivity extends MenuHelper {
 
-
-    private  static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(USERS_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    private static final UserService service = retrofit.create(UserService.class);
+    private UserService service;
 
 
     @Override
@@ -58,7 +55,7 @@ public class UserProfileActivity extends MenuHelper {
         final SharedPreferences sharedPref = this.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         final String username= sharedPref.getString(USERNAME, "none");
 
-        final MdfUserCreate userCreate = MdfUserCreate.create();
+        final UserCreate userCreate = UserCreate.builder().build();
         final EditText passwordET = (EditText) findViewById(R.id.user_profile_password_id);
         final EditText passwordConfirmET = (EditText) findViewById(R.id.user_profile_password_confirm_id);
         final EditText emailET = (EditText) findViewById(R.id.user_profile_user_email_id);
@@ -75,9 +72,12 @@ public class UserProfileActivity extends MenuHelper {
         final Spinner creditCardExpYearSpinner = (Spinner) findViewById(R.id.user_profile_credit_card_exp_year_id);
         initCreditCardSpinners(this, userCreate, creditCardExpYearSpinner, R.array.years_array);
 
-        service.getUserByUsername(username).enqueue(new Callback<ImtUser>() {
+        RetrofitServicesInitializer retrofitServicesInitializer = new RetrofitServicesInitializer(sharedPref.getString(BASE_URL, "none"));
+        service = retrofitServicesInitializer.getUserService();
+
+        service.getUserByUsername(username).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<ImtUser> call, Response<ImtUser> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 final User user = response.body();
                 emailET.setText(handleNulls(user.getEmail(), "") );
                 phoneET.setText(handleNulls(user.getPhoneNumber(), ""));
@@ -87,7 +87,7 @@ public class UserProfileActivity extends MenuHelper {
             }
 
             @Override
-            public void onFailure(Call<ImtUser> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 //TODO handle this
             }
         });
@@ -95,7 +95,7 @@ public class UserProfileActivity extends MenuHelper {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImtUserUpdate userUpdate = ImtUserUpdate.builder()
+                UserUpdate userUpdate = UserUpdate.builder()
                         .creditCardCCV(creditCardCcvET.getText().toString())
                         .creditCardExpMonth(userCreate.getCreditCardExpMonth())
                         .creditCardExpYear(userCreate.getCreditCardExpYear())
@@ -106,14 +106,14 @@ public class UserProfileActivity extends MenuHelper {
                         .email(emailET.getText().toString())
                         .username(username)
                         .build();
-                service.updateCustomer(ImtUserUpdate.builder().from(userUpdate).build()).enqueue(new Callback<ImtUser>() {
+                service.updateCustomer(userUpdate).enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(Call<ImtUser> call, Response<ImtUser> response) {
+                    public void onResponse(Call<User> call, Response<User> response) {
                         Toast.makeText(UserProfileActivity.this, "Successfully Updated Profile", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onFailure(Call<ImtUser> call, Throwable t) {
+                    public void onFailure(Call<User> call, Throwable t) {
                         Toast.makeText(UserProfileActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
                     }
                 });

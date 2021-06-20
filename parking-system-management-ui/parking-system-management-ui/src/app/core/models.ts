@@ -114,11 +114,11 @@ export interface ParkingSpot extends ActionAudit {
   
     number: string;
   
-    isAvailable?: boolean;
+    available?: boolean;
 
-    isRentable?: boolean;
+    rentable?: boolean;
 
-    isRented?: boolean;
+    rented?: boolean;
 
 }
 

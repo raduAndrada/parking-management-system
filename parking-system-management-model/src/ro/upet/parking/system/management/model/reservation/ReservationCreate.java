@@ -1,5 +1,9 @@
 package ro.upet.parking.system.management.model.reservation;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -9,33 +13,34 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @author Andrada
  * Model for a reservation
  */
-@Value.Immutable
-@JsonSerialize(as = ImtReservationCreate.class)
-@JsonDeserialize(builder = ImtReservationCreate.Builder.class)
-public interface ReservationCreate {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ReservationCreate {
 	
 	/**
 	 * @return the username for the reservation
 	 */
-	String getUsername();
+	String username;
 	
 
 	/**
 	 * @return the name of the parking
 	 */
-	String getParkingName();
+	String parkingName;
 	
 	
 	/**
 	 * @return the start time for the reservation
 	 */
-	String getStartTime();
+	String startTime;
 	
 	
 
 	/**
 	 * @return the end time for the reservation
 	 */
-	String getEndTime();
+	String endTime;
 
 }

@@ -13,12 +13,12 @@ public class PasswordEncryptionConverter implements AttributeConverter<String, b
 	
 
 	@Override
-	public byte[] convertToDatabaseColumn(final String attribute) {
-		return  PasswordEncryptionProvider.getEncryptedPassword(attribute, SaltGenerator.generateSalt());
+	public  byte[] convertToDatabaseColumn(final String attribute) {
+		return PasswordEncryptionProvider.getEncryptedPassword(attribute, SaltGenerator.generateSalt());
 	}
 
 	@Override
-	public String convertToEntityAttribute(byte[] dbData) {
+	public String convertToEntityAttribute( byte[] dbData) {
 		return new String(dbData);
 	}
 

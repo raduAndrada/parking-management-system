@@ -1,6 +1,6 @@
 package ro.upet.parking.system.management.business.api.reservation;
 
-import ro.upet.parking.system.management.data.api.reservation.ReservationEntity;
+import java.time.Instant;
 
 /**
  * @author Andrada
@@ -12,5 +12,5 @@ public interface ReservationValidator {
 	 * @param entity the reservation to be checked 
 	 * @return true if the reservation can be saved, false otherwise
 	 */
-	boolean validate (final ReservationEntity entity) ;
+	boolean validate (final Long parkingSpotId, final Instant startTime, final Instant endTime) ;
 }

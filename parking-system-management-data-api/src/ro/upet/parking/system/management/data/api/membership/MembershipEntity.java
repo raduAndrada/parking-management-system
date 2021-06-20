@@ -4,11 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.annotation.Nullable;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,11 +16,12 @@ import ro.upet.parking.system.management.data.api.user.UserEntity;
 import ro.upet.parking.system.management.model.base.MembershipType;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+
 @Entity(name = "memberships")
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MembershipEntity implements Serializable{
 	
 	/**
@@ -43,6 +40,7 @@ public class MembershipEntity implements Serializable{
 	/**
 	 * common columns for all entities 
 	 */
+	@Embedded
 	public BaseEntity base;
 	
 	/**
@@ -81,8 +79,5 @@ public class MembershipEntity implements Serializable{
 	 *  the cost of a membership
 	 */
 	private BigDecimal cost;
-	
-	
 
-	
 }

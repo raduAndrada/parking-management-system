@@ -10,15 +10,18 @@ import com.google.common.base.Splitter;
 
 import java.util.Objects;
 
+import lombok.experimental.UtilityClass;
 import ro.upet.parking.system.management.R;
-import ro.upet.parking.system.management.model.MdfUserCreate;
+import ro.upet.parking.system.management.model.UserCreate;
 
 /**
  * @author Andrada
  * Utility class for Strings passed to the Android client
  */
+@UtilityClass
 public class BaseUtils {
 
+    private static final String HH_MM_REGEX = "^(\\d{2}:\\d{2})$";
     /**
      *
      * @param year of the instant
@@ -80,7 +83,7 @@ public class BaseUtils {
      * @param spinner the element containing the details about the user's credit card
      * @param arrayId the array used as a spinner
      */
-    public static void initCreditCardSpinners(Context context, final MdfUserCreate userCreate, final Spinner spinner, final int arrayId)
+    public static void initCreditCardSpinners(Context context, final UserCreate userCreate, final Spinner spinner, final int arrayId)
     {
         final ArrayAdapter<CharSequence> monthsAdapter = ArrayAdapter.createFromResource(context, arrayId , android.R.layout.simple_spinner_item);
         monthsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -99,5 +102,9 @@ public class BaseUtils {
             }
         });
 
+    }
+
+    public static boolean isValidHourAndMinute(final String time){
+        return time.matches(HH_MM_REGEX);
     }
 }

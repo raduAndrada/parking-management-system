@@ -1,14 +1,11 @@
 package ro.upet.parking.system.management.business.impl.vehicle;
 
+import org.modelmapper.ModelMapper;
+import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
+import ro.upet.parking.system.management.model.vehicle.Vehicle;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import ro.upet.parking.system.management.business.impl.base.GenericMapper;
-import ro.upet.parking.system.management.business.impl.user.UserMapper;
-import ro.upet.parking.system.management.data.api.vehicle.VehicleEntity;
-import ro.upet.parking.system.management.model.vehicle.ImtVehicle;
-import ro.upet.parking.system.management.model.vehicle.MdfVehicle;
-import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
 /**
  * 
@@ -16,17 +13,14 @@ import ro.upet.parking.system.management.model.vehicle.Vehicle;
  */
 public class VehicleMapper {
 
-	private static final GenericMapper<VehicleEntity, Vehicle> MAPPER = new GenericMapper();
+	private static final ModelMapper MAPPER = new ModelMapper();
 
 	/**
 	 * @param model for the vehicle
 	 * @return the corresponding entity
 	 */
 	public static VehicleEntity toVehicleEntity(final Vehicle model) {
-		final VehicleEntity entity = new VehicleEntity();
-		MAPPER.mapToEntity(model, entity);
-		entity.setUser(UserMapper.toUserEntity(model.getUser()));
-		return entity;
+		return MAPPER.map(model, VehicleEntity.class);
 	}
 
 	/**
@@ -34,10 +28,7 @@ public class VehicleMapper {
 	 * @return the model for the entity
 	 */
 	public static Vehicle toVehicle(final VehicleEntity entity) {
-		MdfVehicle model = MdfVehicle.create();
-		MAPPER.mapToModel(entity, model);
-		model.setUser(UserMapper.toUser(entity.getUser()));
-		return model.toImmutable();
+		return MAPPER.map(entity, Vehicle.class);
 	}
 
 	/**
