@@ -12,5 +12,7 @@ public interface UserValidator {
 	 * @param user the user to be validated
 	 * @return true if the user is valid, false otherwise - a valid user requires the username not to be taken as well as the email address
 	 */
-	boolean validate(final User user);
+	void validateUser(final User user);
+
+	void validateEmail(final String email);
 }

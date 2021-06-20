@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.model.payment.options;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import ro.upet.parking.system.management.model.base.BaseModel;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class PaymentOptions extends BaseModel{
 	
 	/**

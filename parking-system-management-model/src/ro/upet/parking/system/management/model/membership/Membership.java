@@ -1,9 +1,6 @@
 package ro.upet.parking.system.management.model.membership;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.validation.annotation.Validated;
 import ro.upet.parking.system.management.model.base.BaseModel;
@@ -11,7 +8,6 @@ import ro.upet.parking.system.management.model.base.MembershipType;
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpot;
 import ro.upet.parking.system.management.model.user.User;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,6 +23,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @Validated
+@EqualsAndHashCode(callSuper = true)
 public class Membership extends BaseModel implements Serializable  {
 	
 	/**

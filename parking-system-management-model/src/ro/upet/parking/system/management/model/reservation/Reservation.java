@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Validated
+@EqualsAndHashCode(callSuper = true)
 public class Reservation extends BaseModel{
 
 	/**

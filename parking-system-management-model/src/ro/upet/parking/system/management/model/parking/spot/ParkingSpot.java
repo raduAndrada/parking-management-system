@@ -2,6 +2,7 @@ package ro.upet.parking.system.management.model.parking.spot;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import ro.upet.parking.system.management.model.base.BaseModel;
@@ -14,6 +15,7 @@ import ro.upet.parking.system.management.model.base.BaseModel;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class ParkingSpot  extends BaseModel{
 	
 	/**

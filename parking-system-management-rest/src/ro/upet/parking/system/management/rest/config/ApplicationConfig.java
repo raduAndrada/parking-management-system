@@ -1,32 +1,6 @@
 package ro.upet.parking.system.management.rest.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import ro.upet.parking.system.management.business.api.membership.MembershipService;
-import ro.upet.parking.system.management.business.api.parking.ParkingService;
-import ro.upet.parking.system.management.business.api.parking.level.ParkingLevelService;
-import ro.upet.parking.system.management.business.api.parking.spot.ParkingSpotService;
-import ro.upet.parking.system.management.business.api.parking.zone.ParkingZoneService;
-import ro.upet.parking.system.management.business.api.payment.options.PaymentOptionsService;
-import ro.upet.parking.system.management.business.api.reservation.ReservationService;
-import ro.upet.parking.system.management.business.api.reservation.ReservationValidator;
-import ro.upet.parking.system.management.business.api.user.UserService;
-import ro.upet.parking.system.management.business.api.user.UserValidator;
-import ro.upet.parking.system.management.business.api.vehicle.VehicleService;
-import ro.upet.parking.system.management.business.api.vehicle.VehicleValidator;
-import ro.upet.parking.system.management.business.impl.membership.MembershipServiceImpl;
-import ro.upet.parking.system.management.business.impl.parking.ParkingServiceImpl;
-import ro.upet.parking.system.management.business.impl.parking.level.ParkingLevelServiceImpl;
-import ro.upet.parking.system.management.business.impl.parking.spot.ParkingSpotServiceImpl;
-import ro.upet.parking.system.management.business.impl.parking.zone.ParkingZoneServiceImpl;
-import ro.upet.parking.system.management.business.impl.payment.options.PaymentOptionsServiceImpl;
-import ro.upet.parking.system.management.business.impl.reservation.ReservationServiceImpl;
-import ro.upet.parking.system.management.business.impl.reservation.ReservationValidatorImpl;
-import ro.upet.parking.system.management.business.impl.user.UserServiceImpl;
-import ro.upet.parking.system.management.business.impl.user.UserValidatorImpl;
-import ro.upet.parking.system.management.business.impl.vehicle.VehicleServiceImpl;
-import ro.upet.parking.system.management.business.impl.vehicle.VehicleValidatorImpl;
 
 @Configuration
 public class ApplicationConfig {
