@@ -24,7 +24,7 @@ public class VehicleValidatorImpl implements VehicleValidator{
 	 */
 	@Override
 	public void validate(final String licencePlate) {
-		if (vehicleRepo.findOptionalByLicencePlate(licencePlate).isPresent() || validateLicencePlateNumber(licencePlate)) {
+		if (vehicleRepo.findOptionalByLicencePlate(licencePlate).isPresent() || !validateLicencePlateNumber(licencePlate)) {
 			log.error("Operation cannot be performed the {} is already taken or is invalid", licencePlate);
 			throw new BusinessException("Invalid LicencePlateNumber");
 		}

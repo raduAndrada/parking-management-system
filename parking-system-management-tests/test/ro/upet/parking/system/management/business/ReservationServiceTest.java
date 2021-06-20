@@ -33,7 +33,7 @@ import static ro.upet.parking.system.management.util.TestDataBuilder.*;
 @Profile("inttest")
 public class ReservationServiceTest {
     
-	private static final String START_TIME_1 = "2021-04-03T10:15:30.00Z";;
+	private static final String START_TIME_1 = "2021-04-03T10:15:30.00Z";
 	private static final String END_TIME_1 = "2021-04-03T11:15:30.00Z";
 
 	private static final Instant START_TIME_INSTANT = Instant.parse(START_TIME_1);

@@ -1,0 +1,13 @@
+{
+  "parking": {
+    "name": "disertatie_2021",
+    "location": "Petrosani, Hundedoara",
+    "opensAt": "00:00",
+    "closesAt": "23:59",
+    "pricePerHour": "10"
+  },
+  "numberOfLevels": "3",
+  "parkingZoneStartingLetter": "a",
+  "parkingZoneEndingLetter": "c",
+  "parkingZoneSpotNumber": "5"
+}

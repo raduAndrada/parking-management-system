@@ -1,0 +1,20 @@
+{
+  "vehicle": {
+    "user": {
+      "name": "Irina Andrada RADU",
+      "username": "andrada",
+      "password": "andrada",
+      "email": "andrada@test.com",
+      "phoneNumber": "0000000000",
+      "userType": "CUSTOMER",
+      "birthday": "1995-09-27"
+    },
+    "name": "test",
+    "licencePlate": "HD12YYF",
+    "size": "MEDIUM"
+  },
+  "creditCardNumber" : "irelevant",
+  "creditCardExpMonth": "01",
+  "creditCardExpMonth": "2024",
+  "creditCardCCV": "123"
+}
