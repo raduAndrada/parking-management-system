@@ -3,6 +3,7 @@ package ro.upet.parking.system.management.model;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+@Builder
 public class ReservationNext {
 
 	/**
@@ -50,4 +51,10 @@ public class ReservationNext {
 	 * @return  the status of the reservation
 	 */
 	ReservationStatus reservationStatus;
+
+	String parkingSpot;
+
+	String parkingName;
+
+	String parkingLevel;
 }

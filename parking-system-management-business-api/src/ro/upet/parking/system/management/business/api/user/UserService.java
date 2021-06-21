@@ -15,14 +15,8 @@ public interface UserService extends BaseService<User> {
      * @param password the password for the user
      * @return the user if it exists, empty if not
      */
-    User loginWithUsernameAndPassword(final String username, final String password);
+    User loginWithUsernameOrEmailAndPassword(final String username, final String email, final String password);
 
-    /**
-     * @param email    the email of the user
-     * @param password the password for the user
-     * @return the user if it exists, empty if not
-     */
-    User loginWithEmailAndPassword(final String email, final String password);
 
     /**
      * @param userUpdate the details of the userUpdate

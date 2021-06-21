@@ -42,6 +42,8 @@ public class MainActivity extends MenuHelper {
 
     private ReservationService service ;
 
+    private static final String PARKING_DETAILS = "Parking: %s, Sport: %s, Level: %s";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +59,16 @@ public class MainActivity extends MenuHelper {
         RetrofitServicesInitializer retrofitServicesInitializer = new RetrofitServicesInitializer(sharedPref.getString(BASE_URL, "none"));
         service = retrofitServicesInitializer.getReservationService();
 
-        final TextView timeTextView = (TextView) findViewById(R.id.main_time_indicator_id);
-        final TextView daysTextView = (TextView) findViewById(R.id.main_days_indicator_counter_id);
-        final TextView hoursTextView = (TextView) findViewById(R.id.main_hours_indicator_counter_id);
-        final TextView minutesTextView = (TextView) findViewById(R.id.main_minutes_indicator_counter_id);
+        final TextView timeTextView = findViewById(R.id.main_time_indicator_id);
+        final TextView daysTextView = findViewById(R.id.main_days_indicator_counter_id);
+        final TextView hoursTextView =  findViewById(R.id.main_hours_indicator_counter_id);
+        final TextView minutesTextView = findViewById(R.id.main_minutes_indicator_counter_id);
+        final TextView parkingDetails = findViewById(R.id.main_parking_details_id);
+        parkingDetails.setVisibility(View.INVISIBLE);
 
-        final BootstrapButton claimBtn = (BootstrapButton) findViewById(R.id.main_claim_btn_id);
-        final BootstrapButton removeBtn = (BootstrapButton) findViewById(R.id.main_remove_btn_id);
-        final BootstrapButton releaseBtn = (BootstrapButton) findViewById(R.id.main_release_btn_id);
+        final BootstrapButton claimBtn = findViewById(R.id.main_claim_btn_id);
+        final BootstrapButton removeBtn = findViewById(R.id.main_remove_btn_id);
+        final BootstrapButton releaseBtn = findViewById(R.id.main_release_btn_id);
 
         releaseBtn.setVisibility(View.INVISIBLE);
 
@@ -73,7 +77,8 @@ public class MainActivity extends MenuHelper {
             public void onResponse(Call<ReservationNext> call, Response<ReservationNext> response) {
                 final ReservationNext rn = response.body();
                 if (Objects.nonNull(rn)) {
-
+                    parkingDetails.setText(String.format(PARKING_DETAILS, rn.getParkingName(), rn.getParkingSpot(), rn.getParkingLevel()));
+                    parkingDetails.setVisibility(View.VISIBLE);
                     daysTextView.setText(rn.getDays().toString());
                     hoursTextView.setText(rn.getHours().toString());
                     minutesTextView.setText(rn.getMinutes().toString());
@@ -106,45 +111,37 @@ public class MainActivity extends MenuHelper {
                         }
                     });
 
-                    removeBtn.setOnClickListener(new View.OnClickListener() {
+                    removeBtn.setOnClickListener(view -> service.deleteReservationById(rn.getReservationId()).enqueue(new Callback<Reservation>() {
                         @Override
-                        public void onClick(View view) {
-                            service.deleteReservationById(rn.getReservationId()).enqueue(new Callback<Reservation>() {
-                                @Override
-                                public void onResponse(Call<Reservation> call, Response<Reservation> response) {
-                                    Toast.makeText(getApplicationContext(), "Successfully removed Reservation", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public void onFailure(Call<Reservation> call, Throwable t) {
-
-                                }
-                            });
+                        public void onResponse(Call<Reservation> call1, Response<Reservation> response1) {
+                            parkingDetails.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(), "Successfully removed Reservation", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
+                            startActivity(intent);
                         }
-                    });
-                    releaseBtn.setOnClickListener(new View.OnClickListener() {
+
                         @Override
-                        public void onClick(View view) {
-                            service.completeReservation(rn.getReservationId()).enqueue(new Callback<Reservation>() {
-                                @Override
-                                public void onResponse(Call<Reservation> call, Response<Reservation> response) {
-                                    Toast.makeText(getApplicationContext(), "Successfully claimed Reservation", Toast.LENGTH_LONG).show();
-                                    releaseBtn.setEnabled(false);
-                                    releaseBtn.setText(ReservationStatus.COMPLETED.toString());
-                                    removeBtn.setEnabled(false);
-                                    Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
-                                    startActivity(intent);
-                                }
+                        public void onFailure(Call<Reservation> call1, Throwable t) {
 
-                                @Override
-                                public void onFailure(Call<Reservation> call, Throwable t) {
-
-                                }
-                            });
                         }
-                    });
+                    }));
+                    releaseBtn.setOnClickListener(view -> service.completeReservation(rn.getReservationId()).enqueue(new Callback<Reservation>() {
+                        @Override
+                        public void onResponse(Call<Reservation> call12, Response<Reservation> response12) {
+                            parkingDetails.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(), "Successfully claimed Reservation", Toast.LENGTH_LONG).show();
+                            releaseBtn.setEnabled(false);
+                            releaseBtn.setText(ReservationStatus.COMPLETED.toString());
+                            removeBtn.setEnabled(false);
+                            Intent intent = new Intent(MainActivity.this, ReservationHistoryActivity.class);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Reservation> call12, Throwable t) {
+
+                        }
+                    }));
 
                     new CountDownTimer(computeTimerTask(rn.getDays(), rn.getHours(), rn.getMinutes()), 1000) {
 
@@ -232,6 +229,7 @@ public class MainActivity extends MenuHelper {
                     minutesTextView.setVisibility(View.INVISIBLE);
                     claimBtn.setVisibility(View.INVISIBLE);
                     removeBtn.setVisibility(View.INVISIBLE);
+                    parkingDetails.setVisibility(View.INVISIBLE);
                 }
             }
 

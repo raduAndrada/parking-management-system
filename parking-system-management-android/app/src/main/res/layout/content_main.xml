@@ -90,6 +90,18 @@
         android:textColor="@color/bootstrap_brand_danger"
         />
 
+    <TextView
+        android:id="@+id/main_parking_details_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/parking_details"
+        android:layout_below="@id/main_minutes_indicator_counter_id"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:ems="10"
+        android:layout_marginTop="25dp"
+        />
+
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

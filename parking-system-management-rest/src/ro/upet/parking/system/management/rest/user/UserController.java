@@ -15,6 +15,9 @@ import ro.upet.parking.system.management.rest.base.BaseController;
 import ro.upet.parking.system.management.rest.stripe.UserCreateStripeService;
 
 import javax.inject.Inject;
+import java.util.Objects;
+
+import static org.springframework.http.ResponseEntity.notFound;
 
 /**
  * @author Andrada Rest controller for the users
@@ -52,7 +55,7 @@ public class UserController extends BaseController<User> {
         final User user = userService.getByUsername(username);
         if (user == null) {
             log.info(" with id: {} does not exist", username);
-            return ResponseEntity.notFound().build();
+            return notFound().build();
         } else {
             return ResponseEntity.ok(user);
         }
@@ -63,20 +66,15 @@ public class UserController extends BaseController<User> {
      * @return the created entity
      */
     @PostMapping(LOGIN_PATH)
-    public ResponseEntity<User> post(@RequestBody final User user) {
-        log.info("REST request to login : {}", user.toString());
-        User validUser;
-        try {
-            validUser = userService.loginWithUsernameAndPassword(user.getUsername(), user.getPassword());
-            if (validUser == null) {
-                validUser = userService.loginWithEmailAndPassword(user.getUsername(), user.getPassword());
-            }
-        } catch (final Exception e) {
-            log.info("Something went wrong logging in the user : {}", user, e);
-            return null;
-        }
+    public ResponseEntity<User> post(@RequestBody User user) {
+        log.info("REST request to login : {}", user);
+        user = userService.loginWithUsernameOrEmailAndPassword(user.getUsername(), user.getEmail(), user.getPassword());
         //	SecurityContextHolder.getContext().setAuthentication(new AuthenticationImpl(validUser));
-        return ResponseEntity.ok(validUser);
+        if (Objects.nonNull(user)) {
+            return ResponseEntity.ok(user);
+        }
+        log.info("Invalid login");
+        return notFound().build();
     }
 
     /**

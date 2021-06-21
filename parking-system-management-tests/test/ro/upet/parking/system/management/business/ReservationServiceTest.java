@@ -64,7 +64,8 @@ public class ReservationServiceTest {
 	@Test
 	public void testGetById_success() {
 		val entity = buildReservationEntity(START_TIME_1, END_TIME_1, ReservationStatus.PENDING);
-		when(reservationRepo.getOne(any(Long.class))).thenReturn(entity);
+
+		when(reservationRepo.getOne(1L)).thenReturn(entity);
 		val actual = reservationService.getById(1L);
 		val expected = ReservationMapper.toReservation(entity);
 		assertThat(actual).isEqualTo(expected);
@@ -87,7 +88,7 @@ public class ReservationServiceTest {
 
 		verify(parkingSpotRepo, times(1)).findAllAvailableByParkingName("Parking1");
 		verify(userRepo, times(1)).findByUsername("Andrada");
-		verify(reservationRepo, times(2)).save(any());
+		verify(reservationRepo, times(1)).save(any());
 	}
 
 
@@ -126,6 +127,5 @@ public class ReservationServiceTest {
 				.parkingName("Parking1")
 				.build();
 	}
-    
-   
+
 }

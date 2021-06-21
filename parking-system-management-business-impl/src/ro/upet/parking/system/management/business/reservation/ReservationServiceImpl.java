@@ -18,7 +18,10 @@ import ro.upet.parking.system.management.model.reservation.ReservationCreate;
 import ro.upet.parking.system.management.model.reservation.ReservationNext;
 
 import javax.transaction.Transactional;
-import java.time.*;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
@@ -297,7 +300,6 @@ public class ReservationServiceImpl implements ReservationService {
         final Integer reservationDurationHours = Math.abs(endTimeLDT.getHour() - startTimeLDT.getHour());
         final Integer reservationDurationMinutes = Math.abs(endTimeLDT.getMinute() - startTimeLDT.getMinute());
 
-
         return ReservationNext.builder()
                 .days(daysTillReservation)
                 .hours(correctNegativeTimes(hoursTillReservation, 24))
@@ -306,6 +308,9 @@ public class ReservationServiceImpl implements ReservationService {
                 .durationHours(reservationDurationHours)
                 .durationMinutes(reservationDurationMinutes)
                 .reservationStatus(entity.getReservationStatus())
+                .parkingLevel( entity.getParkingSpot().getParkingZone().getParkingLevel().getNumber())
+                .parkingName( entity.getParkingSpot().getParkingZone().getParkingLevel().getParking().getName())
+                .parkingSpot(entity.getParkingSpot().getNumber())
                 .build();
     }
 

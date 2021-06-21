@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class UserRepositoryTest extends DataTests {
 
@@ -30,29 +32,33 @@ public class UserRepositoryTest extends DataTests {
     private static final String USER_PHONENUMBER2 = "0123456789";
 
 
-    private static final UserEntity USER_1 = new UserEntity();
-    private static final UserEntity USER_2 = new UserEntity();
+    private static UserEntity USER_1 = new UserEntity();
+    private static UserEntity USER_2 = new UserEntity();
 
     @Inject
     private ro.upet.parking.system.management.data.impl.user.UserRepository userRepo;
 
     @Before
-    public void init() {
-        USER_1.setUsername(USER_USERNAME1);
-        USER_1.setEmail(USER_EMAIL1);
-        USER_1.setPassword(USER_PASSWORD1);
-        USER_1.setAddress(USER_ADDRESS1);
-        USER_1.setPhoneNumber(USER_PHONENUMBER1);
+    public void setUp() {
+        USER_1 = UserEntity.builder()
+                .username(USER_USERNAME1)
+                .email(USER_EMAIL1)
+                .password(USER_PASSWORD1)
+                .address(USER_ADDRESS1)
+                .phoneNumber(USER_PHONENUMBER1)
+                .build();
 
-        USER_2.setUsername(USER_USERNAME2);
-        USER_2.setEmail(USER_EMAIL2);
-        USER_2.setPassword(USER_PASSWORD2);
-        USER_2.setAddress(USER_ADDRESS2);
-        USER_2.setPhoneNumber(USER_PHONENUMBER2);
+        USER_2 = UserEntity.builder()
+                .username(USER_USERNAME2)
+                .email(USER_EMAIL2)
+                .password(USER_PASSWORD2)
+                .address(USER_ADDRESS2)
+                .phoneNumber(USER_PHONENUMBER2)
+                .build();
     }
 
     @Test
-    public void addUser_test_success() {
+    public void testTestAddUser_success() {
         val testEntity = userRepo.save(USER_1);
         val expectedEntity = userRepo.findById(testEntity.getId());
 
@@ -62,16 +68,16 @@ public class UserRepositoryTest extends DataTests {
     }
 
     @Test
-    public void deleteUser_test_success() {
+    public void testDeleteUser_success() {
         final UserEntity testEntity = userRepo.save(USER_1);
         userRepo.delete(testEntity);
 
         val expectedEntity = userRepo.findById(testEntity.getId());
-        assertThat(expectedEntity.isEmpty());
+        assertThat(expectedEntity).isEmpty();
     }
 
     @Test
-    public void findUserByUsername_test_success() {
+    public void testFindUserByUsername_success() {
         val testEntity1 = userRepo.save(USER_1);
         userRepo.save(USER_2);
 
@@ -82,32 +88,23 @@ public class UserRepositoryTest extends DataTests {
     }
 
     @Test
-    public void findUserByEmail_test_success() {
+    public void testFindUserByEmail_success() {
         val testEntity1 = userRepo.save(USER_1);
         val expectedEntity1 = userRepo.findByEmail(USER_EMAIL1);
         assertThat(expectedEntity1.isPresent());
         assertThat(expectedEntity1.get().getId()).isEqualTo(testEntity1.getId());
     }
 
-
     @Test
-    public void findUserByUsernameAndPassword_test_success() {
-        val testEntity1 = userRepo.save(USER_1);
-
-        val expectedEntity1 = userRepo.findByUsernameAndPassword(USER_USERNAME1, USER_ENCRYPTED_PASSWORD1);
-        assertThat(expectedEntity1.isPresent());
+    public void testFindUserByPasswordAndUsernameOrEmail_success() {
+        userRepo.save(USER_1);
+        assertTrue(userRepo.findByUsernameOrEmailAndPassword(USER_USERNAME1, "unknown", USER_PASSWORD1).isPresent());
+        assertTrue(userRepo.findByUsernameOrEmailAndPassword("unknown", USER_EMAIL1, USER_PASSWORD1).isPresent());
+        assertFalse(userRepo.findByUsernameOrEmailAndPassword("unknown", "unknown", USER_PASSWORD1).isPresent());
     }
 
     @Test
-    public void findUserByEmailAndPassword_test_success() {
-        val testEntity1 = userRepo.save(USER_1);
-        val expectedEntity1 = userRepo.findByEmailAndPassword(USER_EMAIL1, USER_ENCRYPTED_PASSWORD1);
-
-        assertThat(expectedEntity1.isPresent());
-    }
-
-    @Test
-    public void findAllUsers_test_success() {
+    public void testFindAllUsers_success() {
         userRepo.save(USER_1);
         userRepo.save(USER_2);
         final List<UserEntity> expectedList = userRepo.findAll();
@@ -117,7 +114,7 @@ public class UserRepositoryTest extends DataTests {
 
 
     @Test
-    public void updateUser_test_success() {
+    public void testUpdateUser_success() {
         val testEntity = userRepo.save(USER_1);
         testEntity.setPassword(USER_PASSWORD2);
         userRepo.save(testEntity);

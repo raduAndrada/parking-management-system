@@ -41,6 +41,7 @@ public class UserServiceTest {
 	private static final String PHONE_NUMBER_1 = "0123456789";
 	private static final String PASSWORD_1 = "password1";
 	private static final String PASSWORD_2 = "password2";
+	private static final String UNKNOWN = "uknown";
 
 	private UserService userService;
 
@@ -195,45 +196,44 @@ public class UserServiceTest {
 	@Test
 	public void testLoginWithUsernameAndPassword_success(){
 		val entity = buildUserEntity(USERNAME_1, EMAIL_2);
-		when(userRepo.findByUsernameAndPassword(USERNAME_1, PASSWORD_1)).thenReturn(Optional.ofNullable(entity));
+		when(userRepo.findByUsernameOrEmailAndPassword(USERNAME_1, UNKNOWN, PASSWORD_1)).thenReturn(Optional.ofNullable(entity));
 
-		val actual = userService.loginWithUsernameAndPassword(USERNAME_1, PASSWORD_1);
+		val actual = userService.loginWithUsernameOrEmailAndPassword(USERNAME_1, UNKNOWN, PASSWORD_1);
 		val expected = UserMapper.toUser(entity);
 
 		assertThat(actual).isEqualTo(expected);
-		verify(userRepo, times(1)).findByUsernameAndPassword(USERNAME_1, PASSWORD_1);
+		verify(userRepo, times(1)).findByUsernameOrEmailAndPassword(USERNAME_1, UNKNOWN, PASSWORD_1);
 	}
 
 	@Test
 	public void testLoginWithUsernameAndPassword_fail(){
-		val entity = buildUserEntity(USERNAME_1, EMAIL_2);
-		when(userRepo.findByUsernameAndPassword(USERNAME_1, PASSWORD_1)).thenReturn(Optional.empty());
+		when(userRepo.findByUsernameOrEmailAndPassword(USERNAME_1, UNKNOWN, PASSWORD_1)).thenReturn(Optional.empty());
 
-		val actual = userService.loginWithUsernameAndPassword(USERNAME_1, PASSWORD_1);
+		val actual = userService.loginWithUsernameOrEmailAndPassword(USERNAME_1, UNKNOWN, PASSWORD_1);
 		assertThat(actual).isNull();
-		verify(userRepo, times(1)).findByUsernameAndPassword(USERNAME_1, PASSWORD_1);
+		verify(userRepo, times(1)).findByUsernameOrEmailAndPassword(USERNAME_1, UNKNOWN, PASSWORD_1);
 	}
 
 	@Test
 	public void testLoginWithEmailAndPassword_success(){
-		val entity = buildUserEntity(USERNAME_1, EMAIL_2);
-		when(userRepo.findByEmailAndPassword(EMAIL_2, PASSWORD_1)).thenReturn(Optional.ofNullable(entity));
+		val entity = buildUserEntity(UNKNOWN, EMAIL_2);
+		when(userRepo.findByUsernameOrEmailAndPassword(UNKNOWN, EMAIL_2, PASSWORD_1)).thenReturn(Optional.ofNullable(entity));
 
-		val actual = userService.loginWithEmailAndPassword(EMAIL_2, PASSWORD_1);
+		val actual = userService.loginWithUsernameOrEmailAndPassword(UNKNOWN, EMAIL_2, PASSWORD_1);
 		val expected = UserMapper.toUser(entity);
 
 		assertThat(actual).isEqualTo(expected);
-		verify(userRepo, times(1)).findByEmailAndPassword(EMAIL_2, PASSWORD_1);
+		verify(userRepo, times(1)).findByUsernameOrEmailAndPassword(UNKNOWN, EMAIL_2, PASSWORD_1);
 	}
 
 
 	@Test
 	public void testLoginWithEmailAndPassword_fail(){
-		when(userRepo.findByEmailAndPassword(EMAIL_1, PASSWORD_1)).thenReturn(Optional.empty());
+		when(userRepo.findByUsernameOrEmailAndPassword(UNKNOWN, EMAIL_1, PASSWORD_1)).thenReturn(Optional.empty());
 
-		val actual = userService.loginWithEmailAndPassword(EMAIL_1, PASSWORD_1);
+		val actual = userService.loginWithUsernameOrEmailAndPassword(UNKNOWN, EMAIL_1, PASSWORD_1);
 		assertThat(actual).isNull();
-		verify(userRepo, times(1)).findByEmailAndPassword(EMAIL_1, PASSWORD_1);
+		verify(userRepo, times(1)).findByUsernameOrEmailAndPassword(UNKNOWN, EMAIL_1, PASSWORD_1);
 	}
 
 

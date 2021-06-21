@@ -4,11 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.immutables.value.Value;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 
 @Data
@@ -55,4 +50,10 @@ public class ReservationNext {
 	 * @return  the status of the reservation
 	 */
 	ReservationStatus reservationStatus;
+
+	String parkingSpot;
+
+	String parkingName;
+
+	String parkingLevel;
 }

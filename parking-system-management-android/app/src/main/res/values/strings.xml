@@ -80,4 +80,5 @@
     <string name="create_reservations">Create reservation</string>
     <string name="invalid_date_format">Hours must be hh:mm format</string>
     <string name="ip_address">http://192.168.0.94:8000/</string>
+    <string name="parking_details">Parking: Test Spot: A0 Level: 0</string>
 </resources>

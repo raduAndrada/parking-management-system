@@ -36,6 +36,7 @@ public class UserControllerTest {
     private static final String LOGIN_URI = USERS_URI + "/login";
     private static final String CUSTOMER_CREATE_URI = USERS_URI + "/customer-create";
     private static final String CUSTOMER_UPDATE_URI = USERS_URI + "/customer-update";
+    private static final String UNKNOWN = "uknown";
 
     private static String USERNAME_1 = "Andrada";
     private static String EMAIL_1 = "email1@test.com";
@@ -68,7 +69,7 @@ public class UserControllerTest {
     @Test
     public void testLoginWithUsername_success() throws Exception {
         final User user = buildUser(USERNAME_1, EMAIL_1);
-        when(userService.loginWithUsernameAndPassword(USERNAME_1, PASSWORD_1)).thenReturn(user);
+        when(userService.loginWithUsernameOrEmailAndPassword(USERNAME_1, UNKNOWN, PASSWORD_1)).thenReturn(user);
 
         mockMvc.perform(post(LOGIN_URI)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -80,14 +81,14 @@ public class UserControllerTest {
 
     @Test
     public void testLoginWithEmail_success() throws Exception {
-        final User user = buildUser(USERNAME_1, EMAIL_1);
-        when(userService.loginWithEmailAndPassword(EMAIL_1, PASSWORD_1)).thenReturn(user);
+        final User user = buildUser(UNKNOWN, EMAIL_1);
+        when(userService.loginWithUsernameOrEmailAndPassword(UNKNOWN, EMAIL_1, PASSWORD_1)).thenReturn(user);
 
         mockMvc.perform(post(LOGIN_URI)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(user)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(USERNAME_1))
+                .andExpect(jsonPath("$.name").value(NAME_1))
                 .andExpect(jsonPath("$.email").value(EMAIL_1));
     }
 

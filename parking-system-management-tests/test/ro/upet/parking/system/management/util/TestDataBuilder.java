@@ -17,6 +17,7 @@ import ro.upet.parking.system.management.model.base.UserType;
 import ro.upet.parking.system.management.model.parking.Parking;
 import ro.upet.parking.system.management.model.parking.ParkingCreate;
 import ro.upet.parking.system.management.model.reservation.Reservation;
+import ro.upet.parking.system.management.model.reservation.ReservationNext;
 import ro.upet.parking.system.management.model.user.User;
 import ro.upet.parking.system.management.model.vehicle.Vehicle;
 
@@ -220,4 +221,15 @@ public class TestDataBuilder {
                 .build();
     }
 
+    public static ReservationNext buildReservationNext(){
+        return ReservationNext.builder()
+                .days(0)
+                .hours(1)
+                .minutes(30)
+                .durationHours(1)
+                .durationMinutes(30)
+                .build();
+    }
 }
+
+

@@ -13,7 +13,6 @@ import org.testcontainers.shaded.com.google.common.collect.ImmutableList;
 import ro.upet.parking.system.management.business.api.reservation.ReservationService;
 import ro.upet.parking.system.management.model.base.ReservationStatus;
 import ro.upet.parking.system.management.model.reservation.ReservationCreate;
-import ro.upet.parking.system.management.model.reservation.ReservationNext;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -22,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ro.upet.parking.system.management.rest.RestUtil.asJsonString;
 import static ro.upet.parking.system.management.util.TestDataBuilder.buildReservation;
+import static ro.upet.parking.system.management.util.TestDataBuilder.buildReservationNext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,7 +36,8 @@ public class ReservationControllerTest {
     private static final String RESERVATION_COMPLETE_URI = RESERVATION_URI + "/complete/{reservationId}";
 
     private static String USERNAME_1 = "Andrada";
-    private static final String START_TIME_1 = "2021-04-03T10:15:30.00Z";;
+    private static final String START_TIME_1 = "2021-04-03T10:15:30.00Z";
+    ;
     private static final String END_TIME_1 = "2021-04-03T11:15:30.00Z";
 
 
@@ -67,7 +68,7 @@ public class ReservationControllerTest {
     public void testCreateReservation_success() throws Exception {
         final ReservationCreate reservationCreate = buildReservationCreate();
         when(reservationService.createReservation(any(ReservationCreate.class)))
-                    .thenReturn(buildReservation(START_TIME_1, END_TIME_1, ReservationStatus.PENDING));
+                .thenReturn(buildReservation(START_TIME_1, END_TIME_1, ReservationStatus.PENDING));
 
         mockMvc.perform(post(RESERVATION_CREATE_URI)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -89,7 +90,6 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$.durationHours").value("1"))
                 .andExpect(jsonPath("$.durationMinutes").value("30"));
     }
-
 
 
     @Test
@@ -120,8 +120,7 @@ public class ReservationControllerTest {
     }
 
 
-
-    private static ReservationCreate buildReservationCreate(){
+    private static ReservationCreate buildReservationCreate() {
         return ReservationCreate.builder()
                 .username("Andrada")
                 .startTime(START_TIME_1)
@@ -130,13 +129,4 @@ public class ReservationControllerTest {
                 .build();
     }
 
-    private static ReservationNext buildReservationNext(){
-        return ReservationNext.builder()
-                .days(0)
-                .hours(1)
-                .minutes(30)
-                .durationHours(1)
-                .durationMinutes(30)
-                .build();
-    }
 }

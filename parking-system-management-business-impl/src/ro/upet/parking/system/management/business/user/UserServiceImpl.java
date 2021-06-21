@@ -113,17 +113,8 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     @Override
-    public User loginWithUsernameAndPassword(final String username, final String password) {
-        final Optional<UserEntity> ue = userRepo.findByUsernameAndPassword(username, password);
-        return ue.isPresent() ? UserMapper.toUser(ue.get()) : null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public User loginWithEmailAndPassword(String email, String password) {
-        final Optional<UserEntity> ue = userRepo.findByEmailAndPassword(email, password);
+    public User loginWithUsernameOrEmailAndPassword(final String username, final String email, final String password) {
+        final Optional<UserEntity> ue = userRepo.findByUsernameOrEmailAndPassword(username, email, password);
         return ue.isPresent() ? UserMapper.toUser(ue.get()) : null;
     }
 
