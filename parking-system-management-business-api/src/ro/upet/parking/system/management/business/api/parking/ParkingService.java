@@ -9,8 +9,6 @@ import ro.upet.parking.system.management.model.parking.ParkingCreate;
  * Service for creating a parking 
  */
 public interface ParkingService extends BaseService<Parking>{
-	
-	//TODO add parking cost
 
 	/**
 	 * @param parkingCreate the configuration for the parking

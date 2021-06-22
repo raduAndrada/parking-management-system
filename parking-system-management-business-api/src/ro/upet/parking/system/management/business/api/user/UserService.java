@@ -30,6 +30,11 @@ public interface UserService extends BaseService<User> {
      */
     User getByUsername(String username);
 
+    /**
+     * @param email the user's email
+     * @param stripeId the stripe ID stored for the user
+     * @return the updated value
+     */
     User updateStripe(final String email, final String stripeId);
 
 }

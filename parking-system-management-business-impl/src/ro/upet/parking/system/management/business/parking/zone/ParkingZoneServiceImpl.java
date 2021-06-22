@@ -1,27 +1,26 @@
 package ro.upet.parking.system.management.business.parking.zone;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.parking.zone.ParkingZoneService;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 import ro.upet.parking.system.management.data.impl.parking.zone.ParkingZoneRepository;
 import ro.upet.parking.system.management.model.parking.zone.ParkingZone;
 
+import java.util.List;
+
 /**
  * @author Andrada
  * Business level logic implementation for parkingZones 
  */
 @Service
+@AllArgsConstructor
 public class ParkingZoneServiceImpl implements ParkingZoneService{
-	
-	@Inject
-	ParkingZoneRepository parkingZoneRepo;
-	
+
+
+	private final ParkingZoneRepository parkingZoneRepo;
+
 
 	/**
 	 * {@inheritDoc}

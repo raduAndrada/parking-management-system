@@ -7,7 +7,7 @@ package ro.upet.parking.system.management.business.api.vehicle;
 public interface VehicleValidator {
 	/**
 	 * @param licencePlate to be validated
-	 * @return true is the vehicle is defined correctly, false otherwise
+	 * @throws ro.upet.parking.system.management.business.api.core.BusinessException if the licence plate is taken
 	 */
 	void validate (final String licencePlate);
 }

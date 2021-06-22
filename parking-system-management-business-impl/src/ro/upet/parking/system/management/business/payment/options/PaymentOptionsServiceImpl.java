@@ -1,9 +1,7 @@
 package ro.upet.parking.system.management.business.payment.options;
 
-import java.util.List;
-
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import ro.upet.parking.system.management.business.api.core.BusinessException;
 import ro.upet.parking.system.management.business.api.payment.options.PaymentOptionsService;
 import ro.upet.parking.system.management.data.api.payment.options.PaymentOptionsEntity;
@@ -11,11 +9,14 @@ import ro.upet.parking.system.management.data.impl.payment.options.PaymentOption
 import ro.upet.parking.system.management.data.impl.user.UserRepository;
 import ro.upet.parking.system.management.model.payment.options.PaymentOptions;
 
+import java.util.List;
+
 /**
  * @author Andrada
  * Business level logic implementation for paymentOptionss 
  */
 @Service
+@AllArgsConstructor
 public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	
 	final
@@ -23,11 +24,6 @@ public class PaymentOptionsServiceImpl implements PaymentOptionsService{
 	
 	final
 	UserRepository userRepo;
-
-	public PaymentOptionsServiceImpl(PaymentOptionsRepository paymentOptionsRepo, UserRepository userRepo) {
-		this.paymentOptionsRepo = paymentOptionsRepo;
-		this.userRepo = userRepo;
-	}
 
 	/**
 	 * {@inheritDoc}

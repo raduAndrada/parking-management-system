@@ -10,9 +10,13 @@ public interface UserValidator {
 
 	/**
 	 * @param user the user to be validated
-	 * @return true if the user is valid, false otherwise - a valid user requires the username not to be taken as well as the email address
+	 * @throws ro.upet.parking.system.management.business.api.core.BusinessException if the email or username is taken
 	 */
 	void validateUser(final User user);
 
+	/**
+	 * @param email of the user to be validated
+	 * @throws ro.upet.parking.system.management.business.api.core.BusinessException if the email is taken
+	 */
 	void validateEmail(final String email);
 }

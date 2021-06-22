@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Andrada Mapper for the membership entity and model
+ * @author Andrada
+ * Mapper for the membership entity and model
  */
 public class MembershipMapper {
     private static final ModelMapper MAPPER = new ModelMapper();

@@ -1,13 +1,7 @@
 package ro.upet.parking.system.management.business.parking.spot;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
-
+import lombok.experimental.UtilityClass;
 import ro.upet.parking.system.management.data.api.parking.spot.ParkingSpotEntity;
 import ro.upet.parking.system.management.data.api.parking.zone.ParkingZoneEntity;
 import ro.upet.parking.system.management.model.parking.level.ParkingLevel;
@@ -15,10 +9,17 @@ import ro.upet.parking.system.management.model.parking.spot.ParkingSpotLevelSort
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpotPreferenceOptions;
 import ro.upet.parking.system.management.model.parking.spot.ParkingSpotZoneSortOptions;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 /**
  * @author Andrada Utility class to find parking spots based on different
  * criteria
  */
+@UtilityClass
 public class ParkingSpotFinder {
 
     public static ParkingSpotEntity findParkingSpotForMembership(List<ParkingZoneEntity> parkingZoneEntityList) {

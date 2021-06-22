@@ -9,7 +9,9 @@ import java.time.Instant;
 public interface ReservationValidator {
 
 	/**
-	 * @param entity the reservation to be checked 
+	 * @param parkingSpotId spot checked
+	 * @param endTime end time of the reservation
+	 * @param startTime  start time of the reservation
 	 * @return true if the reservation can be saved, false otherwise
 	 */
 	boolean isValidReservation(final Long parkingSpotId, final Instant startTime, final Instant endTime) ;
