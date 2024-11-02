@@ -22,9 +22,9 @@ spring:
 
 stripe:
   secret:
-    key: sk_test_51HskSzKjGxGlZ0lyFGqgqRioYYAOyxfjkJf1LPNvhQ1WPgbyRJ8P3rbpGpHJG0cJproPUd3jgpuT4JBlBb8nowwU00i38BUUCn
+    key: ${STRIPE_SECRET_KEY}
   publishable:
-    key: pk_test_51HskSzKjGxGlZ0ly9rb5ZXdHsozaY8DPqliYzVgOXhNvN6rtKUrRPM9lSH5WhzZUO79TNNIll80m7FjsYw0ZDY8D00lhUZjT52
+    key: ${STRIPE_PUBLISHABLE_KEY}
 #logging.level.org.springframework.jdbc.core.JdbcTemplate: DEBUG
 #logging.level.org.springframework.jdbc.core.StatementCreatorUtils: TRACE
 #logging.level.org.hibernate.SQL: DEBUG
